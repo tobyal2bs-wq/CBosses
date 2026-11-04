@@ -57,25 +57,25 @@ public final class Fx {
         if (c <= 0 || world == null || particles <= 0) return;
         Class<?> type = particle.getDataType();
         try {
-            if (type == Void.class) world.spawnParticle(particle, at, c, dx, dy, dz, speed);
-            else if (type == BlockData.class) world.spawnParticle(particle, at, c, dx, dy, dz, speed, (theme == null ? Material.STONE : theme.debris()).createBlockData());
-            else if (type == Particle.DustOptions.class) world.spawnParticle(particle, at, c, dx, dy, dz, 0, new Particle.DustOptions(theme == null ? Color.WHITE : theme.main(), 1.5f));
-            else if (type == Color.class) world.spawnParticle(particle, at, c, dx, dy, dz, 0, theme == null ? Color.WHITE : theme.main());
-            else if (type == Float.class) world.spawnParticle(particle, at, c, dx, dy, dz, speed, 0f);
-            else if (type == Integer.class) world.spawnParticle(particle, at, c, dx, dy, dz, speed, 0);
+            if (type == Void.class) Privacy.particle(world, particle, at, c, dx, dy, dz, speed);
+            else if (type == BlockData.class) Privacy.particle(world, particle, at, c, dx, dy, dz, speed, (theme == null ? Material.STONE : theme.debris()).createBlockData());
+            else if (type == Particle.DustOptions.class) Privacy.particle(world, particle, at, c, dx, dy, dz, 0, new Particle.DustOptions(theme == null ? Color.WHITE : theme.main(), 1.5f));
+            else if (type == Color.class) Privacy.particle(world, particle, at, c, dx, dy, dz, 0, theme == null ? Color.WHITE : theme.main());
+            else if (type == Float.class) Privacy.particle(world, particle, at, c, dx, dy, dz, speed, 0f);
+            else if (type == Integer.class) Privacy.particle(world, particle, at, c, dx, dy, dz, speed, 0);
         } catch (RuntimeException ignored) { }
     }
 
     public static void dust(Location at, Color color, float size, int count, double spread) {
         int c = n(count);
         if (c <= 0) return;
-        at.getWorld().spawnParticle(Particle.DUST, at, c, spread, spread, spread, 0, new Particle.DustOptions(color, size));
+        Privacy.particle(at.getWorld(), Particle.DUST, at, c, spread, spread, spread, 0, new Particle.DustOptions(color, size));
     }
 
     public static void blockDust(Location at, Material block, int count, double spread) {
         int c = n(count);
         if (c <= 0) return;
-        try { at.getWorld().spawnParticle(Particle.BLOCK, at, c, spread, 0.2, spread, 0.1, block.createBlockData()); } catch (RuntimeException ignored) { }
+        try { Privacy.particle(at.getWorld(), Particle.BLOCK, at, c, spread, 0.2, spread, 0.1, block.createBlockData()); } catch (RuntimeException ignored) { }
     }
 
     /** A flat ring of coloured dust on the ground. */
@@ -85,7 +85,7 @@ public final class Fx {
         World w = center.getWorld();
         for (int i = 0; i < p; i++) {
             double a = Math.PI * 2 * i / p;
-            w.spawnParticle(Particle.DUST, center.getX() + Math.cos(a) * radius, center.getY() + 0.15, center.getZ() + Math.sin(a) * radius, 1, 0, 0, 0, 0, dust);
+            Privacy.particle(w, Particle.DUST, center.getX() + Math.cos(a) * radius, center.getY() + 0.15, center.getZ() + Math.sin(a) * radius, 1, 0, 0, 0, 0, dust);
         }
     }
 
@@ -146,8 +146,8 @@ public final class Fx {
         for (int i = 0; i <= steps; i++) {
             double t = (double) i / steps;
             Location p = from.clone().add(d.clone().multiply(t)).add(0, 0.15, 0);
-            w.spawnParticle(Particle.DUST, p.clone().add(side), 1, 0, 0, 0, 0, dust);
-            w.spawnParticle(Particle.DUST, p.clone().subtract(side), 1, 0, 0, 0, 0, dust);
+            Privacy.particle(w, Particle.DUST, p.clone().add(side), 1, 0, 0, 0, 0, dust);
+            Privacy.particle(w, Particle.DUST, p.clone().subtract(side), 1, 0, 0, 0, 0, dust);
         }
     }
 
@@ -194,7 +194,7 @@ public final class Fx {
             int flight = 8 + r.nextInt(8);
             BlockDisplay d;
             try {
-                d = at.getWorld().spawn(at, BlockDisplay.class, e -> {
+                d = at.getWorld().spawn(at, BlockDisplay.class, e -> { Privacy.claim(e);
                     e.setPersistent(false);
                     e.setBlock(data);
                     e.setShadowRadius(0);
@@ -245,7 +245,7 @@ public final class Fx {
                         float tilt = (float) Math.toRadians(r.nextDouble(-35, 35));
                         BlockDisplay d;
                         try {
-                            d = spot.getWorld().spawn(spot, BlockDisplay.class, e -> {
+                            d = spot.getWorld().spawn(spot, BlockDisplay.class, e -> { Privacy.claim(e);
                                 e.setPersistent(false); e.setBlock(data); e.setShadowRadius(0); e.setViewRange(0.6f);
                                 e.setTransformation(tf(new Vector3f(-s / 2, -s, -s / 2), s, new Quaternionf()));
                             });
@@ -255,7 +255,7 @@ public final class Fx {
                         later(spot, 20, () -> { if (d.isValid()) d.remove(); debris.decrementAndGet(); });
                     }
                     if (i % 3 == 0) {
-                        try { spot.getWorld().spawnParticle(Particle.BLOCK, spot.clone().add(0, 0.3, 0), n(3), 0.2, 0.1, 0.2, 0.1, data); } catch (RuntimeException ignored) { }
+                        try { Privacy.particle(spot.getWorld(), Particle.BLOCK, spot.clone().add(0, 0.3, 0), n(3), 0.2, 0.1, 0.2, 0.1, data); } catch (RuntimeException ignored) { }
                     }
                 }
                 if (theme != null) particle(c.getWorld(), theme.spark(), c.clone().add(0, 0.3, 0), (int) (rr * 3), rr * 0.7, 0.1, rr * 0.7, 0.02, theme);
@@ -271,7 +271,7 @@ public final class Fx {
         float w = 0.55f;
         BlockDisplay d;
         try {
-            d = at.getWorld().spawn(at, BlockDisplay.class, e -> {
+            d = at.getWorld().spawn(at, BlockDisplay.class, e -> { Privacy.claim(e);
                 e.setPersistent(false); e.setBlock(data); e.setShadowRadius(0); e.setViewRange(0.6f);
                 e.setTransformation(new Transformation(new Vector3f(-w / 2, -height, -w / 2), new Quaternionf(), new Vector3f(w, height, w), new Quaternionf()));
             });
@@ -296,7 +296,7 @@ public final class Fx {
         BlockDisplay[] d = {null};
         if (shown) {
             try {
-                d[0] = t.getWorld().spawn(t, BlockDisplay.class, e -> {
+                d[0] = t.getWorld().spawn(t, BlockDisplay.class, e -> { Privacy.claim(e);
                     e.setPersistent(false); e.setBlock(d0); e.setShadowRadius(0); e.setViewRange(1f);
                     e.setBrightness(new Display.Brightness(15, 15));
                     e.setTransformation(tf(new Vector3f(-size / 2 - 6, (float) height, -size / 2 - 3), size, new Quaternionf()));
@@ -336,7 +336,7 @@ public final class Fx {
             later(at, 1 + delay, () -> {
                 ItemDisplay d;
                 try {
-                    d = at.getWorld().spawn(at.clone().add(0, 1, 0), ItemDisplay.class, e -> {
+                    d = at.getWorld().spawn(at.clone().add(0, 1, 0), ItemDisplay.class, e -> { Privacy.claim(e);
                         e.setPersistent(false); e.setItemStack(stack); e.setShadowRadius(0); e.setViewRange(0.6f);
                         e.setBrightness(new Display.Brightness(15, 15));
                         e.setTransformation(tf(new Vector3f(), 0.6f, new Quaternionf()));

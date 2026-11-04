@@ -1,5 +1,7 @@
 package com.cbosses.season;
 
+import com.cbosses.T;
+
 import com.cbosses.CBossesPlugin;
 import com.cbosses.util.Text;
 import org.bukkit.Bukkit;
@@ -78,17 +80,16 @@ public final class Seasons {
 
     public void command(CommandSender sender, String[] args) {
         if (args.length < 2) {
-            plugin.send(sender, "<gold>Seasons</gold> <gray>(/cbosses season <id> on|off|auto)");
+            plugin.send(sender, T.t("season.seasons-cbosses-season-on-off", "<gold>Seasons</gold> <gray>(/cbosses season <id> on|off|auto)"));
             for (String id : ids())
-                sender.sendMessage(Text.mm(" <dark_gray>-</dark_gray> <white>" + id + "</white> " + name(id) + " <gray>mode <white>" + mode(id) + "</white>"
-                        + (active(id) ? " <green>● on now" : " <dark_gray>○ off")));
+                sender.sendMessage(Text.mm(T.t("season.mode", " <dark_gray>-</dark_gray> <white><id></white> <id2> <gray>mode <white><id3></white><off>", "id", id, "id2", name(id), "id3", mode(id), "off", (active(id) ? " <green>● on now" : " <dark_gray>○ off"))));
             return;
         }
         String id = args[1].toLowerCase(Locale.ROOT);
-        if (!ids().contains(id)) { plugin.send(sender, "<red>No season " + Text.escape(id) + ". <gray>Seasons: " + String.join(", ", ids())); return; }
-        if (args.length < 3 || !MODES.contains(args[2].toLowerCase(Locale.ROOT))) { plugin.send(sender, "<yellow>/cbosses season " + id + " on|off|auto"); return; }
+        if (!ids().contains(id)) { plugin.send(sender, T.t("season.no-season-seasons", "<red>No season <id>. <gray>Seasons: <list>", "id", Text.escape(id), "list", String.join(", ", ids()))); return; }
+        if (args.length < 3 || !MODES.contains(args[2].toLowerCase(Locale.ROOT))) { plugin.send(sender, T.t("season.cbosses-season-on-off-auto", "<yellow>/cbosses season <id> on|off|auto", "id", id)); return; }
         plugin.getConfig().set("seasons.list." + id + ".mode", args[2].toLowerCase(Locale.ROOT));
         plugin.saveConfig();
-        plugin.send(sender, "<gray>" + name(id) + " <gray>is now <white>" + mode(id) + "</white>" + (active(id) ? " <green>(running)" : " <dark_gray>(not running)"));
+        plugin.send(sender, T.t("season.is-now", "<gray><id> <gray>is now <white><id2></white><running>", "id", name(id), "id2", mode(id), "running", (active(id) ? " <green>(running)" : " <dark_gray>(not running)")));
     }
 }

@@ -23,6 +23,9 @@ effects:
   max-flying-blocks: 160
   # Most shards a boss breaks into when it dies.
   max-shards-per-death: 48
+  # How much fine detail the boss models keep: high (every plate, patch and fringe), medium (no surface
+  # patches, about 15% fewer blocks) or low (also no plates, trims or hems, about 25% fewer).
+  model-detail: high
   # How often a model moves (in ticks). 3 is smooth thanks to interpolation; 4-5 halves the cost.
   model-update-ticks: 3
   # Models only animate when a player is within this many blocks.
@@ -51,8 +54,8 @@ schedule:
   arena: main
   # rotate: a different boss each week in order; random: a random one each week.
   order: rotate
-  # Boss ids never picked by the schedule.
-  exclude: []
+  # Boss ids never picked by the schedule. The finale boss only wakes through the finale below.
+  exclude: [the_unmaker]
   # Also put the chapter bosses into the weekly rotation.
   include-chapter-bosses: false
 
@@ -97,8 +100,12 @@ chapter-bosses:
   arena-radius: 28
   # Multiply chapter boss health (they are solo fights).
   health-multiplier: 1.0
-  # Other players may help (they get the base reward too). false makes the boss ignore them.
-  allow-helpers: true
+  # The boss is the quest player's own: it appears at their quest spot and nobody else sees it, hears it,
+  # bumps into it or is attacked by it or its minions. Its particles, sounds and flying blocks are only
+  # shown to that player too. Bosses never break or place blocks.
+  private: true
+  # Other players may help (they get the base reward too). Ignored while private is on.
+  allow-helpers: false
   # The boss leaves if its player is out of the circle this many seconds; it waits for /cbosses chapter retry.
   leave-after-seconds: 30
   # Chapters whose boss is a big one: longer countdown sound, darker titles.
@@ -139,6 +146,19 @@ worldguard:
   # WorldGuard's mob-spawning deny would also block the bosses (they are mobs). Keep this true so bosses
   # still appear in protected spawn areas you made an arena in; set false to let WorldGuard block them.
   bypass-spawn-blocking: true
+
+# ----------------------------------------------------------------------------------- FINALE
+# Once every legend in after: has been beaten (in any order, by anyone, tests don't count), the finale boss
+# wakes at its arena. Progress is saved in finale.yml and starts over when the finale is beaten.
+# /cbosses finale shows progress, /cbosses finale wake starts it now, /cbosses finale reset starts over.
+finale:
+  enabled: true
+  boss: the_unmaker
+  after: [withered_tyrant, ender_wyrm, the_listener]
+  # Seconds between the warning and the boss arriving.
+  delay-seconds: 60
+  # The arena it wakes in.
+  arena: main
 
 # ----------------------------------------------------------------------------------- SEASONS
 # Seasonal bosses (season: in bosses.yml) take the weekly slot while their season is on.

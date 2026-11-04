@@ -6,7 +6,7 @@ import yaml
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.join(HERE, "..", "..")
 sys.path.insert(0, os.path.join(HERE, "..", "models"))
-import anims, palette, recipes, legends, chapters, recipes_cb  # noqa: F401  (registers rigs and texts)
+import anims, palette, recipes, legends, chapters, recipes_cb, finale  # noqa: F401  (registers rigs and texts)
 
 models = json.load(open(os.path.join(ROOT, "src/main/resources/models.json")))
 bosses = yaml.safe_load(open(os.path.join(ROOT, "src/main/resources/bosses.yml")))["bosses"]
@@ -24,7 +24,7 @@ def grad(mm, fallback):
 out = []
 for id, b in bosses.items():
     c1, c2 = grad(b["name"], THEME.get(b["theme"], "#ffb347"))
-    kind = "chapter" if b.get("chapter") else "seasonal" if b.get("season") else "world"
+    kind = "chapter" if b.get("chapter") else "seasonal" if b.get("season") else "legend" if id in ("withered_tyrant", "ender_wyrm", "the_unmaker") else "world"
     out.append({"id": id, "name": plain(b["name"]), "c1": c1, "c2": c2, "title": b.get("title", ""), "entity": b["entity"], "health": b["health"],
                 "season": b.get("season", ""), "chapter": b.get("chapter", 0), "kind": kind, "bar": b.get("bar", "RED"), "abilities": b["abilities"],
                 "color": THEME.get(b["theme"], c2), "theme": b["theme"], "movement": b.get("movement", "walk"), "description": b.get("description", ""),
@@ -116,7 +116,7 @@ sub("  tickFx(now, dt);\n  controls.update();", "  tickFx(now, dt);\n  tickShard
 
 # roster groups and info
 sub('const groups = [["Weekly bosses", DATA.bosses.filter(b => !b.season)], ["Seasonal bosses", DATA.bosses.filter(b => b.season)]];',
-    'const groups = [["World bosses", DATA.bosses.filter(b => b.kind === "world")], ["Chapter bosses", DATA.bosses.filter(b => b.kind === "chapter")], ["Seasonal bosses", DATA.bosses.filter(b => b.kind === "seasonal")]];')
+    'const groups = [["Legends and the finale", DATA.bosses.filter(b => b.kind === "legend")], ["World bosses", DATA.bosses.filter(b => b.kind === "world")], ["Chapter bosses", DATA.bosses.filter(b => b.kind === "chapter")], ["Seasonal bosses", DATA.bosses.filter(b => b.kind === "seasonal")]];')
 sub('${DATA.models[b.id].cubes.length} blocks${b.season ? " · " + nice(b.season) : ""}',
     '${DATA.models[b.id].cubes.length} blocks${b.season ? " · " + nice(b.season) : ""}${b.chapter ? " · chapter " + b.chapter : ""}${b.movement === "fly" ? " · flies" : ""}')
 sub('<p class="sub">${boss.title}${boss.season ? " · " + nice(boss.season) + " season" : ""}</p>',

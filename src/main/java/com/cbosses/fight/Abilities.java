@@ -1,5 +1,7 @@
 package com.cbosses.fight;
 
+import com.cbosses.T;
+
 import com.cbosses.util.Text;
 import io.papermc.paper.entity.TeleportFlag;
 import org.bukkit.Bukkit;
@@ -103,7 +105,7 @@ final class Abilities {
                     Fx.eruption(here, r, Fx.ground(here, th), th, 4);
                     for (int i = 0; i < 24; i++) {
                         double a = Math.PI * 2 * i / 24;
-                        for (double rr = 2; rr <= r; rr += 3) world.spawnParticle(Particle.SWEEP_ATTACK, here.clone().add(Math.cos(a) * rr, 0.4, Math.sin(a) * rr), 1);
+                        for (double rr = 2; rr <= r; rr += 3) Privacy.particle(world, Particle.SWEEP_ATTACK, here.clone().add(Math.cos(a) * rr, 0.4, Math.sin(a) * rr), 1);
                     }
                     for (Player p : service.fighters(f)) if (p.getLocation().distanceSquared(here) <= r * r) { hurt(f, p, 4); knock(p, here, 1.4, 0.6); }
                 });
@@ -300,7 +302,7 @@ final class Abilities {
                     Fx.particle(world, Particle.HAPPY_VILLAGER, at.clone().add(0, boss.getHeight() / 2, 0), 60, 1, 1, 1, 0.1, th);
                     Fx.pillar(at, Particle.HEART, th, 6, 1.2);
                     Fx.sound(at, "BLOCK_BEACON_POWER_SELECT", 1.2f, 0.8f);
-                    for (Player p : targets) p.sendActionBar(Text.mm(f.def.name() + " <green>heals itself!"));
+                    for (Player p : targets) p.sendActionBar(Text.mm(T.t("fight.heals-itself", "<boss> <green>heals itself!", "boss", f.def.name())));
                 } else run(f, "shockwave", targets);
             }
             case "quake" -> {

@@ -1,5 +1,7 @@
 package com.cbosses.fight;
 
+import com.cbosses.T;
+
 import com.cbosses.util.Text;
 import net.kyori.adventure.bossbar.BossBar;
 import net.kyori.adventure.title.Title;
@@ -44,7 +46,7 @@ final class Cinematics {
         Theme th = Theme.of(def.theme());
         World world = at.getWorld();
         Material ground = Fx.ground(at, th);
-        if (service.introDarkness()) for (Player p : at.getNearbyPlayers(40)) if (Bukkit.isOwnedByCurrentRegion(p)) service.effect(p, "darkness", 70, 0);
+        if (service.introDarkness()) for (Player p : at.getNearbyPlayers(40)) if (Bukkit.isOwnedByCurrentRegion(p) && Privacy.sees(p, at)) service.effect(p, "darkness", 70, 0);
         Fx.sound(at, "BLOCK_BEACON_ACTIVATE", 2f, 0.5f);
         Fx.sound(at, th.ambient(), 2f, 0.6f);
         int[] step = {0};
@@ -81,9 +83,9 @@ final class Cinematics {
         int n = Math.max(16, (int) (r * 6 * Math.max(0.4, Fx.particles)));
         for (int i = 0; i < n; i++) {
             double a = Math.PI * 2 * i / n + turn;
-            w.spawnParticle(Particle.DUST, at.getX() + Math.cos(a) * r, at.getY() + 0.12, at.getZ() + Math.sin(a) * r, 1, 0, 0, 0, 0, main);
+            Privacy.particle(w, Particle.DUST, at.getX() + Math.cos(a) * r, at.getY() + 0.12, at.getZ() + Math.sin(a) * r, 1, 0, 0, 0, 0, main);
             double b = Math.PI * 2 * i / n - turn * 1.6;
-            w.spawnParticle(Particle.DUST, at.getX() + Math.cos(b) * r * 0.62, at.getY() + 0.12, at.getZ() + Math.sin(b) * r * 0.62, 1, 0, 0, 0, 0, accent);
+            Privacy.particle(w, Particle.DUST, at.getX() + Math.cos(b) * r * 0.62, at.getY() + 0.12, at.getZ() + Math.sin(b) * r * 0.62, 1, 0, 0, 0, 0, accent);
         }
         // the star: five points on the inner ring, every second one joined
         for (int k = 0; k < 5; k++) {
@@ -92,7 +94,7 @@ final class Cinematics {
             int steps = Math.max(4, (int) (r * 2 * Math.max(0.4, Fx.particles)));
             for (int s = 0; s <= steps; s++) {
                 double t = (double) s / steps;
-                w.spawnParticle(Particle.DUST, at.getX() + x1 + (x2 - x1) * t, at.getY() + 0.12, at.getZ() + z1 + (z2 - z1) * t, 1, 0, 0, 0, 0, accent);
+                Privacy.particle(w, Particle.DUST, at.getX() + x1 + (x2 - x1) * t, at.getY() + 0.12, at.getZ() + z1 + (z2 - z1) * t, 1, 0, 0, 0, 0, accent);
             }
         }
     }
@@ -138,9 +140,9 @@ final class Cinematics {
     void titleCard(Fight f) {
         Location at = f.boss.getLocation();
         String sub = f.def.title().isBlank() ? "" : "<gray><italic>" + Text.escape(f.def.title());
-        if (f.def.chapterBoss()) sub = "<gold>Chapter " + f.def.chapter() + " boss</gold>" + (sub.isEmpty() ? "" : " <dark_gray>·</dark_gray> " + sub);
+        if (f.def.chapterBoss()) sub = T.t("fight.chapter", "<gold>Chapter ") + f.def.chapter() + " boss</gold>" + (sub.isEmpty() ? "" : " <dark_gray>·</dark_gray> " + sub);
         Title title = Title.title(Text.mm(f.def.name()), Text.mm(sub), Title.Times.times(Duration.ofMillis(300), Duration.ofMillis(2600), Duration.ofMillis(900)));
-        for (Player p : at.getNearbyPlayers(56)) if (Bukkit.isOwnedByCurrentRegion(p)) {
+        for (Player p : at.getNearbyPlayers(56)) if (Bukkit.isOwnedByCurrentRegion(p) && Privacy.sees(p, at)) {
             p.showTitle(title);
             p.playSound(p.getLocation(), org.bukkit.Sound.ENTITY_ENDER_DRAGON_GROWL, 0.7f, 0.8f);
         }
@@ -166,8 +168,8 @@ final class Cinematics {
         Fx.debris(at, Fx.ground(at, th), 12, 5, 2.4, 0.5f);
         Fx.sound(at, th.charge(), 2f, 0.6f);
         Fx.sound(at, "ENTITY_ENDER_DRAGON_GROWL", 1.2f, 0.7f);
-        String line = phase == 1 ? "<red><bold>is enraged!" : "<dark_red><bold>is desperate!";
-        for (Player p : at.getNearbyPlayers(48)) if (Bukkit.isOwnedByCurrentRegion(p)) {
+        String line = phase == 1 ? T.t("fight.is-enraged", "<red><bold>is enraged!") : T.t("fight.is-desperate", "<dark_red><bold>is desperate!");
+        for (Player p : at.getNearbyPlayers(48)) if (Bukkit.isOwnedByCurrentRegion(p) && Privacy.sees(p, at)) {
             p.showTitle(Title.title(Text.mm(f.def.name()), Text.mm(line), Title.Times.times(Duration.ofMillis(150), Duration.ofMillis(1600), Duration.ofMillis(500))));
             if (p.getLocation().distanceSquared(at) < 100 && service.mayHurt(f, p)) {
                 org.bukkit.util.Vector v = p.getLocation().toVector().subtract(at.toVector()).setY(0);

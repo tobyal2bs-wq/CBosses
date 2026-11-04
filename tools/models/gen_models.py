@@ -1,6 +1,6 @@
 import json, sys, os
 sys.path.insert(0, os.path.dirname(__file__))
-import anims, models, palette, bipeds, quads, others, seasonal, recipes, legends, chapters, recipes_cb, detail
+import anims, models, palette, bipeds, quads, others, seasonal, recipes, legends, chapters, recipes_cb, finale, detail, craft, motion
 out = {"version": 1, "rigs": anims.RIGS, "models": {}}
 used = set()
 for fn in models.MODELS:
@@ -8,10 +8,12 @@ for fn in models.MODELS:
     if m.rig in ("biped", "float"): m.elbows(weapons=getattr(m, "hold", None))
     if m.rig == "biped": m.hands()
     detail.enrich(m)
+    craft.craft(m)
     m.zones()
     j = m.json()
-    j["spawn"] = recipes.SPAWN[m.id]
-    j["death"] = recipes.DEATH[m.id]
+    tags = {c.get("g") for c in m.cubes}
+    j["spawn"] = motion.spawn(recipes.SPAWN[m.id], "trim" in tags, "vein" in tags)
+    j["death"] = motion.death(recipes.DEATH[m.id], "trim" in tags, "vein" in tags)
     out["models"][m.id] = j
     used |= {palette.base(c["k"]) for c in m.cubes}
 missing = sorted(b for b in used if b not in palette.P)

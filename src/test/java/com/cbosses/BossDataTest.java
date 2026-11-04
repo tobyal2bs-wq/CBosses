@@ -62,6 +62,31 @@ class BossDataTest {
     }
 
     @Test
+    void everyModelHasAtLeast120BlocksAndCanDropItsDetail() throws Exception {
+        var full = models();
+        for (var e : full.entrySet()) assertTrue(e.getValue().cubes.size() >= 120, e.getKey() + " has only " + e.getValue().cubes.size() + " blocks");
+        int was = ModelRig.detail;
+        try {
+            ModelRig.detail = 0;
+            var low = models();
+            for (var e : low.entrySet()) {
+                assertTrue(low.get(e.getKey()).cubes.size() < full.get(e.getKey()).cubes.size(), e.getKey() + " keeps every block on low detail");
+                assertFalse(low.get(e.getKey()).cubes.isEmpty(), e.getKey() + " is empty on low detail");
+            }
+        } finally { ModelRig.detail = was; }
+    }
+
+    @Test
+    void theFinaleBossExistsAndIsKeptOutOfTheWeeklyRotation() throws Exception {
+        var defs = bosses();
+        assertNotNull(defs.get("the_unmaker"), "the finale boss");
+        for (String legend : new String[]{"withered_tyrant", "ender_wyrm", "the_listener"}) assertNotNull(defs.get(legend), legend);
+        ModelRig.Model m = models().get("the_unmaker");
+        assertTrue(m.cubes.size() >= 200, "the finale is the most detailed boss");
+        assertTrue(m.death.stream().anyMatch(s -> s.op().equals("shatter")), "the finale shatters");
+    }
+
+    @Test
     void chapterBossesCoverTenChapters() throws Exception {
         var defs = bosses();
         for (int ch = 1; ch <= 10; ch++) {

@@ -378,6 +378,8 @@ function matches(only, i) {
   const c = cur.model.cubes[i];
   if (only === "lit") return !!c.l; if (only === "unlit") return !c.l;
   if (c.k.split("[")[0] === only) return true;
+  if (c.g && c.g === only) return true;
+  if (only === "plain") return !c.g;
   return cur.model.bones.find(b => b.name === c.b).name.startsWith(only) || c.b.startsWith(only);
 }
 function ranks(order) {

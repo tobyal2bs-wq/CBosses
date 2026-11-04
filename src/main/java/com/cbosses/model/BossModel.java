@@ -1,5 +1,7 @@
 package com.cbosses.model;
 
+import com.cbosses.fight.Privacy;
+
 import io.papermc.paper.threadedregions.scheduler.ScheduledTask;
 import org.bukkit.Bukkit;
 import org.bukkit.Color;
@@ -109,7 +111,7 @@ public final class BossModel {
             }
             original[i] = data; current[i] = data;
             BlockData d0 = data;
-            BlockDisplay d = at.getWorld().spawn(at, BlockDisplay.class, e -> {
+            BlockDisplay d = at.getWorld().spawn(at, BlockDisplay.class, e -> { Privacy.claim(e);
                 e.setPersistent(false);
                 e.getPersistentDataContainer().set(kindKey, PersistentDataType.STRING, "part");
                 e.getPersistentDataContainer().set(fightKey, PersistentDataType.STRING, fight);
@@ -125,7 +127,7 @@ public final class BossModel {
         float s = model.scale / 16f;
         for (int i = 0; i < model.zones.size(); i++) {
             ModelRig.Zone z = model.zones.get(i);
-            Interaction box = at.getWorld().spawn(at, Interaction.class, e -> {
+            Interaction box = at.getWorld().spawn(at, Interaction.class, e -> { Privacy.claim(e);
                 e.setPersistent(false);
                 e.getPersistentDataContainer().set(kindKey, PersistentDataType.STRING, "zone");
                 e.getPersistentDataContainer().set(fightKey, PersistentDataType.STRING, fight);
@@ -623,7 +625,7 @@ public final class BossModel {
             BlockData data = current[i];
             BlockDisplay shard;
             try {
-                shard = base.getWorld().spawn(base, BlockDisplay.class, d -> {
+                shard = base.getWorld().spawn(base, BlockDisplay.class, d -> { Privacy.claim(d);
                     d.setPersistent(false);
                     d.setBlock(data);
                     d.setShadowRadius(0);
@@ -703,14 +705,14 @@ public final class BossModel {
         try { particle = Particle.valueOf(name); } catch (IllegalArgumentException e) { return; }
         Class<?> type = particle.getDataType();
         try {
-            if (type == Void.class) world.spawnParticle(particle, at, count, spread, spread, spread, 0.05);
+            if (type == Void.class) Privacy.particle(world, particle, at, count, spread, spread, spread, 0.05);
             else if (type == BlockData.class) {
                 Material m = Material.matchMaterial(s.str("block", "STONE"));
-                world.spawnParticle(particle, at, count, spread, spread, spread, 0.05, (m != null && m.isBlock() ? m : Material.STONE).createBlockData());
-            } else if (type == Color.class) world.spawnParticle(particle, at, count, spread, spread, spread, 0, color(s.str("color", "#ffffff")));
-            else if (type == Particle.DustOptions.class) world.spawnParticle(particle, at, count, spread, spread, spread, 0, new Particle.DustOptions(color(s.str("color", "#ffffff")), 1.5f));
-            else if (type == Float.class) world.spawnParticle(particle, at, count, spread, spread, spread, 0, 0f);
-            else if (type == Integer.class) world.spawnParticle(particle, at, count, spread, spread, spread, 0, 0);
+                Privacy.particle(world, particle, at, count, spread, spread, spread, 0.05, (m != null && m.isBlock() ? m : Material.STONE).createBlockData());
+            } else if (type == Color.class) Privacy.particle(world, particle, at, count, spread, spread, spread, 0, color(s.str("color", "#ffffff")));
+            else if (type == Particle.DustOptions.class) Privacy.particle(world, particle, at, count, spread, spread, spread, 0, new Particle.DustOptions(color(s.str("color", "#ffffff")), 1.5f));
+            else if (type == Float.class) Privacy.particle(world, particle, at, count, spread, spread, spread, 0, 0f);
+            else if (type == Integer.class) Privacy.particle(world, particle, at, count, spread, spread, spread, 0, 0);
         } catch (RuntimeException ignored) { }
     }
 
@@ -730,7 +732,7 @@ public final class BossModel {
         Sound sound = SOUNDS.computeIfAbsent(name, n -> {
             try { return (Sound) Sound.class.getField(n).get(null); } catch (ReflectiveOperationException | RuntimeException e) { return MISSING; }
         });
-        if (sound != MISSING) world.playSound(at, sound, volume, pitch);
+        if (sound != MISSING) Privacy.sound(world, at, sound, volume, pitch);
     }
 
     // ------------------------------------------------------------------ ending

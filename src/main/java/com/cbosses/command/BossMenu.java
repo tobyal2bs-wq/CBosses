@@ -1,5 +1,7 @@
 package com.cbosses.command;
 
+import com.cbosses.T;
+
 import com.cbosses.CBossesPlugin;
 import com.cbosses.fight.BossDef;
 import com.cbosses.util.Text;
@@ -40,16 +42,16 @@ public final class BossMenu implements Listener {
         int pages = Math.max(1, (all.size() + 44) / 45);
         page = Math.max(0, Math.min(pages - 1, page));
         Holder h = new Holder(page);
-        Inventory inv = Bukkit.createInventory(h, 54, Text.mm("<dark_gray>Bosses <gray>(" + (page + 1) + "/" + pages + ")"));
+        Inventory inv = Bukkit.createInventory(h, 54, Text.mm(T.t("menu.bosses", "<dark_gray>Bosses <gray>(<page>/<pages>)", "page", (page + 1), "pages", pages)));
         h.inv = inv;
         for (int i = 0; i < 45 && page * 45 + i < all.size(); i++) {
             BossDef d = all.get(page * 45 + i);
             h.ids.add(d.id());
             inv.setItem(i, icon(d));
         }
-        if (page > 0) inv.setItem(45, button(Material.ARROW, "<yellow>Previous page"));
-        if (page < pages - 1) inv.setItem(53, button(Material.ARROW, "<yellow>Next page"));
-        inv.setItem(49, button(Material.CLOCK, "<gold>Next weekly boss: <white>" + Text.escape(plugin.service().upcomingName().isEmpty() ? "none" : plugin.service().upcomingName())
+        if (page > 0) inv.setItem(45, button(Material.ARROW, T.t("menu.previous-page", "<yellow>Previous page")));
+        if (page < pages - 1) inv.setItem(53, button(Material.ARROW, T.t("menu.next-page", "<yellow>Next page")));
+        inv.setItem(49, button(Material.CLOCK, T.t("menu.next-weekly-boss", "<gold>Next weekly boss: <white>") + Text.escape(plugin.service().upcomingName().isEmpty() ? "none" : plugin.service().upcomingName())
                 + " <gray>" + plugin.service().nextText()));
         player.openInventory(inv);
     }
@@ -67,13 +69,13 @@ public final class BossMenu implements Listener {
             meta.displayName(Text.mm(d.name()).decoration(TextDecoration.ITALIC, false));
             List<Component> lore = new ArrayList<>();
             if (!d.title().isBlank()) lore.add(Text.mm("<gray><italic>" + Text.escape(d.title())));
-            lore.add(Text.mm(d.chapterBoss() ? "<aqua>Chapter " + d.chapter() + " boss" : d.seasonal() ? "<light_purple>Seasonal: " + d.season() : "<gold>World boss")
+            lore.add(Text.mm(d.chapterBoss() ? T.t("menu.chapter", "<aqua>Chapter ") + d.chapter() + " boss" : d.seasonal() ? T.t("menu.seasonal", "<light_purple>Seasonal: ") + d.season() : T.t("menu.world-boss", "<gold>World boss"))
                     .decoration(TextDecoration.ITALIC, false));
-            lore.add(Text.mm("<gray>Health <white>" + (int) d.health() + "</white>  Attacks <white>" + d.abilities().size() + "</white>  " + d.movement()).decoration(TextDecoration.ITALIC, false));
+            lore.add(Text.mm(T.t("menu.health-attacks", "<gray>Health <white><health></white>  Attacks <white><size></white>  <movement>", "health", (int) d.health(), "size", d.abilities().size(), "movement", d.movement())).decoration(TextDecoration.ITALIC, false));
             if (!d.description().isBlank()) for (String line : wrap(d.description(), 38)) lore.add(Text.mm("<dark_gray>" + Text.escape(line)).decoration(TextDecoration.ITALIC, false));
             lore.add(Component.empty());
-            lore.add(Text.mm("<yellow>Left-click</yellow> <gray>test it here").decoration(TextDecoration.ITALIC, false));
-            lore.add(Text.mm("<yellow>Right-click</yellow> <gray>spawn at the main arena").decoration(TextDecoration.ITALIC, false));
+            lore.add(Text.mm(T.t("menu.left-click-test-it-here", "<yellow>Left-click</yellow> <gray>test it here")).decoration(TextDecoration.ITALIC, false));
+            lore.add(Text.mm(T.t("menu.right-click-spawn-at-the", "<yellow>Right-click</yellow> <gray>spawn at the main arena")).decoration(TextDecoration.ITALIC, false));
             meta.lore(lore);
         });
         return item;

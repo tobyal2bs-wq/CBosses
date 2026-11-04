@@ -1,5 +1,7 @@
 package com.cbosses.chapter;
 
+import com.cbosses.T;
+
 import com.cbosses.CBossesPlugin;
 import com.cbosses.fight.BossDef;
 import com.cbosses.util.Sched;
@@ -101,7 +103,7 @@ public final class ChapterBosses implements Listener {
         BossDef def = bossFor(chapter);
         if (def == null) return;
         Player p = event.getPlayer();
-        Sched.entityLater(p, 100, () -> plugin.send(p, plugin.msg("chapter-boss-waiting", "<gold><boss> <gray>is still waiting for you. <yellow>/cbosses chapter retry</yellow> when you are ready.").replace("<boss>", def.name())));
+        Sched.entityLater(p, 100, () -> plugin.send(p, plugin.msg("chapter-boss-waiting", T.t("chapter.is-still-waiting-for-you", "<gold><boss> <gray>is still waiting for you. <yellow>/cbosses chapter retry</yellow> when you are ready.")).replace("<boss>", def.name())));
     }
 
     /** Starts the countdown for a player's chapter boss. force skips the "already beaten" check. */
@@ -114,14 +116,14 @@ public final class ChapterBosses implements Listener {
         if (plugin.getConfig().getStringList("fight.disabled-worlds").contains(player.getWorld().getName())) {
             counting.remove(id);
             pending.put(id, chapter); save();
-            plugin.send(player, "<gray>A chapter boss wants to fight you, but bosses are off in this world. <yellow>/cbosses chapter retry</yellow> somewhere else.");
+            plugin.send(player, T.t("chapter.a-chapter-boss-wants-to", "<gray>A chapter boss wants to fight you, but bosses are off in this world. <yellow>/cbosses chapter retry</yellow> somewhere else."));
             return false;
         }
         pending.put(id, chapter); save();
         int seconds = Math.max(3, plugin.getConfig().getInt("chapter-bosses.countdown-seconds", 10));
         boolean big = plugin.getConfig().getIntegerList("chapter-bosses.big-chapters").contains(chapter);
-        String label = big ? "<dark_red><bold>A GREAT EVIL STIRS" : "<gold><bold>CHAPTER BOSS";
-        plugin.send(player, plugin.msg("chapter-boss-warning", "<gold>⚔ <boss> <gray>is coming for you in <white><seconds></white> seconds. Get ready!")
+        String label = big ? T.t("chapter.a-great-evil-stirs", "<dark_red><bold>A GREAT EVIL STIRS") : T.t("chapter.chapter-boss", "<gold><bold>CHAPTER BOSS");
+        plugin.send(player, plugin.msg("chapter-boss-warning", T.t("chapter.is-coming-for-you-in", "<gold>⚔ <boss> <gray>is coming for you in <white><seconds></white> seconds. Get ready!"))
                 .replace("<boss>", def.name()).replace("<seconds>", Integer.toString(seconds)));
         int[] left = {seconds};
         player.getScheduler().runAtFixedRate(plugin, t -> {
@@ -130,11 +132,11 @@ public final class ChapterBosses implements Listener {
                 t.cancel();
                 counting.remove(id);
                 if (!plugin.service().chapterFight(player, def, plugin.getConfig().getInt("chapter-bosses.arena-radius", 28)))
-                    plugin.send(player, "<gray>The chapter boss could not appear here. <yellow>/cbosses chapter retry</yellow> somewhere open.");
+                    plugin.send(player, T.t("chapter.the-chapter-boss-could-not", "<gray>The chapter boss could not appear here. <yellow>/cbosses chapter retry</yellow> somewhere open."));
                 return;
             }
             if (left[0] <= 5 || left[0] == seconds) {
-                player.showTitle(Title.title(Text.mm(label), Text.mm(def.name() + " <gray>in <white>" + left[0]),
+                player.showTitle(Title.title(Text.mm(label), Text.mm(T.t("chapter.in", "<boss> <gray>in <white><left>", "boss", def.name(), "left", left[0])),
                         Title.Times.times(Duration.ZERO, Duration.ofMillis(1100), Duration.ofMillis(200))));
                 player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASEDRUM, 1f, left[0] <= 3 ? 0.6f : 0.9f);
                 if (big) player.playSound(player.getLocation(), Sound.ENTITY_WARDEN_HEARTBEAT, 1f, 1f);
@@ -161,7 +163,7 @@ public final class ChapterBosses implements Listener {
             if (helper != null) plugin.service().pay(e.getKey(), helper.getName(), Math.max(4, place), def.rewards(), def);
         }
         if (plugin.getConfig().getBoolean("chapter-bosses.announce", true))
-            Sched.global(() -> Bukkit.broadcast(Text.mm(plugin.msg("chapter-boss-beaten", "<gold>⚔ <white><player></white> <gray>defeated the chapter boss <boss><gray>!")
+            Sched.global(() -> Bukkit.broadcast(Text.mm(plugin.msg("chapter-boss-beaten", T.t("chapter.defeated-the-chapter-boss", "<gold>⚔ <white><player></white> <gray>defeated the chapter boss <boss><gray>!"))
                     .replace("<player>", Text.escape(name)).replace("<boss>", def.name()))));
     }
 

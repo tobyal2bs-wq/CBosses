@@ -110,6 +110,11 @@ NEW = {
      minion=None, minions=0, abilities=["sonic_boom", "darkness", "slam", "shockwave", "quake", "pull", "charge"], ability_seconds=5,
      phases=[0.75, 0.5, 0.25], money=100000, top_money=0, items=["DIAMOND 8", "NETHERITE_INGOT 1", "ECHO_SHARD 4"], top_items=[],
      description="Chapter 10, the last great boss. A Warden from the deep dark, nine blocks tall and eyeless. Its ribcage of souls lights up when it hears you, and its sonic boom goes through walls."),
+  "the_unmaker": dict(name="<gradient:#2a0845:#ff4fd8:#2a0845><bold>THE UNMAKER</bold></gradient>", title="Heart of the Void",
+     entity="IRON_GOLEM", health=6000, damage=17, armor=16, bar="PINK", theme="void", movement="hover", fly_height=4,
+     minion="ENDERMAN", minions=3, abilities=["quake", "sonic_boom", "meteor", "orbs", "pull", "darkness", "lightning", "blink", "charge", "minions"], ability_seconds=4,
+     phases=[0.8, 0.6, 0.4, 0.2], money=250000, top_money=250000, items=["NETHERITE_INGOT 2", "DIAMOND_BLOCK 2", "ENCHANTED_GOLDEN_APPLE 1"], top_items=["NETHER_STAR 1"],
+     description="The finale. Wakes once the Withered Tyrant, the Ender Wyrm and The Listener Below have all been beaten. A four-armed titan of obsidian around a burning void heart, ten blocks tall, with one great eye and a crown of orbiting shards. Smashes with both fists, sweeps a blade of the void and casts from an orb."),
 }
 
 def q(s):
@@ -196,6 +201,9 @@ for id, b in src.items():
 w("")
 w("  # ------------------------------------------------------------------ CBosses legends")
 for id in ("withered_tyrant", "ender_wyrm", "killer_claus", "brain_freeze"): emit(id, NEW[id])
+w("")
+w("  # ------------------------------------------------------------------ the finale (after the three legends)")
+emit("the_unmaker", NEW["the_unmaker"])
 w("")
 w("  # ------------------------------------------------------------------ chapter bosses (one after every CQuests chapter)")
 for id in ("brakka", "gate_shade", "oakheart", "keywarden", "hollow_king", "iron_tusk", "captain_brine", "ember_queen", "choirmaster", "the_listener"):

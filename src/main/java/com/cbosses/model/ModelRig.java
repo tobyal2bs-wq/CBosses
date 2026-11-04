@@ -25,7 +25,7 @@ import java.util.Set;
  *
  * Spawn and death are lists of steps played on the cubes. Each step has an op, a start tick (at), a
  * blend time (dur) and can be spread over the cubes (stagger, order up/down/out/in/random) or limited
- * to some of them (only: lit, unlit, a block id or a bone name prefix). Ops: pose (back to the model's
+ * to some of them (only: lit, unlit, a block id, a bone name prefix, or a detail tag: vein, trim, detail, or plain for the untagged blocks). Ops: pose (back to the model's
  * shape), move, drop (fall to the floor), burst (fly outward), toward (pull to a point), shrink, scale,
  * spin, tilt, swap (change block, "" = the original), light, anim (play a rig animation), fx
  * (particles, sound, lightning), fling (thrown in an arc that lands and bounces), shatter (the block
@@ -70,7 +70,17 @@ public final class ModelRig {
     public record Bone(String name, int parent, Vector3f pivot, Vector3f rest) {}
 
     /** One block of the model; {@code local} places a unit block in its bone, in model pixels. */
-    public record Cube(int bone, String block, String base, Matrix4f local, boolean light, float centerY) {}
+    public record Cube(int bone, String block, String base, Matrix4f local, boolean light, float centerY, String tag) {}
+
+    /** How much fine detail the models keep (effects.model-detail): 2 = everything, 1 = no surface
+     * patches, 0 = no patches, trims or fringes either. Glowing veins always stay. Set before load. */
+    public static volatile int detail = 2;
+
+    static boolean keep(String tag) {
+        if (tag.equals("detail")) return detail >= 2;
+        if (tag.equals("trim")) return detail >= 1;
+        return true;
+    }
 
     public record Step(String op, int at, int dur, int stagger, String order, String only, JsonObject params) {
         public float num(String key, float def) {
@@ -143,6 +153,8 @@ public final class ModelRig {
             if (only.equals("lit")) return c.light();
             if (only.equals("unlit")) return !c.light();
             if (c.base().equals(only)) return true;
+            if (!c.tag().isEmpty() && c.tag().equals(only)) return true;
+            if (only.equals("plain")) return c.tag().isEmpty();
             return bones.get(c.bone()).name().startsWith(only);
         }
     }
@@ -197,7 +209,9 @@ public final class ModelRig {
                 }
                 local.translate(f).scale(t.x - f.x, t.y - f.y, t.z - f.z);
                 String block = o.get("k").getAsString();
-                cubes.add(new Cube(bone, block, base(block), local, o.has("l"), (f.y + t.y) / 2));
+                String tag = o.has("g") ? o.get("g").getAsString() : "";
+                if (!keep(tag)) continue;
+                cubes.add(new Cube(bone, block, base(block), local, o.has("l"), (f.y + t.y) / 2, tag));
             }
             Map<String, String> attacks = new LinkedHashMap<>();
             if (m.has("attacks")) for (var a : m.getAsJsonObject("attacks").entrySet()) attacks.put(a.getKey(), a.getValue().getAsString());

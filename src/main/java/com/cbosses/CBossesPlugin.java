@@ -25,6 +25,7 @@ public final class CBossesPlugin extends JavaPlugin {
     private ChapterBosses chapters;
     private Seasons seasons;
     private CBossesAPI api;
+    private com.cbosses.finale.Finale finale;
     private YamlConfiguration messages = new YamlConfiguration();
 
     public static CBossesPlugin instance() { return instance; }
@@ -50,9 +51,11 @@ public final class CBossesPlugin extends JavaPlugin {
         seasons = new Seasons(this);
         service = new BossService(this);
         chapters = new ChapterBosses(this);
+        finale = new com.cbosses.finale.Finale(this);
         api = new CBossesAPI(this);
         getServer().getPluginManager().registerEvents(service, this);
         getServer().getPluginManager().registerEvents(chapters, this);
+        getServer().getPluginManager().registerEvents(finale, this);
         BossMenu menu = new BossMenu(this);
         getServer().getPluginManager().registerEvents(menu, this);
         BossCommand command = new BossCommand(this, menu);
@@ -84,8 +87,19 @@ public final class CBossesPlugin extends JavaPlugin {
         File file = new File(getDataFolder(), "messages.yml");
         messages = YamlConfiguration.loadConfiguration(file);
         try (var in = getResource("messages.yml")) {
-            if (in != null) messages.setDefaults(YamlConfiguration.loadConfiguration(new InputStreamReader(in, StandardCharsets.UTF_8)));
-        } catch (Exception ignored) { }
+            if (in == null) return;
+            YamlConfiguration jar = YamlConfiguration.loadConfiguration(new InputStreamReader(in, StandardCharsets.UTF_8));
+            messages.setDefaults(jar);
+            // lines added in an update are written into the server's file so they can be found and changed
+            boolean added = false;
+            YamlConfiguration own = YamlConfiguration.loadConfiguration(file);
+            for (String key : jar.getKeys(true)) {
+                if (jar.isConfigurationSection(key) || own.isSet(key)) continue;
+                own.set(key, jar.get(key));
+                added = true;
+            }
+            if (added) { own.save(file); messages = own; messages.setDefaults(jar); }
+        } catch (Exception e) { getLogger().warning("Could not update messages.yml: " + e.getMessage()); }
     }
 
     public String msg(String key, String fallback) {
@@ -100,6 +114,7 @@ public final class CBossesPlugin extends JavaPlugin {
 
     public BossService service() { return service; }
     public ChapterBosses chapters() { return chapters; }
+    public com.cbosses.finale.Finale finale() { return finale; }
     public Seasons seasons() { return seasons; }
     public CBossesAPI api() { return api; }
 }

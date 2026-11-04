@@ -46,7 +46,7 @@ wait_for() {
 
 wait_for "Done (" 300
 wait_for "CBosses .* enabled with" 30
-for cmd in "cbosses list" "cbosses arena radius main 30" "cbosses arena list" "cbosses schedule" "cbosses season" "cbosses season winter on" "cbosses season winter auto" \
+for cmd in "cbosses list" "cbosses arena radius main 30" "cbosses arena list" "cbosses schedule" "cbosses season" "cbosses season winter on" "cbosses season winter auto" "cbosses finale" \
            "cbosses selftest" "cbosses reload" "cbosses list"; do
   echo "$cmd" >> console
   sleep 3

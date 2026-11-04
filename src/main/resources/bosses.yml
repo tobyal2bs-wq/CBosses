@@ -860,6 +860,33 @@ bosses:
       top-commands: []
     description: "A three-scoop ice cream monster on a waffle cone. Rains sprinkles, freezes you solid and splats scoops across the arena."
 
+  # ------------------------------------------------------------------ the finale (after the three legends)
+  the_unmaker:
+    name: "<gradient:#2a0845:#ff4fd8:#2a0845><bold>THE UNMAKER</bold></gradient>"
+    title: "Heart of the Void"
+    entity: IRON_GOLEM
+    health: 6000
+    damage: 17
+    armor: 16
+    bar: PINK
+    theme: void
+    movement: hover
+    fly-height: 4
+    phases: [0.8, 0.6, 0.4, 0.2]
+    minion: ENDERMAN
+    minions: 3
+    ability-seconds: 4
+    abilities: [quake, sonic_boom, meteor, orbs, pull, darkness, lightning, blink, charge, minions]
+    health-per-player: 0.25
+    rewards:
+      money: 250000
+      top-money: 250000
+      items: ["NETHERITE_INGOT 2", "DIAMOND_BLOCK 2", "ENCHANTED_GOLDEN_APPLE 1"]
+      top-items: ["NETHER_STAR 1"]
+      commands: []
+      top-commands: []
+    description: "The finale. Wakes once the Withered Tyrant, the Ender Wyrm and The Listener Below have all been beaten. A four-armed titan of obsidian around a burning void heart, ten blocks tall, with one great eye and a crown of orbiting shards. Smashes with both fists, sweeps a blade of the void and casts from an orb."
+
   # ------------------------------------------------------------------ chapter bosses (one after every CQuests chapter)
   brakka:
     name: "<gradient:#ff7b00:#ffd27a><bold>Brakka the Torchbearer</bold></gradient>"

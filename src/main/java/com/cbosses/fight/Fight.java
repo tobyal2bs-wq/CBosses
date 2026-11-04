@@ -16,6 +16,8 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 /** One running boss fight. */
 public final class Fight {
+    /** Set when the fight is private to its owner (a chapter boss): the Privacy circle's key. */
+    public volatile String privateZone;
     public final String key;
     public final BossDef def;
     public final Arena arena;
