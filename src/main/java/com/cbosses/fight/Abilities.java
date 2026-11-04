@@ -62,13 +62,13 @@ final class Abilities {
     }
 
     /** Runs one attack. Works with no targets too (the self-test). */
-    void run(Fight f, String ability, List<Player> targets) {
+    void run(Fight f, String asked, List<Player> targets) {
         Mob boss = f.boss;
         Location at = boss.getLocation();
         World world = at.getWorld();
         Theme th = f.theme;
         Player main = boss.getTarget() instanceof Player p && targets.contains(p) ? p : targets.isEmpty() ? null : targets.get(0);
-        if (f.def.flies() && (ability.equals("leap") || ability.equals("charge") || ability.equals("slam"))) ability = "dive";
+        final String ability = f.def.flies() && (asked.equals("leap") || asked.equals("charge") || asked.equals("slam")) ? "dive" : asked;
         if (f.model != null) f.model.attack(f.model.model.attackFor(ability)); else boss.swingMainHand();
         double big = Math.max(1, f.model == null ? boss.getHeight() / 2 : f.model.model.blocks() / 4);
         switch (ability) {
