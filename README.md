@@ -2,10 +2,10 @@
 
 <p align="center"><img src="docs/images/hero.jpg" alt="CBosses bosses" width="100%"></p>
 
-**CBosses** adds 42 animated block-model bosses to Paper and Folia servers. Every boss is built from hundreds of
-display blocks, has its own entrance, its own attacks and its own death, and runs on a schedule, on a season, or
-right after a player finishes a CQuests chapter. It works on its own and alongside **CQuests**, and it has full
-**WorldGuard** support.
+**CBosses** adds 43 animated block-model bosses to Paper and Folia servers. Every boss is built from 130 to
+260 display blocks, has its own entrance, its own attacks and its own death, and runs on a schedule, on a
+season, right after a player finishes a CQuests chapter, or as the finale once the three legends have fallen. It
+works on its own and alongside **CQuests**, and it has full **WorldGuard** support.
 
 ### [Open the 3D boss viewer](https://claude.ai/artifact/NbYXjJCKyRwZ2oTmETby7k)
 
@@ -14,10 +14,19 @@ also in this repo at [`docs/viewer.html`](docs/viewer.html) (download and open i
 
 ## Highlights
 
+- **Hand-finished models.** Every boss has at least 120 blocks: layered shoulder plates, knee guards, chest badges,
+  spines, torn hems, rivets, shading patches and glowing veins on top of its own design. Turn the fine detail down
+  with `effects.model-detail` on a busy server.
 - **A different entrance for every boss.** Omens, ground cracks and a themed build-up first, then the boss climbs out of the
   earth, falls from the sky, assembles block by block, or, for Clucksworth, hatches out of a giant egg.
-- **A different death for every boss.** Each death has a flash, a camera shake and a custom sequence, and most end with the
-  model shattering into physics shards.
+- **A different death for every boss.** Each death has a flash, a camera shake and a custom sequence: the veins go dark,
+  the armour plates are thrown off, and most end with the model shattering into physics shards.
+- **The finale.** Beat the Withered Tyrant, the Ender Wyrm and The Listener Below and **The Unmaker** wakes: a ten block
+  tall, four-armed titan with a void heart, one great eye and a crown of orbiting shards.
+- **Private chapter bosses.** A chapter boss appears where the player finished their quest and only exists for them:
+  nobody else sees it, hears it, bumps into it or gets attacked. No boss ever breaks or places blocks.
+- **Every word is yours.** All chat lines, titles, action bars, menus and the defeat broadcast are in `messages.yml`;
+  boss names, titles and descriptions are in `bosses.yml`.
 - **Attacks you can read.** Every ability has its own wind-up pose, effects and impact: slams, charges, dives, beams, meteors,
   spikes, sonic booms, minion waves and more. Flying bosses swoop and dive instead of jumping.
 - **Chapter bosses.** A boss after every CQuests chapter (1 to 10), with two big set pieces after chapters 5 and 10.
@@ -32,8 +41,8 @@ also in this repo at [`docs/viewer.html`](docs/viewer.html) (download and open i
 ## Chapter bosses
 
 When a player finishes a chapter in CQuests, CBosses counts down on their screen and their chapter boss appears in a
-circle around them. It is a solo fight by default (helpers allowed), and if they lose or leave, it waits for
-`/cbosses chapter retry`. Pick a different boss per chapter under `chapter-bosses.bosses` in `config.yml`.
+circle at their quest spot. It is their own private fight: other players do not see it, hear it or get hit by it,
+and its minions only go after that player. If they lose or leave, it waits for `/cbosses chapter retry`. Pick a different boss per chapter under `chapter-bosses.bosses` in `config.yml`.
 
 | Chapter | Boss | Health | Size |
 |---|---|---|---|
@@ -56,6 +65,21 @@ circle around them. It is a solo fight by default (helpers allowed), and if they
 </table>
 
 
+## The finale
+
+When the Withered Tyrant, the Ender Wyrm and The Listener Below have all been beaten (in any order, by anyone),
+the whole server is warned and The Unmaker wakes at the main arena a minute later. `/cbosses finale` shows how far
+the server is, `/cbosses finale wake` starts it now and `/cbosses finale reset` starts over. Change the bosses, the
+delay and the arena under `finale:` in `config.yml`.
+
+<table>
+<tr><td valign="top" width="33%"><img src="docs/images/the_unmaker.jpg" width="260" alt="THE UNMAKER"><br><b>THE UNMAKER</b><br><i>Heart of the Void</i><br><sub><code>the_unmaker</code> · 6000 HP · 5 phases · Hovers</sub><br><br>The finale. Wakes once the Withered Tyrant, the Ender Wyrm and The Listener Below have all been beaten. A four-armed titan of obsidian around a burning void heart, ten blocks tall, with one great eye and a crown of orbiting shards. Smashes with both fists, sweeps a blade of the void and casts from an orb.<br><br><sub><b>Attacks:</b> Quake, Sonic Boom, Meteor, Orbs, Pull, Darkness, Lightning, Blink, Charge, Minions</sub></td></tr>
+</table>
+
+
+<p align="center"><img src="docs/images/unmaker_heart.jpg" width="32%"> <img src="docs/images/unmaker_arms.jpg" width="32%"> <img src="docs/images/unmaker_death.jpg" width="32%"></p>
+<p align="center"><sub>The void heart lights alone in the air, the four arms swing in, and the end: the arms torn away before it bursts.</sub></p>
+
 ## Legend bosses
 
 <table>
@@ -74,8 +98,7 @@ These take turns as the weekly public boss at your arena.
 <tr><td valign="top" width="33%"><img src="docs/images/cinder_sovereign.jpg" width="260" alt="The Cinder Sovereign"><br><b>The Cinder Sovereign</b><br><i>Crowned in Living Flame</i><br><sub><code>cinder_sovereign</code> · 1300 HP · 3 phases · Hovers</sub><br><br>A floating lord of embers in spinning rings of fire. Rains meteors and breathes flame.<br><br><sub><b>Attacks:</b> Fire Ring, Minions, Blink, Levitate, Meteor, Orbs, Breath</sub></td><td valign="top" width="33%"><img src="docs/images/volatile_colossus.jpg" width="260" alt="The Volatile Colossus"><br><b>The Volatile Colossus</b><br><i>It Hisses. It Never Stops.</i><br><sub><code>volatile_colossus</code> · 1400 HP · 3 phases · Walks</sub><br><br>A creeper the size of a house. It explodes, a lot, and never dies from it.<br><br><sub><b>Attacks:</b> Detonate, Leap, Pull, Slam, Charge</sub></td><td valign="top" width="33%"><img src="docs/images/king_gloop.jpg" width="260" alt="King Gloop"><br><b>King Gloop</b><br><i>Monarch of the Swamp</i><br><sub><code>king_gloop</code> · 1600 HP · 3 phases · Walks</sub><br><br>The slime king. Bounces, quakes the arena and splits into a crowd of little slimes.<br><br><sub><b>Attacks:</b> Leap, Quake, Minions, Poison, Slam, Spikes</sub></td></tr>
 <tr><td valign="top" width="33%"><img src="docs/images/executioner.jpg" width="260" alt="The Executioner"><br><b>The Executioner</b><br><i>Axe of the Woodland Mansion</i><br><sub><code>executioner</code> · 1500 HP · 3 phases · Walks</sub><br><br>A hooded executioner with a giant axe. Charges, cleaves and calls his vindicators.<br><br><sub><b>Attacks:</b> Leap, Shockwave, Minions, Roar, Charge, Slam</sub></td><td valign="top" width="33%"><img src="docs/images/pharaoh.jpg" width="260" alt="Pharaoh Ankhamun"><br><b>Pharaoh Ankhamun</b><br><i>Risen from the Buried Temple</i><br><sub><code>pharaoh</code> · 1600 HP · 3 phases · Walks</sub><br><br>An ancient pharaoh. Curses the sun away, poisons with sand and raises husks from the dunes.<br><br><sub><b>Attacks:</b> Darkness, Poison, Minions, Blink, Spikes, Orbs</sub></td><td valign="top" width="33%"><img src="docs/images/ruinmaw.jpg" width="260" alt="Ruinmaw"><br><b>Ruinmaw</b><br><i>The Rotting Juggernaut</i><br><sub><code>ruinmaw</code> · 2000 HP · 3 phases · Walks</sub><br><br>A chained zoglin beast of the ruins. Breaks the ground into spikes and charges.<br><br><sub><b>Attacks:</b> Leap, Quake, Shockwave, Roar, Charge, Spikes</sub></td></tr>
 <tr><td valign="top" width="33%"><img src="docs/images/hexmother.jpg" width="260" alt="Hexmother Morwen"><br><b>Hexmother Morwen</b><br><i>Brewer of a Thousand Curses</i><br><sub><code>hexmother</code> · 1200 HP · 3 phases · Walks</sub><br><br>A witch queen. Curses, heals herself, throws potions and floats players up into the air.<br><br><sub><b>Attacks:</b> Levitate, Poison, Blink, Heal, Darkness, Orbs, Spikes</sub></td><td valign="top" width="33%"><img src="docs/images/void_walker.jpg" width="260" alt="The Void Walker"><br><b>The Void Walker</b><br><i>It Was Never Really Here</i><br><sub><code>void_walker</code> · 1400 HP · 3 phases · Walks</sub><br><br>A tall enderman from the void. Teleports, blinds and pulls players into its rift.<br><br><sub><b>Attacks:</b> Blink, Darkness, Levitate, Pull, Orbs, Sonic Boom</sub></td><td valign="top" width="33%"><img src="docs/images/fenrir.jpg" width="260" alt="Fenrir"><br><b>Fenrir</b><br><i>The Wolf That Swallows the Moon</i><br><sub><code>fenrir</code> · 1500 HP · 3 phases · Walks</sub><br><br>A giant frost wolf. Leaps, freezes and howls for its pack.<br><br><sub><b>Attacks:</b> Leap, Frost, Minions, Roar, Charge, Slam</sub></td></tr>
-<tr><td valign="top" width="33%"><img src="docs/images/tempest.jpg" width="260" alt="Tempest"><br><b>Tempest</b><br><i>The Storm Given Form</i><br><sub><code>tempest</code> · 1200 HP · 3 phases · Hovers</sub><br><br>A living storm. Throws players around with wind and calls down lightning.<br><br><sub><b>Attacks:</b> Levitate, Pull, Shockwave, Lightning, Orbs, Dive</sub></td><td valign="top" width="33%"><img src="docs/images/pale_watcher.jpg" width="260" alt="The Pale Watcher"><br><b>The Pale Watcher</b><br><i>Don't Look Away</i><br><sub><code>pale_watcher</code> · 1500 HP · 3 phases · Walks</sub><br><br>A pale creaking tree that watches. Only moves when you look away... mostly.<br><br><sub><b>Attacks:</b> Darkness, Blink, Quake, Roar, Spikes, Sonic Boom</sub></td><td valign="top" width="33%"><img src="docs/images/withered_tyrant.jpg" width="260" alt="The Withered Tyrant"><br><b>The Withered Tyrant</b><br><i>Three Skulls, One Hunger</i><br><sub><code>withered_tyrant</code> · 2600 HP · 3 phases · Hovers</sub><br><br>A three-headed wither. Floats above the arena firing volleys of wither skulls from all three heads, screams the light away and dives at you.<br><br><sub><b>Attacks:</b> Skulls, Darkness, Shockwave, Meteor, Minions, Dive</sub></td></tr>
-<tr><td valign="top" width="33%"><img src="docs/images/ender_wyrm.jpg" width="260" alt="Vorthax the Ender Wyrm"><br><b>Vorthax the Ender Wyrm</b><br><i>Dragon of the Outer Dark</i><br><sub><code>ender_wyrm</code> · 3000 HP · 4 phases · Flies</sub><br><br>A real flying dragon. Circles the arena, dives through it, breathes purple fire across the floor and calls down end crystals.<br><br><sub><b>Attacks:</b> Breath, Dive, Orbs, Meteor, Shockwave, Levitate</sub></td></tr>
+<tr><td valign="top" width="33%"><img src="docs/images/tempest.jpg" width="260" alt="Tempest"><br><b>Tempest</b><br><i>The Storm Given Form</i><br><sub><code>tempest</code> · 1200 HP · 3 phases · Hovers</sub><br><br>A living storm. Throws players around with wind and calls down lightning.<br><br><sub><b>Attacks:</b> Levitate, Pull, Shockwave, Lightning, Orbs, Dive</sub></td><td valign="top" width="33%"><img src="docs/images/pale_watcher.jpg" width="260" alt="The Pale Watcher"><br><b>The Pale Watcher</b><br><i>Don't Look Away</i><br><sub><code>pale_watcher</code> · 1500 HP · 3 phases · Walks</sub><br><br>A pale creaking tree that watches. Only moves when you look away... mostly.<br><br><sub><b>Attacks:</b> Darkness, Blink, Quake, Roar, Spikes, Sonic Boom</sub></td></tr>
 </table>
 
 
@@ -122,6 +145,7 @@ All commands need `cbosses.admin` except `/cbosses next`. Aliases: `/cb`, `/boss
 | `/cbosses schedule on\|off` | Turn the weekly boss on or off. |
 | `/cbosses chapter <player> <n>` / `reset` / `retry` | Start, reset or retry a player's chapter boss. |
 | `/cbosses season <id> <on\|off\|auto>` | Switch a season. |
+| `/cbosses finale [wake\|reset]` | Finale progress, wake it now, or start over. |
 | `/cbosses next` | When the next boss wakes. |
 | `/cbosses reload` | Reload every file. |
 
@@ -133,12 +157,15 @@ All commands need `cbosses.admin` except `/cbosses next`. Aliases: `/cb`, `/boss
 - **`bosses.yml`** has every boss: name, title, health, scale, damage, armor, boss bar color, movement, abilities, ability
   timing, phases, minions and rewards (money, items and commands, plus extra rewards for the top damage dealer).
   New bosses from an update are added to your file without touching your changes.
-- **`messages.yml`** has every chat line, in MiniMessage.
+- **`messages.yml`** has every line the plugin shows, in MiniMessage: chat, titles, action bars, the menu, command
+  replies and the broadcasts. Words in angle brackets like `<boss>` and `<player>` are filled in. New lines from an
+  update are added to your file by themselves.
 - **`arenas.yml`** is written by the arena commands.
 
 ### Lag settings
 
-`effects.quality` (low, medium, high, ultra) and `particle-multiplier` scale every particle. `flying-blocks`,
+`effects.model-detail` (high, medium, low) drops the fine pieces from every model (about 15% fewer blocks on
+medium, about 25% fewer on low). `effects.quality` (low, medium, high, ultra) and `particle-multiplier` scale every particle. `flying-blocks`,
 `max-flying-blocks` and `max-shards-per-death` cap block effects. `model-update-ticks` (3 by default) and
 `model-view-distance` control how often and how far models animate. `intro: false` skips the omens.
 
@@ -153,7 +180,8 @@ All commands need `cbosses.admin` except `/cbosses next`. Aliases: `/cb`, `/boss
 ## CQuests
 
 With CQuests installed, chapter completions start chapter bosses, and seasons can follow CQuests' seasons. Both are
-optional and CBosses runs fine without CQuests.
+optional and CBosses runs fine without CQuests. CQuests ships the same models for its own world bosses, and when both
+plugins are installed CQuests leaves the world bosses to CBosses so there are never two at once.
 
 ## PlaceholderAPI
 

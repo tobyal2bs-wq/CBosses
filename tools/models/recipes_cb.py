@@ -31,7 +31,7 @@ NEW_SPAWN = {
      S("scale", 31, 3, s=[1.3, 0.7, 1.3], only="head"), S("pose", 34, 5, only="head"), fx(31, "ITEM_SLIME", 40, "BLOCK_HONEY_BLOCK_PLACE", 0.6, y=0.8),
      fx(31, sound="ENTITY_SLIME_SQUISH", pitch=0.7), S("shake", 32, 8, amp=0.1),
      S("pose", 42, 8, only="ring"), S("pose", 42, 8, only="arm"), S("pose", 42, 8, only="spoon"), S("pose", 42, 8, only="fore"),
-     fx(44, "SNOWFLAKE", 60, "ENTITY_PLAYER_HURT_FREEZE", 1.2, y=1, spread=2), S("anim", 52, 26, name="spin"), fx(52, sound="ENTITY_WANDERING_TRADER_YES", pitch=0.6)],
+     fx(44, "SNOWFLAKE", 60, "ENTITY_PLAYER_HURT_FREEZE", 1.2, y=1, spread=2), S("pose", 48, 4), S("anim", 52, 26, name="spin"), fx(52, sound="ENTITY_WANDERING_TRADER_YES", pitch=0.6)],
  # walks out of a wall of fire, black with soot; the colours come back as the flames die down
  "brakka": [S("swap", 0, block="black_concrete"), S("move", 0, v=[0, 0, -7]), fx(1, "FLAME", 80, "ITEM_FIRECHARGE_USE", 0.5, y=0.4, spread=2.5, ring=3),
      S("pose", 2, 26), fx(8, "LAVA", 20, "BLOCK_FIRE_AMBIENT", 0.8, y=0.4, spread=1.5), fx(18, "FLAME", 40, "ENTITY_BLAZE_BURN", 0.6, y=0.5),

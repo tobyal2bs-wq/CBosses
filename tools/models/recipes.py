@@ -234,9 +234,9 @@ SPAWN.update({
                fx(44, "SOUL_FIRE_FLAME", 60, "ENTITY_SKELETON_HORSE_AMBIENT", 0.5, y=0.7), S("anim", 46, 30, name="rear")],
  # great gourd: a seed in the dirt sprouts, swells in three gulps, and pops its lid to say hello
  "great_gourd": [S("scale", 0, s=[0.08, 0.08, 0.08]), fx(1, "HAPPY_VILLAGER", 20, "ITEM_BONE_MEAL_USE", 0.8, y=0, spread=1),
-               S("scale", 8, 6, s=[0.35, 0.35, 0.35]), fx(8, "HAPPY_VILLAGER", 20, "ITEM_BONE_MEAL_USE", 0.9, y=0.1),
-               S("scale", 18, 6, s=[0.7, 0.7, 0.7]), fx(18, "HAPPY_VILLAGER", 30, "ITEM_BONE_MEAL_USE", 1.0, y=0.2),
-               S("scale", 28, 8, s=[1.15, 0.9, 1.15]), S("scale", 36, 6, s=[1, 1, 1]), fx(30, "BLOCK", 60, "BLOCK_ROOTED_DIRT_BREAK", 0.6, y=0, spread=2.5, block="DIRT"),
+               S("scale", 8, 6, s=[4.375, 4.375, 4.375]), fx(8, "HAPPY_VILLAGER", 20, "ITEM_BONE_MEAL_USE", 0.9, y=0.1),
+               S("scale", 18, 6, s=[2, 2, 2]), fx(18, "HAPPY_VILLAGER", 30, "ITEM_BONE_MEAL_USE", 1.0, y=0.2),
+               S("scale", 28, 8, s=[1.643, 1.286, 1.643]), S("pose", 36, 6), fx(30, "BLOCK", 60, "BLOCK_ROOTED_DIRT_BREAK", 0.6, y=0, spread=2.5, block="DIRT"),
                S("anim", 44, 30, name="roar"), fx(48, "WITCH", 50, "ENTITY_WITCH_CELEBRATE", 0.8, y=1)],
  # old man winter: comes down out of the sky very slowly, holding his staff up like an umbrella, grumbling
  "old_man_winter": [S("move", 0, v=[0, 22, 0]), S("spin", 0, deg=-40), fx(1, "SNOWFLAKE", 120, "ENTITY_PLAYER_HURT_FREEZE", 0.5, y=2, spread=4),
@@ -249,8 +249,8 @@ SPAWN.update({
                S("anim", 50, 30, name="roar"), fx(56, sound="ENTITY_SNOW_GOLEM_AMBIENT", pitch=0.5)],
  # killer bunny: a harmless little rabbit... that grows, and grows
  "killer_bunny": [S("scale", 0, s=[0.18, 0.18, 0.18]), fx(1, "HEART", 6, "ENTITY_RABBIT_AMBIENT", 1.2, y=0.1),
-               S("scale", 20, 6, s=[0.5, 0.5, 0.5]), fx(20, sound="ENTITY_RABBIT_ATTACK", pitch=0.8), S("scale", 30, 6, s=[1.1, 1.1, 1.1]), fx(30, sound="ENTITY_RABBIT_ATTACK", pitch=0.5),
-               fx(38, "ANGRY_VILLAGER", 12, "ENTITY_RAVAGER_ROAR", 1.6, y=0.7), S("scale", 38, 4, s=[1, 1, 1]), S("anim", 44, 26, name="howl")],
+               S("scale", 20, 6, s=[2.778, 2.778, 2.778]), fx(20, sound="ENTITY_RABBIT_ATTACK", pitch=0.8), S("scale", 30, 6, s=[2.2, 2.2, 2.2]), fx(30, sound="ENTITY_RABBIT_ATTACK", pitch=0.5),
+               fx(38, "ANGRY_VILLAGER", 12, "ENTITY_RAVAGER_ROAR", 1.6, y=0.7), S("pose", 38, 4), S("anim", 44, 26, name="howl")],
  # clucksworth: a giant egg wobbles three times, cracks open, and out comes an extremely angry chicken
  "clucksworth": [S("swap", 0, block="white_concrete"), S("scale", 0, s=[0.75, 0.6, 0.75]), fx(1, "CLOUD", 30, "ENTITY_CHICKEN_EGG", 0.5, y=0.2),
                S("spin", 8, 3, deg=20), S("spin", 11, 3, deg=-40), S("spin", 14, 3, deg=20), fx(10, sound="ENTITY_TURTLE_EGG_CRACK", pitch=0.7),
@@ -259,7 +259,7 @@ SPAWN.update({
                S("anim", 48, 30, name="roar"), fx(50, "CLOUD", 40, "ENTITY_CHICKEN_AMBIENT", 0.5, y=0.8), fx(60, sound="ENTITY_CHICKEN_AMBIENT", pitch=0.6)],
  # sunscorch: falls out of the sky and cannonballs onto its pool float with an enormous splash
  "sunscorch": [S("move", 0, v=[0, 24, 0]), S("light", 0, on=True), fx(1, "FLAME", 40, "ENTITY_BLAZE_SHOOT", 0.6, y=3),
-               S("move", 2, 14, v=[0, -24, 0]), S("spin", 2, 14, deg=360), S("scale", 16, 4, s=[1.35, 0.55, 1.35]), S("scale", 20, 6, s=[0.9, 1.2, 0.9]), S("scale", 26, 4, s=[1, 1, 1]),
+               S("move", 2, 14, v=[0, -24, 0]), S("spin", 2, 14, deg=360), S("scale", 16, 4, s=[1.35, 0.55, 1.35]), S("scale", 20, 6, s=[0.667, 2.18, 0.667]), S("pose", 26, 4),
                fx(16, "SPLASH", 200, "ENTITY_GENERIC_SPLASH", 0.6, y=0.1, spread=4), fx(16, "BUBBLE_POP", 80, "ENTITY_PLAYER_SPLASH_HIGH_SPEED", 0.8, y=0, spread=3, ring=4),
                S("light", 30, on=False, only="unlit"), S("anim", 32, 22, name="burst"), fx(36, sound="ENTITY_DOLPHIN_PLAY", pitch=0.6)],
  # admiral pinchworth: digs up out of the sand sideways, snapping its claws to a drumroll
