@@ -1,0 +1,13 @@
+# Every chat line CBosses sends, in MiniMessage (https://docs.advntr.dev/minimessage/format.html).
+# Placeholders: <boss>, <minutes>, <where>, <title>, <player>, <seconds>.
+prefix: "<dark_gray>[<gold>CBosses</gold>]</dark_gray> "
+schedule-warning: "<gold><bold>⚔ BOSS</bold></gold> <boss> <gray>wakes in <white><minutes> minutes</white><where>"
+spawn-broadcast: "<dark_gray><st>                                        </st>\n<gold><bold>⚔ WORLD BOSS ⚔</bold></gold>  <boss>\n<title>\n<gold>has risen<where>\n<gray>Everyone who helps gets a reward; the top 3 by damage get more.\n<dark_gray><st>                                        </st>"
+boss-idle: "<gray><boss> <gray>found no challengers and left."
+boss-timeout: "<gray><boss> <gray>was not beaten in time and vanished."
+boss-stopped: "<gray><boss> <gray>was sent away."
+chapter-boss-warning: "<gold>⚔ <boss> <gray>is coming for you in <white><seconds></white> seconds. Get ready!"
+chapter-boss-started: "<gold>⚔ <boss> <gold>has come for you! <gray>Beat it to claim the chapter reward. Leave the circle or die and it leaves."
+chapter-boss-left: "<gray><boss> <gray>left. Fight it again with <yellow>/cbosses chapter retry</yellow>."
+chapter-boss-waiting: "<gold><boss> <gray>is still waiting for you. <yellow>/cbosses chapter retry</yellow> when you are ready."
+chapter-boss-beaten: "<gold>⚔ <white><player></white> <gray>defeated the chapter boss <boss><gray>!"

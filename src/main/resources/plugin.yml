@@ -1,0 +1,17 @@
+name: CBosses
+version: '${version}'
+main: com.cbosses.CBossesPlugin
+api-version: '1.21'
+folia-supported: true
+author: clarx
+description: Animated block-model bosses with weekly, seasonal and chapter fights, WorldGuard support and a CQuests hook.
+softdepend: [WorldGuard, PlaceholderAPI, CQuests]
+commands:
+  cbosses:
+    description: CBosses commands
+    aliases: [cb, bosses]
+    usage: /cbosses help
+permissions:
+  cbosses.admin:
+    description: Every CBosses command
+    default: op

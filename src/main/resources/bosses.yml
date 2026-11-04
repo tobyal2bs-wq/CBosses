@@ -1,0 +1,1110 @@
+# CBosses bosses. Every boss is a block model (models.json) drawn over an invisible mob that gives it its AI
+# and hitbox. Add your own, change any number, or set enabled: false to turn one off. /cbosses reload applies it.
+#
+# kind:       world (the weekly boss rotation), seasonal (needs season:) or chapter (needs chapter:).
+#             It is worked out for you from season: and chapter: when left out.
+# chapter:    the CQuests chapter after which this boss comes for the player (chapter bosses are one-on-one).
+# season:     halloween, winter, spring or summer. Seasonal bosses take the weekly slot while their season is on.
+# entity:     the invisible mob underneath (its AI and hitbox). Any mob works.
+# movement:   walk, fly (circles and dives), hover (floats above the ground) or still.
+# fly-height: blocks above the ground for fly and hover bosses (2 to 20).
+# theme:      colours, particles and sounds of every attack: soul, fire, frost, nature, gold, water, storm, earth,
+#             blood, toxic, void, witch, sand, bone, sculk, wither, dragon, holiday, candy, pumpkin, feather, iron.
+# abilities:  picked at random every ability-seconds (faster in later phases):
+#             lightning, shockwave, minions, fire_ring, pull, leap, poison, blink, frost, volley, darkness, levitate,
+#             heal, quake, detonate, roar, charge, slam, meteor, sonic_boom, skulls, breath, spikes, orbs, gifts,
+#             sprinkles, dive, eggs
+# phases:     health fractions where it gets angrier: faster attacks, more minions, its last ability right away.
+# health-per-player: extra health for each extra player near when it wakes (0.25 = +25% each).
+# rewards:    everyone who did at least rewards.min-damage-percent (config.yml) gets money, items and commands;
+#             the top 3 get top-money (split 1, 1/2, 1/3) and top-items, the best gets top-commands too.
+#             %player% and %place% work in commands. Chapter bosses pay the player who beat it.
+# model:      the model in models.json (defaults to the id), or none for the plain mob with its equipment.
+# description: shown in /cbosses menu and the README.
+bosses:
+
+  gravelord:
+    name: "<gradient:#6a1b9a:#e040fb><bold>The Gravelord</bold></gradient>"
+    title: "Lord of the Restless Dead"
+    entity: WITHER_SKELETON
+    health: 1600
+    scale: 2.2
+    damage: 13
+    armor: 10
+    bar: PURPLE
+    theme: soul
+    movement: walk
+    phases: [0.66, 0.33]
+    equipment:
+      head: NETHERITE_HELMET
+      chest: NETHERITE_CHESTPLATE
+      hand: NETHERITE_SWORD
+    minion: SKELETON
+    minions: 4
+    ability-seconds: 8
+    abilities: [minions, darkness, shockwave, blink, skulls, spikes]
+    health-per-player: 0.25
+    rewards:
+      money: 50000
+      top-money: 150000
+      items: ["NETHERITE_SCRAP 1", "GOLDEN_APPLE 4"]
+      top-items: ["ENCHANTED_GOLDEN_APPLE 1"]
+      commands: []
+      top-commands: []
+    description: "A lord of the restless dead in a tattered royal robe. Raises skeletons, blinds the arena and fires burning skulls."
+  molten_colossus:
+    name: "<gradient:#ff6f00:#ffd54f><bold>The Molten Colossus</bold></gradient>"
+    title: "Heart of the Forge"
+    entity: IRON_GOLEM
+    health: 2200
+    scale: 2.4
+    damage: 16
+    armor: 12
+    bar: RED
+    theme: fire
+    movement: walk
+    phases: [0.66, 0.33]
+    ability-seconds: 8
+    abilities: [fire_ring, quake, leap, shockwave, meteor, slam]
+    health-per-player: 0.25
+    rewards:
+      money: 50000
+      top-money: 150000
+      items: ["IRON_BLOCK 4", "GOLDEN_APPLE 3"]
+      top-items: ["NETHERITE_INGOT 1"]
+      commands: []
+      top-commands: []
+    description: "A walking forge of lava and iron plates. Its fists crater the ground and molten rocks rain from the sky."
+  broodmother:
+    name: "<gradient:#33691e:#aed581><bold>The Broodmother</bold></gradient>"
+    title: "Queen of the Deep Webs"
+    entity: SPIDER
+    health: 1400
+    scale: 3.0
+    damage: 10
+    speed: 0.34
+    armor: 0
+    bar: GREEN
+    theme: toxic
+    movement: walk
+    phases: [0.66, 0.33]
+    minion: CAVE_SPIDER
+    minions: 5
+    ability-seconds: 8
+    abilities: [poison, minions, leap, pull, spikes, charge]
+    health-per-player: 0.25
+    rewards:
+      money: 50000
+      top-money: 150000
+      items: ["STRING 32", "GOLDEN_APPLE 3"]
+      top-items: ["DIAMOND 6"]
+      commands: []
+      top-commands: []
+    description: "A giant spider queen. Spits venom, drags you in with webs and sends her brood after you."
+  frost_jarl:
+    name: "<gradient:#4fc3f7:#e1f5fe><bold>Jarl Hrimfrost</bold></gradient>"
+    title: "The Winter That Walks"
+    entity: STRAY
+    health: 1500
+    scale: 2.1
+    damage: 11
+    armor: 8
+    bar: BLUE
+    theme: frost
+    movement: walk
+    phases: [0.66, 0.33]
+    equipment:
+      head: DIAMOND_HELMET
+      chest: LEATHER_CHESTPLATE
+      hand: BOW
+    minion: STRAY
+    minions: 4
+    ability-seconds: 8
+    abilities: [frost, volley, minions, shockwave, slam, spikes]
+    health-per-player: 0.25
+    rewards:
+      money: 50000
+      top-money: 150000
+      items: ["BLUE_ICE 16", "GOLDEN_APPLE 3"]
+      top-items: ["DIAMOND 8"]
+      commands: []
+      top-commands: []
+    description: "A frost giant king in iron and fur. Freezes the ground, throws ice and calls his frozen guard."
+  warlord_gruk:
+    name: "<gradient:#ffb300:#fff176><bold>Warlord Gruk</bold></gradient>"
+    title: "Gold-Hungry Tyrant of the Bastion"
+    entity: PIGLIN_BRUTE
+    health: 1700
+    scale: 2.0
+    damage: 15
+    armor: 10
+    bar: YELLOW
+    theme: gold
+    movement: walk
+    phases: [0.66, 0.33]
+    equipment:
+      head: GOLDEN_HELMET
+      chest: GOLDEN_CHESTPLATE
+      legs: GOLDEN_LEGGINGS
+      hand: GOLDEN_AXE
+    minion: PIGLIN_BRUTE
+    minions: 3
+    ability-seconds: 8
+    abilities: [leap, shockwave, minions, roar, charge, slam]
+    health-per-player: 0.25
+    rewards:
+      money: 50000
+      top-money: 150000
+      items: ["GOLD_BLOCK 4", "GOLDEN_CARROT 16"]
+      top-items: ["GOLD_BLOCK 16"]
+      commands: []
+      top-commands: []
+    description: "A piglin warlord dripping in gold. Charges, leaps and smashes, and his brutes never stop coming."
+  tide_tyrant:
+    name: "<gradient:#00838f:#80deea><bold>The Tide Tyrant</bold></gradient>"
+    title: "Drowned King of the Sunken Fleet"
+    entity: DROWNED
+    health: 1500
+    scale: 2.2
+    damage: 12
+    armor: 8
+    bar: BLUE
+    theme: water
+    movement: walk
+    phases: [0.66, 0.33]
+    equipment:
+      head: TURTLE_HELMET
+      hand: TRIDENT
+    minion: DROWNED
+    minions: 4
+    ability-seconds: 8
+    abilities: [pull, volley, frost, minions, orbs, slam]
+    health-per-player: 0.25
+    rewards:
+      money: 50000
+      top-money: 150000
+      items: ["PRISMARINE_SHARD 16", "GOLDEN_APPLE 3"]
+      top-items: ["HEART_OF_THE_SEA 1"]
+      commands: []
+      top-commands: []
+    description: "A drowned king with a trident. Pulls you into the deep, freezes you with sea spray and raises the drowned."
+  storm_herald:
+    name: "<gradient:#3949ab:#b3e5fc><bold>The Storm Herald</bold></gradient>"
+    title: "Voice of the Thunderhead"
+    entity: EVOKER
+    health: 1200
+    scale: 2.0
+    damage: 10
+    armor: 6
+    bar: BLUE
+    theme: storm
+    movement: walk
+    phases: [0.66, 0.33]
+    ability-seconds: 7
+    abilities: [lightning, levitate, blink, pull, orbs, meteor]
+    health-per-player: 0.25
+    rewards:
+      money: 50000
+      top-money: 150000
+      items: ["LAPIS_BLOCK 4", "GOLDEN_APPLE 3"]
+      top-items: ["TOTEM_OF_UNDYING 1"]
+      commands: []
+      top-commands: []
+    description: "An evoker of storms. Calls lightning, throws players into the air and blinks around the arena."
+  ironhide_behemoth:
+    name: "<gradient:#5d4037:#bcaaa4><bold>The Ironhide Behemoth</bold></gradient>"
+    title: "War Beast of the Raid"
+    entity: RAVAGER
+    health: 2400
+    scale: 1.7
+    damage: 15
+    armor: 12
+    bar: RED
+    theme: iron
+    movement: walk
+    phases: [0.66, 0.33]
+    ability-seconds: 8
+    abilities: [leap, shockwave, roar, quake, charge, slam]
+    health-per-player: 0.25
+    rewards:
+      money: 50000
+      top-money: 150000
+      items: ["EMERALD 24", "GOLDEN_APPLE 3"]
+      top-items: ["EMERALD_BLOCK 6"]
+      commands: []
+      top-commands: []
+    description: "A huge armoured beast. Charges through everything and shakes the ground with every stomp."
+  bloodtusk:
+    name: "<gradient:#b71c1c:#ff8a80><bold>Bloodtusk</bold></gradient>"
+    title: "The Crimson Charger"
+    entity: HOGLIN
+    health: 1800
+    scale: 2.0
+    damage: 14
+    speed: 0.36
+    armor: 8
+    bar: RED
+    theme: blood
+    movement: walk
+    phases: [0.66, 0.33]
+    minion: HOGLIN
+    minions: 2
+    ability-seconds: 8
+    abilities: [leap, shockwave, minions, roar, charge, slam]
+    health-per-player: 0.25
+    rewards:
+      money: 50000
+      top-money: 150000
+      items: ["COOKED_PORKCHOP 32", "GOLDEN_APPLE 3"]
+      top-items: ["NETHERITE_SCRAP 2"]
+      commands: []
+      top-commands: []
+    description: "A crimson boar of the Nether. Gores, charges and calls its herd."
+  cinder_sovereign:
+    name: "<gradient:#ff3d00:#ffea00><bold>The Cinder Sovereign</bold></gradient>"
+    title: "Crowned in Living Flame"
+    entity: BLAZE
+    health: 1300
+    scale: 2.3
+    damage: 10
+    armor: 6
+    bar: YELLOW
+    theme: fire
+    movement: hover
+    fly-height: 3
+    phases: [0.66, 0.33]
+    minion: BLAZE
+    minions: 3
+    ability-seconds: 8
+    abilities: [fire_ring, minions, blink, levitate, meteor, orbs, breath]
+    health-per-player: 0.25
+    rewards:
+      money: 50000
+      top-money: 150000
+      items: ["BLAZE_ROD 12", "GOLDEN_APPLE 3"]
+      top-items: ["NETHER_STAR 1"]
+      commands: []
+      top-commands: []
+    description: "A floating lord of embers in spinning rings of fire. Rains meteors and breathes flame."
+  volatile_colossus:
+    name: "<gradient:#00e676:#ccff90><bold>The Volatile Colossus</bold></gradient>"
+    title: "It Hisses. It Never Stops."
+    entity: CREEPER
+    health: 1400
+    scale: 2.6
+    damage: 0
+    speed: 0.3
+    armor: 6
+    bar: GREEN
+    theme: toxic
+    movement: walk
+    phases: [0.66, 0.33]
+    ability-seconds: 6
+    abilities: [detonate, leap, pull, slam, charge]
+    health-per-player: 0.25
+    rewards:
+      money: 50000
+      top-money: 150000
+      items: ["TNT 8", "GOLDEN_APPLE 3"]
+      top-items: ["MUSIC_DISC_PIGSTEP 1"]
+      commands: []
+      top-commands: []
+    description: "A creeper the size of a house. It explodes, a lot, and never dies from it."
+  king_gloop:
+    name: "<gradient:#7cb342:#dce775><bold>King Gloop</bold></gradient>"
+    title: "Monarch of the Swamp"
+    entity: SLIME
+    health: 1600
+    scale: 1
+    damage: 12
+    armor: 6
+    bar: GREEN
+    theme: toxic
+    movement: walk
+    phases: [0.66, 0.33]
+    minion: SLIME
+    minions: 4
+    ability-seconds: 8
+    abilities: [leap, quake, minions, poison, slam, spikes]
+    health-per-player: 0.25
+    rewards:
+      money: 50000
+      top-money: 150000
+      items: ["SLIME_BLOCK 8", "GOLDEN_APPLE 3"]
+      top-items: ["DIAMOND 8"]
+      commands: []
+      top-commands: []
+    description: "The slime king. Bounces, quakes the arena and splits into a crowd of little slimes."
+  executioner:
+    name: "<gradient:#263238:#90a4ae><bold>The Executioner</bold></gradient>"
+    title: "Axe of the Woodland Mansion"
+    entity: VINDICATOR
+    health: 1500
+    scale: 1.9
+    damage: 17
+    armor: 10
+    bar: WHITE
+    theme: blood
+    movement: walk
+    phases: [0.66, 0.33]
+    equipment:
+      head: NETHERITE_HELMET
+      hand: NETHERITE_AXE
+    minion: VINDICATOR
+    minions: 3
+    ability-seconds: 8
+    abilities: [leap, shockwave, minions, roar, charge, slam]
+    health-per-player: 0.25
+    rewards:
+      money: 50000
+      top-money: 150000
+      items: ["EMERALD 24", "GOLDEN_APPLE 3"]
+      top-items: ["TOTEM_OF_UNDYING 1"]
+      commands: []
+      top-commands: []
+    description: "A hooded executioner with a giant axe. Charges, cleaves and calls his vindicators."
+  pharaoh:
+    name: "<gradient:#f9a825:#fff59d><bold>Pharaoh Ankhamun</bold></gradient>"
+    title: "Risen from the Buried Temple"
+    entity: HUSK
+    health: 1600
+    scale: 2.2
+    damage: 12
+    armor: 8
+    bar: YELLOW
+    theme: sand
+    movement: walk
+    phases: [0.66, 0.33]
+    equipment:
+      head: GOLDEN_HELMET
+      chest: GOLDEN_CHESTPLATE
+      hand: GOLDEN_SWORD
+    minion: HUSK
+    minions: 4
+    ability-seconds: 8
+    abilities: [darkness, poison, minions, blink, spikes, orbs]
+    health-per-player: 0.25
+    rewards:
+      money: 50000
+      top-money: 150000
+      items: ["GOLD_INGOT 16", "GOLDEN_APPLE 3"]
+      top-items: ["ENCHANTED_GOLDEN_APPLE 1"]
+      commands: []
+      top-commands: []
+    description: "An ancient pharaoh. Curses the sun away, poisons with sand and raises husks from the dunes."
+  ruinmaw:
+    name: "<gradient:#ad1457:#f48fb1><bold>Ruinmaw</bold></gradient>"
+    title: "The Rotting Juggernaut"
+    entity: ZOGLIN
+    health: 2000
+    scale: 2.2
+    damage: 15
+    speed: 0.35
+    armor: 10
+    bar: PINK
+    theme: earth
+    movement: walk
+    phases: [0.66, 0.33]
+    ability-seconds: 8
+    abilities: [leap, quake, shockwave, roar, charge, spikes]
+    health-per-player: 0.25
+    rewards:
+      money: 50000
+      top-money: 150000
+      items: ["LEATHER 24", "GOLDEN_APPLE 3"]
+      top-items: ["NETHERITE_SCRAP 2"]
+      commands: []
+      top-commands: []
+    description: "A chained zoglin beast of the ruins. Breaks the ground into spikes and charges."
+  hexmother:
+    name: "<gradient:#6a1b9a:#ce93d8><bold>Hexmother Morwen</bold></gradient>"
+    title: "Brewer of a Thousand Curses"
+    entity: WITCH
+    health: 1200
+    scale: 1.9
+    damage: 8
+    armor: 4
+    bar: PURPLE
+    theme: witch
+    movement: walk
+    phases: [0.66, 0.33]
+    ability-seconds: 7
+    abilities: [levitate, poison, blink, heal, darkness, orbs, spikes]
+    health-per-player: 0.25
+    rewards:
+      money: 50000
+      top-money: 150000
+      items: ["BREWING_STAND 1", "GLOWSTONE_DUST 32", "GOLDEN_APPLE 3"]
+      top-items: ["ENCHANTED_GOLDEN_APPLE 1"]
+      commands: []
+      top-commands: []
+    description: "A witch queen. Curses, heals herself, throws potions and floats players up into the air."
+  void_walker:
+    name: "<gradient:#311b92:#b388ff><bold>The Void Walker</bold></gradient>"
+    title: "It Was Never Really Here"
+    entity: ENDERMAN
+    health: 1400
+    scale: 1.6
+    damage: 13
+    armor: 6
+    bar: PURPLE
+    theme: void
+    movement: walk
+    phases: [0.66, 0.33]
+    ability-seconds: 6
+    abilities: [blink, darkness, levitate, pull, orbs, sonic_boom]
+    health-per-player: 0.25
+    rewards:
+      money: 50000
+      top-money: 150000
+      items: ["ENDER_PEARL 16", "GOLDEN_APPLE 3"]
+      top-items: ["SHULKER_SHELL 4"]
+      commands: []
+      top-commands: []
+    description: "A tall enderman from the void. Teleports, blinds and pulls players into its rift."
+  fenrir:
+    name: "<gradient:#424242:#e0e0e0><bold>Fenrir</bold></gradient>"
+    title: "The Wolf That Swallows the Moon"
+    entity: WOLF
+    health: 1500
+    scale: 3.0
+    damage: 13
+    speed: 0.42
+    armor: 8
+    bar: WHITE
+    theme: frost
+    movement: walk
+    phases: [0.66, 0.33]
+    minion: WOLF
+    minions: 4
+    ability-seconds: 8
+    abilities: [leap, frost, minions, roar, charge, slam]
+    health-per-player: 0.25
+    rewards:
+      money: 50000
+      top-money: 150000
+      items: ["BONE 32", "GOLDEN_APPLE 3"]
+      top-items: ["DIAMOND 8"]
+      commands: []
+      top-commands: []
+    description: "A giant frost wolf. Leaps, freezes and howls for its pack."
+  tempest:
+    name: "<gradient:#80deea:#ffffff><bold>Tempest</bold></gradient>"
+    title: "The Storm Given Form"
+    entity: BREEZE
+    health: 1200
+    scale: 2.5
+    damage: 10
+    armor: 6
+    bar: WHITE
+    theme: storm
+    movement: hover
+    fly-height: 3
+    phases: [0.66, 0.33]
+    minion: BREEZE
+    minions: 2
+    ability-seconds: 7
+    abilities: [levitate, pull, shockwave, lightning, orbs, dive]
+    health-per-player: 0.25
+    rewards:
+      money: 50000
+      top-money: 150000
+      items: ["BREEZE_ROD 8", "GOLDEN_APPLE 3"]
+      top-items: ["HEAVY_CORE 1"]
+      commands: []
+      top-commands: []
+    description: "A living storm. Throws players around with wind and calls down lightning."
+  pale_watcher:
+    name: "<gradient:#757575:#ff6d00><bold>The Pale Watcher</bold></gradient>"
+    title: "Don't Look Away"
+    entity: CREAKING
+    health: 1500
+    scale: 2.0
+    damage: 14
+    armor: 10
+    bar: WHITE
+    theme: bone
+    movement: walk
+    phases: [0.66, 0.33]
+    ability-seconds: 8
+    abilities: [darkness, blink, quake, roar, spikes, sonic_boom]
+    health-per-player: 0.25
+    rewards:
+      money: 50000
+      top-money: 150000
+      items: ["PALE_OAK_LOG 32", "GOLDEN_APPLE 3"]
+      top-items: ["RESIN_BLOCK 8"]
+      commands: []
+      top-commands: []
+    description: "A pale creaking tree that watches. Only moves when you look away... mostly."
+  headless_horseman:
+    name: "<gradient:#e65100:#ffab40><bold>The Headless Horseman</bold></gradient>"
+    title: "Rider of All Hallows' Eve"
+    season: halloween
+    entity: SKELETON
+    health: 1600
+    scale: 1.8
+    damage: 12
+    armor: 8
+    bar: RED
+    theme: pumpkin
+    movement: walk
+    phases: [0.66, 0.33]
+    equipment:
+      head: JACK_O_LANTERN
+      chest: LEATHER_CHESTPLATE
+      legs: LEATHER_LEGGINGS
+      hand: BOW
+    minion: SKELETON
+    minions: 3
+    ability-seconds: 8
+    abilities: [volley, fire_ring, darkness, minions, charge, meteor]
+    health-per-player: 0.25
+    rewards:
+      money: 60000
+      top-money: 200000
+      items: ["PUMPKIN_PIE 16", "JACK_O_LANTERN 4"]
+      top-items: ["ENCHANTED_GOLDEN_APPLE 1"]
+      commands: []
+      top-commands: []
+    description: "Rides out every Halloween with a flaming pumpkin for a head. Throws fire and calls the dead."
+  old_man_winter:
+    name: "<gradient:#b3e5fc:#ffffff><bold>Old Man Winter</bold></gradient>"
+    title: "The Blizzard Returns"
+    season: winter
+    entity: STRAY
+    health: 1700
+    scale: 2.6
+    damage: 12
+    armor: 8
+    bar: BLUE
+    theme: frost
+    movement: walk
+    phases: [0.66, 0.33]
+    equipment:
+      head: LEATHER_HELMET
+      chest: LEATHER_CHESTPLATE
+      hand: BOW
+    minion: STRAY
+    minions: 4
+    ability-seconds: 8
+    abilities: [frost, volley, shockwave, minions, spikes, gifts]
+    health-per-player: 0.25
+    rewards:
+      money: 60000
+      top-money: 200000
+      items: ["SNOW_BLOCK 16", "COOKIE 16"]
+      top-items: ["DIAMOND 12"]
+      commands: []
+      top-commands: []
+    description: "A grumpy old winter wizard. Freezes the arena and throws snow and ice."
+  killer_bunny:
+    name: "<gradient:#ffffff:#ff1744><bold>The Killer Bunny</bold></gradient>"
+    title: "Small, Fluffy, Merciless"
+    season: spring
+    entity: RABBIT
+    health: 900
+    scale: 3.5
+    damage: 12
+    speed: 0.5
+    armor: 4
+    bar: PINK
+    theme: blood
+    movement: walk
+    phases: [0.66, 0.33]
+    minion: RABBIT
+    minions: 4
+    ability-seconds: 8
+    abilities: [leap, minions, shockwave, charge, eggs]
+    health-per-player: 0.25
+    rewards:
+      money: 60000
+      top-money: 200000
+      items: ["RABBIT_STEW 4", "GOLDEN_CARROT 16"]
+      top-items: ["RABBIT_FOOT 4"]
+      commands: []
+      top-commands: []
+    description: "A harmless little rabbit... that keeps growing, and bites."
+  sunscorch:
+    name: "<gradient:#ff6d00:#ffea00><bold>Sunscorch</bold></gradient>"
+    title: "Melting On Holiday"
+    season: summer
+    entity: MAGMA_CUBE
+    health: 1500
+    scale: 1
+    damage: 12
+    armor: 8
+    bar: YELLOW
+    theme: fire
+    movement: walk
+    phases: [0.66, 0.33]
+    minion: MAGMA_CUBE
+    minions: 3
+    ability-seconds: 8
+    abilities: [fire_ring, leap, quake, volley, meteor, sprinkles]
+    health-per-player: 0.25
+    rewards:
+      money: 60000
+      top-money: 200000
+      items: ["MAGMA_BLOCK 16", "MELON_SLICE 32"]
+      top-items: ["NETHERITE_SCRAP 2"]
+      commands: []
+      top-commands: []
+    description: "A grumpy sun on a pool float. Sets the arena on fire and cannonballs into players."
+  great_gourd:
+    name: "<gradient:#ff9100:#7c4dff><bold>The Great Gourd</bold></gradient>"
+    title: "Trick or Treat, Mostly Trick"
+    season: halloween
+    entity: ZOMBIE
+    health: 1500
+    scale: 2.0
+    damage: 12
+    armor: 8
+    bar: YELLOW
+    theme: pumpkin
+    movement: walk
+    phases: [0.66, 0.33]
+    minion: ZOMBIE
+    minions: 4
+    ability-seconds: 8
+    abilities: [fire_ring, minions, poison, leap, meteor, slam]
+    health-per-player: 0.25
+    rewards:
+      money: 60000
+      top-money: 200000
+      items: ["PUMPKIN_PIE 16", "COOKIE 32"]
+      top-items: ["DIAMOND 8"]
+      commands: []
+      top-commands: []
+    description: "A giant pumpkin giant with a lollipop club. Lobs burning pumpkins and smashes."
+  frostbottom:
+    name: "<gradient:#e1f5fe:#ff7043><bold>Frostbottom</bold></gradient>"
+    title: "The Snowman With a Grudge"
+    season: winter
+    entity: STRAY
+    health: 1600
+    scale: 2.0
+    damage: 12
+    armor: 8
+    bar: WHITE
+    theme: frost
+    movement: walk
+    phases: [0.66, 0.33]
+    minion: STRAY
+    minions: 4
+    ability-seconds: 8
+    abilities: [frost, volley, quake, minions, slam, gifts]
+    health-per-player: 0.25
+    rewards:
+      money: 60000
+      top-money: 200000
+      items: ["SNOW_BLOCK 16", "CARROT 32"]
+      top-items: ["DIAMOND 8"]
+      commands: []
+      top-commands: []
+    description: "A huge snowman with a club. Throws snowballs, freezes and stomps."
+  clucksworth:
+    name: "<gradient:#ffffff:#ff5252><bold>Clucksworth</bold></gradient>"
+    title: "The Chicken That Came First"
+    season: spring
+    entity: ZOMBIE
+    health: 1400
+    scale: 2.0
+    damage: 12
+    speed: 0.3
+    armor: 6
+    bar: WHITE
+    theme: feather
+    movement: walk
+    phases: [0.66, 0.33]
+    minion: ZOMBIE
+    minions: 4
+    ability-seconds: 8
+    abilities: [leap, minions, shockwave, eggs, charge]
+    health-per-player: 0.25
+    rewards:
+      money: 60000
+      top-money: 200000
+      items: ["EGG 16", "COOKED_CHICKEN 16"]
+      top-items: ["DIAMOND 8"]
+      commands: []
+      top-commands: []
+    description: "Hatches out of a giant egg as the angriest chicken alive. Throws eggs that hatch, leaps and charges."
+  admiral_pinchworth:
+    name: "<gradient:#ff5252:#ffd180><bold>Admiral Pinchworth</bold></gradient>"
+    title: "Lord of the Sandcastle"
+    season: summer
+    entity: SPIDER
+    health: 1500
+    scale: 2.0
+    damage: 12
+    speed: 0.32
+    armor: 10
+    bar: RED
+    theme: water
+    movement: walk
+    phases: [0.66, 0.33]
+    minion: SILVERFISH
+    minions: 5
+    ability-seconds: 8
+    abilities: [leap, minions, pull, volley, charge, orbs]
+    health-per-player: 0.25
+    rewards:
+      money: 60000
+      top-money: 200000
+      items: ["SAND 32", "TROPICAL_FISH 8"]
+      top-items: ["HEART_OF_THE_SEA 1"]
+      commands: []
+      top-commands: []
+    description: "A crab admiral. Pinches, scuttles sideways and pulls you in."
+
+  # ------------------------------------------------------------------ CBosses legends
+  withered_tyrant:
+    name: "<gradient:#2b2b2b:#8b0000><bold>The Withered Tyrant</bold></gradient>"
+    title: "Three Skulls, One Hunger"
+    entity: WITHER_SKELETON
+    health: 2600
+    damage: 14
+    armor: 12
+    bar: PURPLE
+    theme: wither
+    movement: hover
+    fly-height: 5
+    phases: [0.66, 0.33]
+    minion: WITHER_SKELETON
+    minions: 3
+    ability-seconds: 6
+    abilities: [skulls, darkness, shockwave, meteor, minions, dive]
+    health-per-player: 0.25
+    rewards:
+      money: 80000
+      top-money: 250000
+      items: ["NETHER_STAR 1", "GOLDEN_APPLE 6"]
+      top-items: ["ENCHANTED_GOLDEN_APPLE 2"]
+      commands: []
+      top-commands: []
+    description: "A three-headed wither. Floats above the arena firing volleys of wither skulls from all three heads, screams the light away and dives at you."
+  ender_wyrm:
+    name: "<gradient:#1a0033:#d14bff><bold>Vorthax the Ender Wyrm</bold></gradient>"
+    title: "Dragon of the Outer Dark"
+    entity: PHANTOM
+    health: 3000
+    damage: 13
+    armor: 8
+    bar: PINK
+    theme: dragon
+    movement: fly
+    fly-height: 9
+    phases: [0.7, 0.4, 0.15]
+    minion: ENDERMITE
+    minions: 4
+    ability-seconds: 6
+    abilities: [breath, dive, orbs, meteor, shockwave, levitate]
+    health-per-player: 0.25
+    rewards:
+      money: 90000
+      top-money: 300000
+      items: ["DRAGON_BREATH 4", "ENDER_PEARL 8", "SHULKER_SHELL 2"]
+      top-items: ["ELYTRA 1"]
+      commands: []
+      top-commands: []
+    description: "A real flying dragon. Circles the arena, dives through it, breathes purple fire across the floor and calls down end crystals."
+  killer_claus:
+    name: "<gradient:#b30000:#ffffff><bold>Killer Claus</bold></gradient>"
+    title: "He Knows If You've Been Bad"
+    season: winter
+    entity: ZOMBIE
+    health: 2000
+    damage: 12
+    armor: 6
+    bar: RED
+    theme: holiday
+    movement: walk
+    phases: [0.6, 0.3]
+    minion: STRAY
+    minions: 4
+    ability-seconds: 6
+    abilities: [gifts, frost, charge, minions, leap, volley]
+    health-per-player: 0.25
+    rewards:
+      money: 60000
+      top-money: 180000
+      items: ["COOKIE 32", "DIAMOND 3"]
+      top-items: ["ENCHANTED_GOLDEN_APPLE 1"]
+      commands: []
+      top-commands: []
+    description: "Santa gone very wrong, with a candy cane scythe and a sack of presents that explode. Climbs out of the sack laughing."
+  brain_freeze:
+    name: "<gradient:#ff8fc8:#9fffd0><bold>Brain Freeze</bold></gradient>"
+    title: "The Sundae Supreme"
+    season: summer
+    entity: ZOMBIE
+    health: 1800
+    damage: 10
+    armor: 4
+    bar: PINK
+    theme: candy
+    movement: walk
+    phases: [0.5]
+    minion: SLIME
+    minions: 4
+    ability-seconds: 6
+    abilities: [sprinkles, frost, orbs, shockwave, minions, levitate]
+    health-per-player: 0.25
+    rewards:
+      money: 55000
+      top-money: 160000
+      items: ["COOKIE 16", "MELON_SLICE 32", "DIAMOND 2"]
+      top-items: ["ENCHANTED_GOLDEN_APPLE 1"]
+      commands: []
+      top-commands: []
+    description: "A three-scoop ice cream monster on a waffle cone. Rains sprinkles, freezes you solid and splats scoops across the arena."
+
+  # ------------------------------------------------------------------ chapter bosses (one after every CQuests chapter)
+  brakka:
+    name: "<gradient:#ff7b00:#ffd27a><bold>Brakka the Torchbearer</bold></gradient>"
+    title: "Burner of the Wanderers' Camp"
+    chapter: 1
+    entity: VINDICATOR
+    health: 500
+    damage: 7
+    armor: 4
+    bar: YELLOW
+    theme: fire
+    movement: walk
+    phases: [0.5]
+    minion: PILLAGER
+    minions: 2
+    ability-seconds: 8
+    abilities: [fire_ring, charge, minions, breath]
+    health-per-player: 0.25
+    rewards:
+      money: 8000
+      top-money: 0
+      items: ["IRON_INGOT 8", "BREAD 8"]
+      top-items: []
+      commands: []
+      top-commands: []
+    description: "Chapter 1. The bandit chief who burned the Wanderers' Camp, with a torch in one hand and a cleaver in the other."
+  gate_shade:
+    name: "<gradient:#22223b:#8ecae6><bold>The Gate Shade</bold></gradient>"
+    title: "What Waits at the Gate"
+    chapter: 2
+    entity: WITHER_SKELETON
+    health: 700
+    damage: 7
+    armor: 2
+    bar: BLUE
+    theme: soul
+    movement: hover
+    fly-height: 3
+    phases: [0.5]
+    minion: SKELETON
+    minions: 2
+    ability-seconds: 8
+    abilities: [darkness, blink, pull, orbs]
+    health-per-player: 0.25
+    rewards:
+      money: 12000
+      top-money: 0
+      items: ["IRON_INGOT 12", "GOLDEN_APPLE 1"]
+      top-items: []
+      commands: []
+      top-commands: []
+    description: "Chapter 2. A chained, hooded shadow that hangs in the broken gate. Pulls you into the dark and blinks around you."
+  oakheart:
+    name: "<gradient:#3a5a40:#a3b18a><bold>Sir Oakheart</bold></gradient>"
+    title: "The Elder's Champion"
+    chapter: 3
+    entity: ZOMBIE
+    health: 900
+    damage: 8
+    armor: 8
+    bar: GREEN
+    theme: nature
+    movement: walk
+    phases: [0.5]
+    ability-seconds: 8
+    abilities: [spikes, heal, pull, charge, shockwave]
+    health-per-player: 0.25
+    rewards:
+      money: 16000
+      top-money: 0
+      items: ["GOLD_INGOT 8", "GOLDEN_APPLE 2"]
+      top-items: []
+      commands: []
+      top-commands: []
+    description: "Chapter 3. The Elder's champion: a knight grown from an old oak. Roots burst from the ground and he heals in the sun."
+  keywarden:
+    name: "<gradient:#b8860b:#fff3b0><bold>The Keywarden</bold></gradient>"
+    title: "Guardian of the Five Keys"
+    chapter: 4
+    entity: IRON_GOLEM
+    health: 1200
+    damage: 9
+    armor: 12
+    bar: YELLOW
+    theme: gold
+    movement: walk
+    phases: [0.5]
+    ability-seconds: 7
+    abilities: [slam, shockwave, pull, quake, orbs]
+    health-per-player: 0.25
+    rewards:
+      money: 20000
+      top-money: 0
+      items: ["GOLD_INGOT 16", "DIAMOND 1"]
+      top-items: []
+      commands: []
+      top-commands: []
+    description: "Chapter 4. A giant walking padlock with five glowing keyholes, swinging a key the size of a tree."
+  hollow_king:
+    name: "<gradient:#1b263b:#7fd1ff><bold>THE HOLLOW KING</bold></gradient>"
+    title: "The King Wakes"
+    chapter: 5
+    entity: WITHER_SKELETON
+    health: 2400
+    damage: 13
+    armor: 12
+    bar: BLUE
+    theme: soul
+    movement: walk
+    phases: [0.7, 0.4, 0.15]
+    minion: WITHER_SKELETON
+    minions: 3
+    ability-seconds: 6
+    abilities: [slam, minions, darkness, shockwave, meteor, charge, spikes]
+    health-per-player: 0.25
+    rewards:
+      money: 60000
+      top-money: 0
+      items: ["DIAMOND 4", "GOLDEN_APPLE 4", "NETHERITE_SCRAP 1"]
+      top-items: []
+      commands: []
+      top-commands: []
+    description: "Chapter 5, the first great boss. The ancient king rises from his tomb, nine blocks tall in rusted royal armour, a crown of soul fire on an empty helm."
+  iron_tusk:
+    name: "<gradient:#5c5c5c:#ff9e40><bold>Iron Tusk</bold></gradient>"
+    title: "The War Boar"
+    chapter: 6
+    entity: HOGLIN
+    health: 1600
+    damage: 10
+    armor: 12
+    bar: WHITE
+    theme: iron
+    movement: walk
+    phases: [0.5]
+    minion: HOGLIN
+    minions: 2
+    ability-seconds: 7
+    abilities: [charge, quake, shockwave, fire_ring, slam]
+    health-per-player: 0.25
+    rewards:
+      money: 28000
+      top-money: 0
+      items: ["IRON_BLOCK 4", "DIAMOND 2"]
+      top-items: []
+      commands: []
+      top-commands: []
+    description: "Chapter 6. A war boar in riveted iron plates with a furnace burning in its chest. It charges, and it does not stop."
+  captain_brine:
+    name: "<gradient:#005f73:#94d2bd><bold>Captain Brine</bold></gradient>"
+    title: "Captain of the Drowned"
+    chapter: 7
+    entity: DROWNED
+    health: 1900
+    damage: 10
+    armor: 8
+    bar: BLUE
+    theme: water
+    movement: walk
+    phases: [0.5]
+    minion: DROWNED
+    minions: 3
+    ability-seconds: 7
+    abilities: [pull, slam, frost, minions, orbs, shockwave]
+    health-per-player: 0.25
+    rewards:
+      money: 34000
+      top-money: 0
+      items: ["PRISMARINE_SHARD 16", "DIAMOND 2", "HEART_OF_THE_SEA 1"]
+      top-items: []
+      commands: []
+      top-commands: []
+    description: "Chapter 7. A drowned sea captain with a coral beard who swings a rusted anchor on a chain and drags you under."
+  ember_queen:
+    name: "<gradient:#9d0208:#ffba08><bold>The Ember Queen</bold></gradient>"
+    title: "Queen of the Ember Court"
+    chapter: 8
+    entity: BLAZE
+    health: 2200
+    damage: 11
+    armor: 8
+    bar: RED
+    theme: fire
+    movement: hover
+    fly-height: 3
+    phases: [0.6, 0.3]
+    minion: BLAZE
+    minions: 2
+    ability-seconds: 6
+    abilities: [fire_ring, meteor, breath, orbs, blink, minions]
+    health-per-player: 0.25
+    rewards:
+      money: 40000
+      top-money: 0
+      items: ["BLAZE_ROD 8", "DIAMOND 3"]
+      top-items: []
+      commands: []
+      top-commands: []
+    description: "Chapter 8. A queen of blackstone and fire who steps out of a lava pillar. Rains meteors and breathes fire."
+  choirmaster:
+    name: "<gradient:#e9e3c9:#6c757d><bold>The Choirmaster</bold></gradient>"
+    title: "Conductor of the Bone Choir"
+    chapter: 9
+    entity: WITHER_SKELETON
+    health: 2500
+    damage: 11
+    armor: 8
+    bar: WHITE
+    theme: bone
+    movement: hover
+    fly-height: 3
+    phases: [0.6, 0.3]
+    minion: SKELETON
+    minions: 4
+    ability-seconds: 6
+    abilities: [minions, skulls, shockwave, darkness, sonic_boom, orbs]
+    health-per-player: 0.25
+    rewards:
+      money: 48000
+      top-money: 0
+      items: ["BONE_BLOCK 8", "DIAMOND 4"]
+      top-items: []
+      commands: []
+      top-commands: []
+    description: "Chapter 9. A skeleton conductor floating inside a ring of singing skulls. Every chord is an attack."
+  the_listener:
+    name: "<gradient:#052e33:#4ae3e3><bold>THE LISTENER BELOW</bold></gradient>"
+    title: "It Hears Your Heartbeat"
+    chapter: 10
+    entity: IRON_GOLEM
+    health: 3600
+    damage: 15
+    armor: 14
+    bar: BLUE
+    theme: sculk
+    movement: walk
+    phases: [0.75, 0.5, 0.25]
+    ability-seconds: 5
+    abilities: [sonic_boom, darkness, slam, shockwave, quake, pull, charge]
+    health-per-player: 0.25
+    rewards:
+      money: 100000
+      top-money: 0
+      items: ["DIAMOND 8", "NETHERITE_INGOT 1", "ECHO_SHARD 4"]
+      top-items: []
+      commands: []
+      top-commands: []
+    description: "Chapter 10, the last great boss. A Warden from the deep dark, nine blocks tall and eyeless. Its ribcage of souls lights up when it hears you, and its sonic boom goes through walls."
