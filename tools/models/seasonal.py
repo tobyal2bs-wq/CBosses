@@ -458,15 +458,20 @@ def clucksworth():
     m.c("head", "lime_concrete", (3.6, 44.4, -1), (0.4, 1.4, 0.4))
     # the giant egg he hatches out of: only shown during the entrance, then it shatters off him
     m.bone("shell", "root", (0, 0, 0))
-    H = 52
-    for k in range(13):
-        y0 = k * H / 13
-        t = (y0 + H / 26) / H
-        r = 15 * math.sqrt(max(0.02, 1 - ((t - 0.42) / 0.6) ** 2))
-        m.c("shell", "white_concrete" if k % 3 else "white_terracotta", (0, y0 + H / 26, 0), (2 * r, H / 13 + 0.05, 2 * r))
-        if 2 < k < 11:
-            for a in (45, 160, 280):
-                m.c("shell", "light_gray_concrete", (r * 0.99 * math.cos(math.radians(a + k * 25)), y0 + 2, r * 0.99 * math.sin(math.radians(a + k * 25))), (1.4, 1.2, 1.4), (0, -(a + k * 25), 0))
+    H, L = 54, 10
+    for k in range(L):
+        y = (k + 0.5) * H / L
+        t = y / H
+        r = 15.5 * math.sqrt(max(0.03, 1 - ((t - 0.42) / 0.6) ** 2))
+        if r < 6:
+            m.c("shell", "white_concrete", (0, y, 0), (2 * r, H / L + 0.05, 2 * r))
+            continue
+        n = 6 if r < 11 else 8
+        w = 2 * r * math.tan(math.pi / n) * 1.04
+        for j in range(n):
+            a = 360 * j / n + k * 22.5
+            c = "light_gray_concrete" if (j + k) % 5 == 0 else "white_concrete"
+            m.c("shell", c, ((r - 1.2) * math.cos(math.radians(a)), y, (r - 1.2) * math.sin(math.radians(a))), (2.4, H / L + 0.05, w), (0, -a, 0))
     m.attacks = {"leap": "slam", "minions": "roar", "shockwave": "stomp", "volley": "double", "eggs": "double", "slam": "slam", "charge": "lunge"}
     m.melee = "swipe"
     return m

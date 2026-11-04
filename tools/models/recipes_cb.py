@@ -28,7 +28,7 @@ NEW_SPAWN = {
  "brain_freeze": [S("shrink", 0, s=0, only="!core"), S("move", 0, vh=[0, -1, 0], only="core"), fx(1, "ITEM_SNOWBALL", 40, "BLOCK_POWDER_SNOW_STEP", 0.6, y=0, spread=2),
      S("move", 2, 14, vh=[0, 1, 0], only="core"), S("pose", 16, 2, only="core"), fx(10, "SNOWFLAKE", 30, "BLOCK_SNOW_BREAK", 0.6, y=0.3),
      S("pose", 20, 1, only="head"), S("move", 20, 1, v=[0, 16, 0], only="head"), S("move", 21, 10, v=[0, -16, 0], only="head"),
-     S("scale", 31, 3, s=[1.3, 0.7, 1.3], only="head"), S("scale", 34, 5, s=[1, 1, 1], only="head"), fx(31, "ITEM_SLIME", 40, "BLOCK_HONEY_BLOCK_PLACE", 0.6, y=0.8),
+     S("scale", 31, 3, s=[1.3, 0.7, 1.3], only="head"), S("pose", 34, 5, only="head"), fx(31, "ITEM_SLIME", 40, "BLOCK_HONEY_BLOCK_PLACE", 0.6, y=0.8),
      fx(31, sound="ENTITY_SLIME_SQUISH", pitch=0.7), S("shake", 32, 8, amp=0.1),
      S("pose", 42, 8, only="ring"), S("pose", 42, 8, only="arm"), S("pose", 42, 8, only="spoon"), S("pose", 42, 8, only="fore"),
      fx(44, "SNOWFLAKE", 60, "ENTITY_PLAYER_HURT_FREEZE", 1.2, y=1, spread=2), S("anim", 52, 26, name="spin"), fx(52, sound="ENTITY_WANDERING_TRADER_YES", pitch=0.6)],
@@ -39,14 +39,14 @@ NEW_SPAWN = {
      S("anim", 48, 28, name="roar"), fx(50, sound="ENTITY_VINDICATOR_CELEBRATE", pitch=0.6), S("shake", 50, 10)],
  # a thin shadow flat on the ground stands up, the chains pull taut, the eyes open last
  "gate_shade": [S("scale", 0, s=[1, 0.02, 1]), S("swap", 0, block="black_concrete"), fx(1, "SQUID_INK", 60, "AMBIENT_CAVE", 0.6, y=0, spread=2.5, ring=3),
-     S("scale", 8, 24, s=[1, 1, 1]), fx(12, "SOUL", 40, "ENTITY_WARDEN_AMBIENT", 1.4, y=0.4), S("swap", 32, block="", order="up", stagger=12),
+     S("pose", 8, 24), fx(12, "SOUL", 40, "ENTITY_WARDEN_AMBIENT", 1.4, y=0.4), S("swap", 32, block="", order="up", stagger=12),
      fx(34, sound="BLOCK_CHAIN_PLACE", pitch=0.5), fx(38, sound="BLOCK_CHAIN_PLACE", pitch=0.7), S("shake", 36, 8, only="core"),
      S("flash", 46, 5, only="lit", block="light_blue_concrete"), fx(46, "SCULK_SOUL", 30, "ENTITY_VEX_CHARGE", 0.5, y=0.9), S("anim", 50, 28, name="raise")],
  # grows out of a sapling: small, then bigger in jumps with leaves bursting each time, armour bark sets last
  "oakheart": [S("scale", 0, s=[0.12, 0.12, 0.12]), S("swap", 0, block="oak_leaves", only="!lit"), fx(1, "HAPPY_VILLAGER", 30, "BLOCK_GRASS_PLACE", 0.6, y=0),
-     S("scale", 6, 6, s=[0.4, 0.4, 0.4]), fx(8, "CHERRY_LEAVES", 40, "BLOCK_AZALEA_LEAVES_PLACE", 0.6, y=0.3), S("shake", 12, 4),
-     S("scale", 18, 6, s=[0.75, 0.75, 0.75]), fx(20, "CHERRY_LEAVES", 60, "BLOCK_AZALEA_LEAVES_PLACE", 0.5, y=0.5), S("shake", 24, 4),
-     S("scale", 30, 8, s=[1, 1, 1]), fx(32, "COMPOSTER", 60, "BLOCK_ROOTED_DIRT_PLACE", 0.5, y=0.2, spread=2.5, ring=3),
+     S("scale", 6, 6, s=[3.33, 3.33, 3.33]), fx(8, "CHERRY_LEAVES", 40, "BLOCK_AZALEA_LEAVES_PLACE", 0.6, y=0.3), S("shake", 12, 4),
+     S("scale", 18, 6, s=[1.875, 1.875, 1.875]), fx(20, "CHERRY_LEAVES", 60, "BLOCK_AZALEA_LEAVES_PLACE", 0.5, y=0.5), S("shake", 24, 4),
+     S("pose", 30, 8), fx(32, "COMPOSTER", 60, "BLOCK_ROOTED_DIRT_PLACE", 0.5, y=0.2, spread=2.5, ring=3),
      S("swap", 40, block="", order="down", stagger=16), fx(42, sound="BLOCK_WOOD_PLACE", pitch=0.6), S("flash", 56, 4, only="lit", block="yellow_concrete"),
      S("anim", 58, 26, name="roar"), fx(60, sound="ENTITY_IRON_GOLEM_REPAIR", pitch=0.7)],
  # five glowing keyholes fly in from all around first, then the lock body unfolds around them and the shackle snaps shut
@@ -78,8 +78,8 @@ NEW_SPAWN = {
  # a pillar of lava erupts and she steps out of it as it falls back, the fan of fire opening behind her
  "ember_queen": [S("scale", 0, s=[0.25, 1.5, 0.25]), S("swap", 0, block="magma_block"), S("light", 0, on=True),
      fx(1, "LAVA", 40, "ENTITY_GENERIC_EXPLODE", 0.5, y=0, spread=1.5), fx(2, "FLAME", 80, "ITEM_FIRECHARGE_USE", 0.6, y=0.5, spread=0.6),
-     S("scale", 10, 16, s=[1, 1, 1]), S("swap", 22, block="", order="up", stagger=16), S("light", 40, on=False),
-     S("scale", 26, 1, s=[0.05, 0.05, 0.05], only="fan"), S("scale", 30, 10, s=[1, 1, 1], only="fan"), fx(30, "FLAME", 60, "ENTITY_BLAZE_SHOOT", 0.6, y=0.8, spread=1.5),
+     S("pose", 10, 16), S("swap", 22, block="", order="up", stagger=16), S("light", 40, on=False),
+     S("scale", 26, 1, s=[0.05, 0.05, 0.05], only="fan"), S("pose", 30, 10, only="fan"), fx(30, "FLAME", 60, "ENTITY_BLAZE_SHOOT", 0.6, y=0.8, spread=1.5),
      S("flash", 40, 4, block="orange_concrete"), S("anim", 44, 30, name="raise"), fx(46, sound="ENTITY_BLAZE_AMBIENT", pitch=0.5)],
  # the skull choir appears first and sings a rising chord; the conductor is put together note by note
  "choirmaster": [S("shrink", 0, s=0, only="!ring"), fx(1, "NOTE", 20, "BLOCK_NOTE_BLOCK_CHIME", 0.5, y=1, spread=2),
@@ -102,7 +102,7 @@ NEW_SPAWN = {
      S("shake", 34, 8, only="shell", amp=0.3), fx(36, sound="ENTITY_TURTLE_EGG_CRACK", pitch=0.5),
      S("flash", 44, 3, only="shell"), S("shatter", 46, 10, only="shell", order="out", stagger=4, pieces=3, power=4, up=3),
      fx(46, "POOF", 80, "ENTITY_TURTLE_EGG_HATCH", 0.6, y=0.5, spread=1.6), S("pose", 46, 6, only="!shell"),
-     S("scale", 46, 1, s=[0.7, 0.7, 0.7], only="!shell"), S("scale", 47, 6, s=[1, 1, 1], only="!shell"),
+     S("scale", 46, 1, s=[0.7, 0.7, 0.7], only="!shell"), S("pose", 47, 6, only="!shell"),
      S("anim", 54, 30, name="roar"), fx(56, "CLOUD", 40, "ENTITY_CHICKEN_AMBIENT", 0.5, y=0.8), fx(66, sound="ENTITY_CHICKEN_AMBIENT", pitch=0.6)],
 }
 
