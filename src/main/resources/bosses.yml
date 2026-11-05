@@ -96,7 +96,7 @@ bosses:
     minion: VINDICATOR
     minions: 3
     ability-seconds: 7
-    abilities: [blink, minions, sonic_boom, spikes, levitate, darkness]
+    abilities: [orbs, volley, minions, blink, slam, levitate, darkness]
     health-per-player: 0.25
     rewards:
       money: 50000
@@ -105,7 +105,7 @@ bosses:
       top-items: ["DIAMOND 4"]
       commands: []
       top-commands: []
-    description: "The illager king-sorcerer: a huge grey head with a heavy dark unibrow and a long nose, a towering gold crown set with a red and a blue gem, a short blue robe with gold edging, a stand-up gold collar and a ruby amulet, big square gold cuffs, and a grey staff banded in red with a gold crystal floating over it."
+    description: "The illager arch-sorcerer of ref38: a huge grey illager head with a hard black unibrow and a long nose, a tall open gold crown with a red and a blue gem, a blue coat with gold trim over a dark green tunic, a ruby amulet, big square gold cuffs, red pointed shoes, and a grey staff banded in red with a glowing gold crystal floating at its tip."
   crimson_ronin:
     name: "<gradient:#8b0000:#ff6b6b><bold>The Crimson Oni</bold></gradient>"
     title: "Warlord of the Red Mountain"
@@ -673,7 +673,7 @@ bosses:
       top-items: ["DIAMOND 8"]
       commands: []
       top-commands: []
-    description: "The slime king. Bounces, quakes the arena and splits into a crowd of little slimes."
+    description: "King Gloop with extra detail: bubbles rising inside the jelly, a ring of slimeballs round his crown and swallowed loot floating in his body."
   clockwork_colossus:
     name: "<gradient:#b87333:#ffd54f><bold>The Clockwork Colossus</bold></gradient>"
     title: "Wound Up and Furious"
@@ -721,7 +721,7 @@ bosses:
       top-items: ["ENCHANTED_GOLDEN_APPLE 1"]
       commands: []
       top-commands: []
-    description: "An old tortoise the size of a house that has slept so long a ruined watchtower and a tree grew on its shell. Its shell is ringed with dark scutes, moss spills over the rim, and its wrinkled head peers out with tired yellow eyes."
+    description: "Mossback trimmed to about 250 blocks: the smallest loose bits go first, the head and glowing parts stay."
   old_wizard:
     name: "<gradient:#4a148c:#e1bee7><bold>Archmage Bramblebeard</bold></gradient>"
     title: "Older Than the Mountains"
@@ -769,7 +769,7 @@ bosses:
       top-items: ["TOTEM_OF_UNDYING 1"]
       commands: []
       top-commands: []
-    description: "A small shadow-faced mage under a huge battered straw hat with a green band and a crumpled crown folding forward. Under the brim there is only darkness and two glowing yellow eyes. A tall-collared blue coat with crossed leather straps and a pale blue buckle, white sleeves with a green stripe, striped trousers, big brown shoes, and a bent wooden staff."
+    description: "The hollow mage with extra detail: patches stitched on the hat, fireflies drifting round the brim, brass buttons, and a lantern hung from the staff."
   horned_brute:
     name: "<gradient:#5d4037:#d7ccc8><bold>Gorrak the Horned</bold></gradient>"
     title: "Brute of the High Pass"
@@ -892,7 +892,7 @@ bosses:
       top-items: ["TOTEM_OF_UNDYING 1"]
       commands: []
       top-commands: []
-    description: "The mayor as the meme: one big villager head walking on two stubby legs that stand right in front of its face, with flat feet poking forward. A thick dark unibrow sticks out over the eyes, the left leg stands where the nose would be, the right one at the corner of the face, the mouth peeks out between."
+    description: "The village mayor, now a person: the big villager head with the unibrow, green eyes and the long nose, a green coat with gold buttons and a red sash, a gold chain of office with a big emerald, a black top hat with a red band, a gavel in his hand, grey trousers and polished shoes planted flat."
   shulker_matriarch:
     name: "<gradient:#6a1b9a:#f3e5f5><bold>The Shulker Matriarch</bold></gradient>"
     title: "Mother of the End City"
@@ -918,7 +918,7 @@ bosses:
       top-items: ["ELYTRA 1"]
       commands: []
       top-commands: []
-    description: "The Shulker Matriarch from the oldest End city: a huge purpur shell that opens to show the pale yellow head inside, four smaller shulker boxes circling her, and an end rod lamp set on the lid."
+    description: "The mother of the shulkers, painted properly: a purpur shell with raised plates and dark seams, the lid lifted on her pale yellow head with black eyes, a crown of end rods along the lid, glowing purple runes along the seam, and four small shulkers with their own faces orbiting her."
   old_ironroot:
     name: "<gradient:#455a64:#9ccc65><bold>Old Ironroot</bold></gradient>"
     title: "The Golem the Forest Kept"
@@ -941,7 +941,7 @@ bosses:
       top-items: ["ENCHANTED_GOLDEN_APPLE 1"]
       commands: []
       top-commands: []
-    description: "An iron golem left standing in a meadow for a hundred years: the vanilla golem's build, its plates gone pale, moss and dandelions grown over its shoulders, back and legs, and a sapling in a clump of moss rooted on its left shoulder."
+    description: "Ref39: an iron golem a hundred years in a meadow. Its plates have gone pale and rusty-pink at the seams, green vines run down every block with dandelions in them, its long arms are three stacked blocks with grey joints, and a sapling grows on its left shoulder."
   # ------------------------------------------------------------ mythic: Warden, Wither, Ender Dragon, Breeze and the finale (8000 health)
   the_listener:
     name: "<gradient:#052e33:#4ae3e3><bold>THE LISTENER BELOW</bold></gradient>"
@@ -2291,7 +2291,7 @@ bosses:
     movement: walk
     phases: [0.5]
     ability-seconds: 6
-    abilities: [charge, quake, stomp]
+    abilities: [charge, quake, shockwave]
     health-per-player: 0.15
     rewards:
       money: 15000

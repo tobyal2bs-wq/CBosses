@@ -737,7 +737,7 @@ def fisher_duck():
 
 
 @mini("baby_minotaur", "<gradient:#4e342e:#ffccbc><bold>Little Moo</bold></gradient>", "Baby of the Labyrinth", entity="ZOMBIE", theme="earth", bar="RED",
-      extra=["charge", "stomp"], recipe=generic("CRIT", "ENTITY_COW_AMBIENT", "ENTITY_COW_DEATH", "brown_wool", 1.4, "roar", "die_front"))
+      extra=["charge", "shockwave"], recipe=generic("CRIT", "ENTITY_COW_AMBIENT", "ENTITY_COW_DEATH", "brown_wool", 1.4, "roar", "die_front"))
 def baby_minotaur():
     """A chubby little minotaur: a big brown bull head with white curved horns, a pink muzzle with a gold
     nose ring, a shaggy fringe, and a tiny body in a leather kilt; small but it charges hard."""

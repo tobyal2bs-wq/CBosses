@@ -69,6 +69,7 @@ class BossDataTest {
             int n = full.get(d.model()).cubes.size();
             if (d.mini()) assertTrue(n >= 25 && n <= 200, d.id() + " is a mini boss with " + n + " blocks");
             else if (d.chapterBoss()) assertTrue(n >= 80 && n <= 130, d.id() + " is a chapter boss with " + n + " blocks");
+            else if (d.seasonal()) assertTrue(n >= 60 && n <= 300, d.id() + " is a painted seasonal boss with " + n + " blocks");
             else if (!d.id().equals("grand_augur")) assertTrue(n >= 150, d.id() + " has only " + n + " blocks");
         }
         int was = ModelRig.detail;
