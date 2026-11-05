@@ -133,3 +133,10 @@ P = {
 
 def base(block):
     return block.split("[")[0].replace("minecraft:", "")
+
+P.update({
+ "stripped_jungle_log": ("log", "#ab8448", "#97723c"), "jungle_log": ("log", "#55441b", "#6c5428"), "jungle_planks": ("planks", "#a07350", "#8a6142"),
+ "dirt": ("noise", "#866043", "#6c4a32"), "sand": ("noise", "#dbd3a0", "#cfc48c"), "pink_concrete_powder": ("noise", "#e59ab5", "#d88aa6"),
+ "cherry_planks": ("planks", "#e2b2ac", "#cf9b95"), "stripped_birch_log": ("log", "#c4b07b", "#b29f6b"), "stripped_jungle_wood": ("log", "#ab8448", "#97723c"),
+ "black_concrete_powder": ("noise", "#191a1f", "#25262b"), "white_stained_glass": ("glass", "#ffffff", "#e8e8e8"),
+})

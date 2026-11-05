@@ -84,7 +84,8 @@ class Model:
                 if b["parent"] == arm and b["name"] != fore:
                     b["parent"] = fore
                     tilt = weapons.get(b["name"], 25)
-                    b["rest"] = [round(-bend + tilt, 2), 0, 0]
+                    tx, ty, tz = tilt if isinstance(tilt, (tuple, list)) else (tilt, 0, 0)
+                    b["rest"] = [round(-bend + tx, 2), ty, tz]
 
     METAL = ("iron_block", "gold_block", "netherite_block", "polished_deepslate", "chain", "anvil", "copper", "polished_blackstone", "raw_gold_block", "raw_iron_block")
 
