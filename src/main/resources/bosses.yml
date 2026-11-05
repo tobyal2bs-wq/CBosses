@@ -585,6 +585,8 @@ bosses:
     theme: gold
     movement: walk
     phases: [0.5]
+    minion: SILVERFISH
+    minions: 3
     ability-seconds: 7
     abilities: [slam, charge, minions, darkness, shockwave, orbs]
     health-per-player: 0.25
@@ -1082,6 +1084,8 @@ bosses:
     theme: witch
     movement: walk
     phases: [0.66, 0.33]
+    minion: VEX
+    minions: 3
     ability-seconds: 7
     abilities: [minions, blink, darkness, orbs, levitate, heal]
     health-per-player: 0.25
@@ -1157,6 +1161,8 @@ bosses:
     theme: nature
     movement: walk
     phases: [0.5]
+    minion: SPIDER
+    minions: 2
     ability-seconds: 8
     abilities: [quake, minions, spikes, volley, heal]
     health-per-player: 0.25
@@ -1180,6 +1186,8 @@ bosses:
     theme: gold
     movement: walk
     phases: [0.5]
+    minion: SILVERFISH
+    minions: 2
     ability-seconds: 7
     abilities: [leap, minions, volley, slam]
     health-per-player: 0.25
@@ -1330,6 +1338,8 @@ bosses:
     movement: hover
     fly-height: 2
     phases: [0.5]
+    minion: SILVERFISH
+    minions: 2
     ability-seconds: 7
     abilities: [darkness, minions, sonic_boom, charge, pull]
     health-per-player: 0.25

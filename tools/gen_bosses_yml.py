@@ -102,6 +102,8 @@ NEW = {
 
 # bosses that used to close a chapter and now join the weekly rotation get general boss health
 PROMOTED = {"keywarden": 1800, "hollow_king": 2200, "captain_brine": 1900, "ember_queen": 2000}
+# minions for bosses whose model has a summon move
+MINION = {"keywarden": "SILVERFISH", "hexmother": "VEX", "oakheart": "SPIDER", "vault_mimic": "SILVERFISH", "sculk_herald": "SILVERFISH"}
 CHAPTER_HEALTH = [500, 700, 900, 1200, 1400, 1600, 1800, 2000, 2200, 2500]
 
 
@@ -139,6 +141,8 @@ def entry(id, kind, season=None, chapter=None):
         d["description"] = describe(id).replace("THE UNMAKER, the finale.", "The finale. Wakes once the Withered Tyrant, the Ender Wyrm, the Gale Sovereign and The Listener Below have all been beaten.")
     else:
         d["description"] = describe(id)
+    if id in MINION and not d.get("minion"):
+        d["minion"], d["minions"] = MINION[id], 2 if chapter else 3
     own = list(MODELS[id]["attacks"])
     d["abilities"] = list(dict.fromkeys(own + EXTRA.get(id, [])))
     return d
