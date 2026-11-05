@@ -66,7 +66,10 @@ class BossDataTest {
         var full = models();
         var defs = bosses();
         for (BossDef d : defs.values()) {
-            int n = full.get(d.model()).cubes.size();
+            ModelRig.Model fm = full.get(d.model());
+            int n = fm.cubes.size();
+            // only one face is shown at a time, so the spare faces don't count
+            if (fm.faceOf != null) for (String f : fm.faceOf) if (f != null && !f.equals("idle")) n--;
             if (d.mini()) assertTrue(n >= 25 && n <= 200, d.id() + " is a mini boss with " + n + " blocks");
             else if (d.chapterBoss()) assertTrue(n >= 80 && n <= 130, d.id() + " is a chapter boss with " + n + " blocks");
             else if (d.seasonal()) assertTrue(n >= 60 && n <= 300, d.id() + " is a painted seasonal boss with " + n + " blocks");
