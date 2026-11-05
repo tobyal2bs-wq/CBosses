@@ -64,6 +64,8 @@ public record Theme(String id, Color main, Color accent, Particle spark, Particl
                     "ENTITY_WITCH_CELEBRATE", "BLOCK_WOOD_BREAK", "AMBIENT_CAVE", "ENTITY_WITCH_DEATH")),
             Map.entry("feather", t("feather", 0xffffff, 0xffeb3b, Particle.CLOUD, Particle.POOF, Material.HAY_BLOCK, Material.WHITE_WOOL,
                     "ENTITY_CHICKEN_AMBIENT", "ENTITY_CHICKEN_HURT", "ENTITY_CHICKEN_STEP", "ENTITY_CHICKEN_DEATH")),
+            Map.entry("wind", t("wind", 0x80cbc4, 0xe0f7fa, Particle.SMALL_GUST, Particle.CLOUD, Material.WAXED_COPPER_BLOCK, Material.WAXED_OXIDIZED_COPPER,
+                    "ENTITY_BREEZE_INHALE", "ENTITY_BREEZE_WIND_BURST", "ENTITY_BREEZE_IDLE_AIR", "ENTITY_BREEZE_DEATH")),
             Map.entry("iron", t("iron", 0x455a64, 0x90a4ae, Particle.SMOKE, Particle.CRIT, Material.IRON_BLOCK, Material.POLISHED_DEEPSLATE,
                     "BLOCK_ANVIL_PLACE", "BLOCK_ANVIL_LAND", "BLOCK_CHAIN_STEP", "ENTITY_IRON_GOLEM_DEATH")));
 

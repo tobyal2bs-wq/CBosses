@@ -176,7 +176,7 @@ def warlord_gruk():
 
 @model
 def grand_augur():
-    """The illager king-sorcerer, built chibi style like the reference: a huge grey head with a heavy
+    """The illager king-sorcerer: a huge grey head with a heavy
     dark unibrow and a long nose, a towering gold crown set with a red and a blue gem, a short blue
     robe with gold edging, a stand-up gold collar and a ruby amulet, big square gold cuffs, and a grey
     staff banded in red with a gold crystal floating over it."""

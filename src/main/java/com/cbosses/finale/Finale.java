@@ -42,7 +42,7 @@ public final class Finale implements Listener {
     public String boss() { return plugin.getConfig().getString("finale.boss", "the_unmaker"); }
     public List<String> after() {
         List<String> l = plugin.getConfig().getStringList("finale.after");
-        return l.isEmpty() ? List.of("withered_tyrant", "ender_wyrm", "the_listener") : l;
+        return l.isEmpty() ? List.of("withered_tyrant", "ender_wyrm", "gale_sovereign", "the_listener") : l;
     }
 
     /** The legends still standing between the server and the finale. */

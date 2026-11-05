@@ -6,13 +6,13 @@ import yaml
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.join(HERE, "..", "..")
 sys.path.insert(0, os.path.join(HERE, "..", "models"))
-import anims, palette, recipes, legends, chapters, recipes_cb, finale  # noqa: F401  (registers rigs and texts)
+import anims, palette, v2_legends, v2_recipes as recipes  # noqa: F401  (registers rigs and texts)
 
 models = json.load(open(os.path.join(ROOT, "src/main/resources/models.json")))
 bosses = yaml.safe_load(open(os.path.join(ROOT, "src/main/resources/bosses.yml")))["bosses"]
 THEME = {"soul": "#4fe0ff", "fire": "#ff8a1a", "frost": "#bfe9ff", "nature": "#7bd66a", "gold": "#ffc53d", "water": "#3aa6ff", "storm": "#d6ecff",
          "earth": "#a07850", "blood": "#e0303a", "toxic": "#8cff4a", "void": "#a05cff", "witch": "#c45cff", "sand": "#e6d08a", "bone": "#efe7cf",
-         "sculk": "#2fd6d6", "wither": "#5a1020", "dragon": "#d14bff", "holiday": "#ff3b3b", "candy": "#ff8fc8", "pumpkin": "#ff9a1a", "feather": "#ffffff", "iron": "#c8c8c8"}
+         "sculk": "#2fd6d6", "wither": "#5a1020", "dragon": "#d14bff", "holiday": "#ff3b3b", "candy": "#ff8fc8", "pumpkin": "#ff9a1a", "feather": "#ffffff", "iron": "#c8c8c8", "wind": "#9fe7dc"}
 
 def plain(mm):
     return re.sub(r"<[^>]+>", "", mm).strip()
@@ -24,7 +24,7 @@ def grad(mm, fallback):
 out = []
 for id, b in bosses.items():
     c1, c2 = grad(b["name"], THEME.get(b["theme"], "#ffb347"))
-    kind = "chapter" if b.get("chapter") else "seasonal" if b.get("season") else "legend" if id in ("withered_tyrant", "ender_wyrm", "the_unmaker") else "world"
+    kind = "chapter" if b.get("chapter") else "seasonal" if b.get("season") else "legend" if id in ("withered_tyrant", "ender_wyrm", "gale_sovereign", "the_listener", "the_unmaker") else "world"
     out.append({"id": id, "name": plain(b["name"]), "c1": c1, "c2": c2, "title": b.get("title", ""), "entity": b["entity"], "health": b["health"],
                 "season": b.get("season", ""), "chapter": b.get("chapter", 0), "kind": kind, "bar": b.get("bar", "RED"), "abilities": b["abilities"],
                 "color": THEME.get(b["theme"], c2), "theme": b["theme"], "movement": b.get("movement", "walk"), "description": b.get("description", ""),

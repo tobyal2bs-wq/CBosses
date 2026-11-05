@@ -119,6 +119,7 @@ final class Cinematics {
             case "water" -> { Fx.particle(w, Particle.BUBBLE_COLUMN_UP, at.clone().add(0, 0.2, 0), 20, 4, 0.1, 4, 0.1, th); Fx.particle(w, Particle.SPLASH, at.clone().add(0, 0.2, 0), 20, 5, 0.1, 5, 0.2, th); }
             case "holiday" -> { if (tick % 8 == 0) Fx.sound(at, "BLOCK_NOTE_BLOCK_BELL", 1.6f, 0.5f + (float) p); Fx.particle(w, Particle.SNOWFLAKE, at.clone().add(0, 5, 0), 12, 6, 2, 6, 0.01, th); }
             case "candy" -> { if (tick % 6 == 0) Fx.debris(at.clone().add(Math.cos(tick) * 4, 4, Math.sin(tick) * 4), Material.PINK_CONCRETE, 2, 1, 0.3, 0.2f); }
+            case "wind" -> Fx.particle(w, Particle.SMALL_GUST, at.clone().add(0, 1, 0), 6, 5, 1, 5, 0.02, th);
             case "feather" -> Fx.particle(w, Particle.CLOUD, at.clone().add(0, 3, 0), 6, 3, 1, 3, 0.01, th);
             case "sand" -> Fx.particle(w, Particle.FALLING_DUST, at.clone().add(0, 4, 0), 14, 5, 2, 5, 0, th);
             case "soul", "bone" -> Fx.particle(w, Particle.SOUL, at.clone().add(0, 0.4, 0), 4, 4, 0.2, 4, 0.03, th);

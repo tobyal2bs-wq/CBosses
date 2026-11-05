@@ -15,8 +15,9 @@ for id in ids:
     if m.rig in ("biped", "float") and not getattr(m, "no_elbows", False): m.elbows(bend=getattr(m, "bend", -38), weapons=getattr(m, "hold", None))
     m.zones()
     j = m.json()
-    j["spawn"] = getattr(mod, "SPAWN", {}).get(id, [{"op": "pose", "at": 0}])
-    j["death"] = getattr(mod, "DEATH", {}).get(id, [{"op": "flash", "at": 0, "dur": 3}])
+    import v2_recipes as _r
+    j["spawn"] = getattr(mod, "SPAWN", {}).get(id) or _r.SPAWN.get(id, [{"op": "pose", "at": 0}])
+    j["death"] = getattr(mod, "DEATH", {}).get(id) or _r.DEATH.get(id, [{"op": "flash", "at": 0, "dur": 3}])
     out[id] = j
     import palette as _p
     miss = sorted({c["k"].split("[")[0] for c in j["cubes"]} - set(_p.P))

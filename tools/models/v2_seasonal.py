@@ -757,6 +757,17 @@ def clucksworth():
         m.c("head", WH2, (4.05 * s_, 31.6, 3.4), (0.2, 4, 5))
     m.attacks = {"eggs": "double", "slam": "slam", "minions": "roar", "peck": "lunge"}
     m.melee = "swipe"
+    # the egg she hatches out of: a painted Easter egg built as rings of shell, gone once she breaks out
+    m.bone("shell", "root", (0, 0, 0))
+    bands = ("white_terracotta", "pink_concrete", "white_terracotta", "light_blue_concrete", "white_terracotta", "yellow_concrete", "white_terracotta", "lime_concrete")
+    for k, (y, r) in enumerate(((3, 12.5), (8.5, 14.5), (14, 15), (19.5, 14.8), (25, 14), (30.5, 12.4), (36, 10), (41, 7))):
+        blk = bands[k]
+        m.c("shell", blk, (0, y, r), (2 * r, 5.6, 1.4))
+        m.c("shell", blk, (0, y, -r), (2 * r, 5.6, 1.4))
+        m.c("shell", blk, (r, y, 0), (1.4, 5.6, 2 * r - 1.4))
+        m.c("shell", blk, (-r, y, 0), (1.4, 5.6, 2 * r - 1.4))
+    m.c("shell", "white_terracotta", (0, 44.4, 0), (10, 1.6, 10))
+    m.c("shell", "white_terracotta", (0, 0.4, 0), (24, 0.8, 24))
     return m
 
 

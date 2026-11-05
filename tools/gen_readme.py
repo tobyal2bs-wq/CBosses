@@ -27,17 +27,18 @@ def table(items):
     return "<table>\n" + "\n".join(rows) + "\n</table>\n"
 
 chapter = sorted([(i, v) for i, v in b.items() if v.get("chapter")], key=lambda x: x[1]["chapter"])
-legends = [(i, b[i]) for i in ("withered_tyrant", "ender_wyrm") if i in b]
+LEG = ("the_listener", "withered_tyrant", "ender_wyrm", "gale_sovereign")
+legends = [(i, b[i]) for i in LEG if i in b]
 finale = [(i, b[i]) for i in ("the_unmaker",) if i in b]
 season = [(i, v) for i, v in b.items() if v.get("season")]
-world = [(i, v) for i, v in b.items() if not v.get("chapter") and not v.get("season") and i not in ("withered_tyrant", "ender_wyrm", "the_unmaker")]
-counts = sorted(len(m["cubes"]) for m in __import__("json").load(open("src/main/resources/models.json"))["models"].values())
+world = [(i, v) for i, v in b.items() if not v.get("chapter") and not v.get("season") and i not in LEG + ("the_unmaker",)]
+models = __import__("json").load(open("src/main/resources/models.json"))["models"]
+counts = sorted(len(m["cubes"]) for m in models.values())
 
 def chapter_rows():
-    out = ["| Chapter | Boss | Health | Size |", "|---|---|---|---|"]
+    out = ["| Chapter | Boss | Health | Blocks |", "|---|---|---|---|"]
     for i, v in chapter:
-        big = " **(big)**" if v["chapter"] in (5, 10) else ""
-        out.append(f'| {v["chapter"]}{big} | {plain(v["name"])} | {v["health"]} | {v.get("scale", 1)}x |')
+        out.append(f'| {v["chapter"]} | {plain(v["name"])} | {v["health"]} | {len(models[i]["cubes"])} |')
     return "\n".join(out)
 
 hero = "docs/images/hero.jpg"
@@ -47,7 +48,7 @@ md = f"""# CBosses
 
 **CBosses** adds {len(b)} animated block-model bosses to Paper and Folia servers. Every boss is built from {counts[0]} to
 {counts[-1]} display blocks, has its own entrance, its own attacks and its own death, and runs on a schedule, on a
-season, right after a player finishes a CQuests chapter, or as the finale once the three legends have fallen. It
+season, right after a player finishes a CQuests chapter, or as the finale once the four legends have fallen. It
 works on its own and alongside **CQuests**, and it has full **WorldGuard** support.
 
 ### [Open the 3D boss viewer]({VIEWER})
@@ -57,25 +58,29 @@ also in this repo at [`docs/viewer.html`](docs/viewer.html) (download and open i
 
 ## Highlights
 
-- **Hand-finished models.** Every boss has at least 120 blocks: layered shoulder plates, knee guards, chest badges,
-  spines, torn hems, rivets, shading patches and glowing veins on top of its own design. Turn the fine detail down
-  with `effects.model-detail` on a busy server.
-- **A different entrance for every boss.** Omens, ground cracks and a themed build-up first, then the boss climbs out of the
-  earth, falls from the sky, assembles block by block, or, for Clucksworth, hatches out of a giant egg.
-- **A different death for every boss.** Each death has a flash, a camera shake and a custom sequence: the veins go dark,
-  the armour plates are thrown off, and most end with the model shattering into physics shards.
-- **The finale.** Beat the Withered Tyrant, the Ender Wyrm and The Listener Below and **The Unmaker** wakes: a ten block
-  tall, four-armed titan with a void heart, one great eye and a crown of orbiting shards.
+- **Hand-built models.** Every big boss is 150 blocks or more, and every block is there for a reason: faces painted
+  pixel by pixel, armour with rims and rivets, torn hems, fur tufts, glowing cracks that follow the plates, and props
+  that tell you who the boss is. Chapter bosses are smaller and simpler on purpose. Turn the fine detail down with
+  `effects.model-detail` on a busy server.
+- **A different entrance for every boss.** No two are the same: the Grand Augur's crown floats down onto his head last,
+  Killer Claus climbs out of his own sack, Frostbottom stacks himself one snowball at a time, the Vault Mimic is just a
+  chest until it stands up, and Clucksworth hatches out of a painted Easter egg.
+- **A different death for every boss.** Each death has a flash and its own story: the Horseman's pumpkin is thrown, the
+  Pharaoh pours away as sand, Fenrir freezes and shatters, the Void Walker is sucked into a point and bursts.
+- **The finale.** Beat the Withered Tyrant, the Ender Wyrm, the Gale Sovereign and The Listener Below and **The Unmaker**
+  wakes: a ten block tall, four-armed titan with a void heart, one great eye and a crown of orbiting shards.
 - **Private chapter bosses.** A chapter boss appears where the player finished their quest and only exists for them:
   nobody else sees it, hears it, bumps into it or gets attacked. No boss ever breaks or places blocks.
 - **Every word is yours.** All chat lines, titles, action bars, menus and the defeat broadcast are in `messages.yml`;
   boss names, titles and descriptions are in `bosses.yml`.
 - **Attacks you can read.** Every ability has its own wind-up pose, effects and impact: slams, charges, dives, beams, meteors,
   spikes, sonic booms, minion waves and more. Flying bosses swoop and dive instead of jumping.
-- **Chapter bosses.** A boss after every CQuests chapter (1 to 10), with two big set pieces after chapters 5 and 10.
-- **Legend bosses.** The Withered Tyrant (a three-headed wither), the Ender Wyrm (a flying dragon) and The Listener Below
-  (a warden-like horror) are the biggest fights in the plugin.
-- **Seasonal bosses.** Halloween, Winterfest, Spring and Summer bosses, including Killer Claus, Brain Freeze and Clucksworth.
+- **Chapter bosses.** A small, simple boss after every CQuests chapter (1 to 10), each built for its chapter's story.
+- **Legend bosses.** The Listener Below (the Warden), the Withered Tyrant (the Wither), the Ender Wyrm (a flying Ender
+  Dragon) and the Gale Sovereign (the Breeze) are the biggest fights in the plugin.
+- **Seasonal bosses.** Three each for Halloween, Winter, Easter and Summer, including Killer Claus, Brain Freeze,
+  Clucksworth and the Headless Horseman.
+- **25 world bosses.** From the Grand Augur and the Crimson Oni to King Gloop, the slime king.
 - **Built to stay light.** Models only update near players, movement uses client-side interpolation, particles and flying
   blocks have hard caps, and every cost can be tuned in `effects:`. Region schedulers make it Folia-safe.
 - **Tested on real servers.** CI starts Paper 1.21.4, Paper 26.x and Folia, spawns every boss, runs each attack and plays
@@ -93,7 +98,7 @@ and its minions only go after that player. If they lose or leave, it waits for `
 
 ## The finale
 
-When the Withered Tyrant, the Ender Wyrm and The Listener Below have all been beaten (in any order, by anyone),
+When the Withered Tyrant, the Ender Wyrm, the Gale Sovereign and The Listener Below have all been beaten (in any order, by anyone),
 the whole server is warned and The Unmaker wakes at the main arena a minute later. `/cbosses finale` shows how far
 the server is, `/cbosses finale wake` starts it now and `/cbosses finale reset` starts over. Change the bosses, the
 delay and the arena under `finale:` in `config.yml`.

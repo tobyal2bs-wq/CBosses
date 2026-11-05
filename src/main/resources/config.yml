@@ -154,7 +154,7 @@ worldguard:
 finale:
   enabled: true
   boss: the_unmaker
-  after: [withered_tyrant, ender_wyrm, the_listener]
+  after: [withered_tyrant, ender_wyrm, gale_sovereign, the_listener]
   # Seconds between the warning and the boss arriving.
   delay-seconds: 60
   # The arena it wakes in.

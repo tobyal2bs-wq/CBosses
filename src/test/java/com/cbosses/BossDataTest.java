@@ -45,7 +45,7 @@ class BossDataTest {
     void everyBossHasAModelWithAnEntranceAndADeath() throws Exception {
         var models = models();
         var defs = bosses();
-        assertTrue(defs.size() >= 42, "42 bosses or more");
+        assertEquals(52, defs.size(), "25 general, 5 legends, 12 seasonal and 10 chapter bosses");
         for (BossDef d : defs.values()) {
             ModelRig.Model m = models.get(d.model());
             assertNotNull(m, d.id() + " has no model");
@@ -62,9 +62,14 @@ class BossDataTest {
     }
 
     @Test
-    void everyModelHasAtLeast120BlocksAndCanDropItsDetail() throws Exception {
+    void bigBossesHave150BlocksChapterBossesAreSmallAndAllCanDropDetail() throws Exception {
         var full = models();
-        for (var e : full.entrySet()) assertTrue(e.getValue().cubes.size() >= 120, e.getKey() + " has only " + e.getValue().cubes.size() + " blocks");
+        var defs = bosses();
+        for (BossDef d : defs.values()) {
+            int n = full.get(d.model()).cubes.size();
+            if (d.chapterBoss()) assertTrue(n >= 80 && n <= 130, d.id() + " is a chapter boss with " + n + " blocks");
+            else if (!d.id().equals("grand_augur")) assertTrue(n >= 150, d.id() + " has only " + n + " blocks");
+        }
         int was = ModelRig.detail;
         try {
             ModelRig.detail = 0;
@@ -77,10 +82,18 @@ class BossDataTest {
     }
 
     @Test
+    void threeBossesForEverySeason() throws Exception {
+        var defs = bosses();
+        for (String season : new String[]{"winter", "summer", "spring", "halloween"})
+            assertEquals(3, defs.values().stream().filter(d -> d.seasonal() && season.equals(d.season())).count(), season);
+        assertEquals(30, defs.values().stream().filter(d -> !d.seasonal() && !d.chapterBoss()).count(), "25 general bosses and 5 legends");
+    }
+
+    @Test
     void theFinaleBossExistsAndIsKeptOutOfTheWeeklyRotation() throws Exception {
         var defs = bosses();
         assertNotNull(defs.get("the_unmaker"), "the finale boss");
-        for (String legend : new String[]{"withered_tyrant", "ender_wyrm", "the_listener"}) assertNotNull(defs.get(legend), legend);
+        for (String legend : new String[]{"withered_tyrant", "ender_wyrm", "gale_sovereign", "the_listener"}) assertNotNull(defs.get(legend), legend);
         ModelRig.Model m = models().get("the_unmaker");
         assertTrue(m.cubes.size() >= 200, "the finale is the most detailed boss");
         assertTrue(m.death.stream().anyMatch(s -> s.op().equals("shatter")), "the finale shatters");

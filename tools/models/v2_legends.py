@@ -477,6 +477,10 @@ def gale_sovereign():
     for s_ in (1, -1):
         for z in (-2.6, 0, 2.6):
             m.c("head", CU2, (5.05 * s_, 32, z), (0.3, 0.6, 0.6))
+    # the tip of the tornado: a tight spiral of wind streaks where it touches the ground
+    for k in range(4):
+        a = math.radians(k * 90 + 20)
+        m.c("ring1", WN if k % 2 else WN2, (math.sin(a) * 2.6, 0.4 + k * 0.45, math.cos(a) * 2.6), (2.8, 0.6, 0.8), (0, k * 90 + 110, 12))
     m.attacks = {"gust": "pulse", "charges": "spin", "pull": "raise", "dash": "dive"}
     m.melee = "swipe"
     return m
