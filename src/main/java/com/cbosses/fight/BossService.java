@@ -426,7 +426,7 @@ public final class BossService implements Listener {
         Set<String> skip = new HashSet<>(plugin.getConfig().getStringList("schedule.exclude"));
         boolean chapterInRotation = plugin.getConfig().getBoolean("schedule.include-chapter-bosses", false);
         for (BossDef d : defs.values()) {
-            if (skip.contains(d.id())) continue;
+            if (skip.contains(d.id()) || d.mini()) continue;
             if (d.seasonal()) { if (plugin.seasons().active(d.season())) seasonal.add(d); }
             else if (!d.chapterBoss() || chapterInRotation) normal.add(d);
         }
@@ -518,6 +518,20 @@ public final class BossService implements Listener {
         if (def == null) { plugin.send(player, T.t("fight.no-boss-cbosses-list", "<red>No boss <bossid>. <gray>/cbosses list", "bossid", Text.escape(bossId))); return false; }
         Arena a = arena(arenaId, false);
         if (a == null) { plugin.send(player, T.t("fight.no-arena-cbosses-arena-setspawn", "<red>No arena <arenaid>. <gray>/cbosses arena setspawn <arenaid>", "arenaid", Text.escape(arenaId))); return false; }
+        return spawn(def, a, player, false, null);
+    }
+
+    private final java.util.concurrent.atomic.AtomicInteger hereCount = new java.util.concurrent.atomic.AtomicInteger();
+
+    /**
+     * Ops only: a real fight right where the player stands. Its border is a circle (arenas.here-radius) around
+     * that spot; like every boss it only attacks players and never touches blocks.
+     */
+    public boolean spawnHere(Player player, String bossId) {
+        BossDef def = def(bossId);
+        if (def == null) { plugin.send(player, T.t("fight.no-boss-cbosses-list", "<red>No boss <bossid>. <gray>/cbosses list", "bossid", Text.escape(bossId))); return false; }
+        Arena a = new Arena("here-" + hereCount.incrementAndGet(), Math.max(10, plugin.getConfig().getInt("arenas.here-radius", 40)));
+        a.spawn(player.getLocation().clone());
         return spawn(def, a, player, false, null);
     }
 
@@ -1218,7 +1232,7 @@ public final class BossService implements Listener {
         return names.isEmpty() ? T.t("fight.nobody", "<gray>nobody") : String.join("<gray>, ", names);
     }
 
-    private void broadcast(String message) {
+    public void broadcast(String message) {
         if (message == null || message.isBlank()) return;
         Sched.global(() -> Bukkit.broadcast(Text.mm(message)));
     }

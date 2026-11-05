@@ -14,8 +14,9 @@ def brakka():
     """Chapter 1, The Wanderers' Camp: Brakka the bandit chief. A burly raider with a red bandana over his
     face, an eye patch, leather armour with a wolf-fur collar, a satchel of stolen loot, a crossbow slung
     on his back and a hatchet in each hand."""
-    m = Model("brakka", "biped", 1.35)
+    m = Model("brakka", "biped", 1.7)
     biped(m, hip=13, legx=3.6, neck=31, shoulder=29, armx=9)
+    m.bone("cape", "body", (0, 28.6, -3.4))
     m.bone("axeR", "armR", (-9, 12, 2))
     m.bone("axeL", "armL", (9, 12, 2))
     m.hold = {"axeR": 30, "axeL": 30}
@@ -86,6 +87,14 @@ def brakka():
         m.c("body", c, (x, 15 - h / 2, 3.4), (0.6, h, 0.4), (0, 0, 10))
     m.c("hips", "green_terracotta", (5.4, 12, -1), (2, 3, 2))
     m.c("hips", LE, (5.4, 13.8, -1), (0.8, 0.8, 0.8))
+    # a wide-brimmed bandit hat over the topknot, a red band with a feather, and a ragged travelling cloak
+    m.c("head", "brown_concrete", (0, 39.6, 0.4), (13, 0.8, 12))
+    bevel(m, "head", "brown_terracotta", (0, 41.6, 0.4), (8.4, 3.6, 8), 0.6)
+    m.c("head", RD, (0, 40.4, 0.4), (8.8, 0.9, 8.4))
+    m.c("head", "white_wool", (4.6, 42.4, -1), (0.4, 4, 1), (0, 0, -25))
+    m.c("cape", LE2, (0, 19.6, -3.8), (10, 17, 0.5))
+    hem(m, "cape", LE2, -5, 5, 11.1, -3.8, 0.5, 5, long=3, short=1.2, seed=3)
+    m.c("cape", FU, (0, 28.2, -3.9), (11, 1.6, 0.9))
     m.attacks = {"hatchets": "double", "volley": "cast", "charge": "lunge", "minions": "roar"}
     m.melee = "swipe"
     return m
@@ -177,7 +186,7 @@ def oakheart():
     """Chapter 3, The Elder's Charge: an old oak that woke up to protect the elder's grove. A trunk of
     bark with a hollow full of amber light for a face, mossy shoulders, branch arms that end in leafy
     fists, roots for feet, mushrooms on its side and a bird's nest in its crown of leaves."""
-    m = Model("oakheart", "biped", 1.45)
+    m = Model("oakheart", "biped", 1.8)
     biped(m, hip=12, legx=4.4, neck=31, shoulder=28, armx=10.6)
     m.bend = -24
     BK, BK2, MO, LV, LV2, AM = "oak_log", "dark_oak_log", "moss_block", "oak_leaves", "azalea_leaves", "orange_concrete"
@@ -233,6 +242,17 @@ def oakheart():
         for t in (-1.2, 0, 1.2):
             m.c(a, BK2, (x + t, 11.6, 2.2), (0.7, 3, 0.7), (20, 0, t * 10))
         m.c(a, MO, (x, 28.4, 0), (5, 1, 5))
+    # more of the grove grown on him: moss creeping up the trunk front and back, amber light in the bark
+    # seams, vines hanging off the arms, flowers in the moss
+    from v3_kit import grow, vines
+    grow(m, "body", "front", (0, 19, 4.3), 6, 4, 33, {"A": MO, "B": "green_concrete"}, cover=0.45, top=0.2, edge={"b"}, px=2, depth=0.4)
+    grow(m, "body", "back", (0, 22, -4.3), 6, 6, 34, {"A": MO, "B": "green_concrete"}, cover=0.5, top=0.8, edge={"t"}, px=2, depth=0.4)
+    crack(m, "body", "left", (6, 22, 0), [(2, 4), (2, 1), (-1, 1), (-1, -3)], block=AM, width=0.5)
+    crack(m, "body", "right", (-6, 21, 0), [(-2, 3), (-2, 0), (1, 0), (1, -4)], block=AM, width=0.5)
+    for s, a in ((1, "armL"), (-1, "armR")):
+        vines(m, a, [12.8 * s], 22, 0, [6])
+    for (x, z, c) in ((-3.4, 4.7, "yellow_concrete"), (2.6, 4.7, "light_blue_concrete"), (4, -4.7, "pink_concrete")):
+        m.c("body", c, (x, 15.6 if z > 0 else 26, z), (1, 1, 0.4))
     m.attacks = {"roots": "slam", "thorns": "cast", "quake": "stomp", "minions": "roar"}
     m.melee = "swipe"
     return m
@@ -266,11 +286,14 @@ def vault_mimic():
     for x in (-6.6, 6.6):
         for z in (-2, 2):
             m.c("body", "white_concrete", (x * 0.94, 16.4, z), (0.8, 1.6, 1))
-    # the tongue lolling out over the front, split into two tips
-    m.c("fangL", "pink_concrete", (1.4, 15.6, 6.6), (2, 0.8, 4), (-20, 10, 0))
-    m.c("fangL", "magenta_concrete", (2, 14.6, 8.6), (1.4, 0.6, 2), (-40, 20, 0))
-    m.c("fangR", "pink_concrete", (-1.4, 15.6, 6.6), (2, 0.8, 4), (-20, -10, 0))
-    m.c("fangR", "magenta_concrete", (-2, 14.6, 8.6), (1.4, 0.6, 2), (-40, -20, 0))
+    # the tongue: long, thick and wet, rolling out over the front of the chest and curling back up at the
+    # end, darker down the middle, split into two tips; it lashes with the fang bone
+    tip = limb(m, "fangL", "pink_concrete", (0, 15.4, 3.6), [(3.4, 2.6, (95, 0, 0)), (3.2, 2.4, (130, 0, 0)), (3, 2.2, (175, 0, 0)),
+                                                             (2.6, 2.0, (215, 0, 0)), (2.2, 1.8, (250, 0, 0))])
+    limb(m, "fangL", "magenta_concrete", (0, 15.95, 3.6), [(3.4, 0.6, (95, 0, 0)), (3.2, 0.6, (130, 0, 0)), (3, 0.6, (175, 0, 0))])
+    for s in (1, -1):
+        m.c("fangL", "pink_concrete", (tip[0] + 0.6 * s, tip[1] + 0.6, tip[2] - 0.4), (0.9, 1.6, 0.9), (-20, 0, -20 * s))
+    m.c("fangR", "lime_stained_glass", (1.6, 12.4, 6.2), (0.5, 2.4, 0.5), light=True)
     # the lid: hinged at the back, curved top, the big eye in the front, a gold lock hanging below it
     m.rest("head", (-32, 0, 0))
     bevel(m, "head", WD, (0, 18, 0), (14, 4, 10), 0.6)
@@ -317,8 +340,9 @@ def crypt_knight():
     """Chapter 5, The King Wakes: the first knight to answer the king. Rusted iron plate gone green at the
     joints, a torn purple tabard with the king's sign, a horned helm with a slit that glows, a battered
     tower shield and a spiked flail on a chain."""
-    m = Model("crypt_knight", "biped", 1.45)
+    m = Model("crypt_knight", "biped", 1.7)
     biped(m, hip=13, legx=3.8, neck=31, shoulder=29, armx=9.4)
+    m.bone("cape", "body", (0, 28.4, -3.6))
     m.bone("flail", "armR", (-9.4, 12, 2))
     m.bone("shield", "armL", (9.4, 18, 0))
     m.hold = {"flail": 20, "shield": 0}
@@ -339,8 +363,13 @@ def crypt_knight():
     m.c("body", TB, (0, 20, 3.5), (5, 16, 0.4))
     hem(m, "body", TB, -2.5, 2.5, 12, 3.5, 0.4, 3, long=2.6, short=1)
     paint(m, "body", "front", (0, 23, 3.75), ["G.G.G", "GGGGG", ".GGG."], {"G": GD}, px=0.8, depth=0.2)
-    m.c("body", TB, (0, 21, -3.5), (6, 14, 0.4))
-    hem(m, "body", TB, -3, 3, 14, -3.5, 0.4, 4, long=3, short=1.2, seed=2)
+    # the king's cloak: purple, heavy, torn at the hem, pinned at both shoulders with gold
+    m.c("cape", TB, (0, 18.6, -4.0), (11, 19.6, 0.5))
+    m.c("cape", "purple_terracotta", (0, 27.6, -4.3), (11.4, 1.6, 0.5))
+    hem(m, "cape", TB, -5.5, 5.5, 8.8, -4.0, 0.5, 6, long=3.4, short=1.4, seed=2)
+    paint(m, "cape", "back", (0, 20, -4.25), ["G.G.G", "GGGGG", ".GGG."], {"G": GD}, px=1.4, depth=0.2)
+    for s in (1, -1):
+        m.c("body", GD, (4.6 * s, 28, -3.4), (1.4, 1.4, 0.6))
     # pauldrons stacked in two plates, rusty rivets
     for s, a in ((1, "armL"), (-1, "armR")):
         x = 9.4 * s

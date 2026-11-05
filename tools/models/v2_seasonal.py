@@ -799,15 +799,12 @@ def killer_bunny():
     # body: a fluffy torso, a pale chest tuft, a round pompom tail
     bevel(m, "hips", FU, (0, 13.4, -0.6), (11, 4, 9), 1.2)
     bevel(m, "body", FU, (0, 20.4, 0), (11.4, 12, 8.6), 1.4)
-    tufts(m, "body", FU2, [(-2, 22, 4.4), (2, 21.6, 4.6), (0, 18.4, 4.6), (-2.6, 17, 4.2), (2.6, 17.2, 4.2)], 2.2)
+    bevel(m, "body", "white_concrete", (0, 19.4, 4.3), (6, 7, 0.8), 0.6)
     bevel(m, "hips", FU, (0, 14, -6.4), (5, 5, 4), 1.2)
     tufts(m, "hips", FU2, [(-1.4, 15.4, -8.4), (1.4, 13, -8.4)], 1.6)
-    # a leather strap over one shoulder with an iron pauldron, a grubby bow and bell at the neck
+    # a leather strap over one shoulder, a grubby bow and bell at the neck
     m.c("body", "brown_terracotta", (0, 21, 4.5), (1.4, 14, 0.4), (0, 0, 38))
     m.c("body", "brown_terracotta", (0, 21, -4.5), (1.4, 14, 0.4), (0, 0, -38))
-    bevel(m, "armL", "iron_block", (9.4, 28, 0), (5.6, 2.6, 6.4), 0.6, (0, 0, -16), (8.4, 27, 0))
-    for z in (-2, 0, 2):
-        m.c("armL", "gray_concrete", (11.6, 27.4, z), (0.4, 0.8, 0.8), (0, 0, -16))
     m.c("body", PK, (0, 26.4, 0), (7.4, 1.6, 7))
     for s in (1, -1):
         m.c("body", PK, (2.2 * s, 26.6, 4.2), (2.8, 2, 0.8), (0, 0, 20 * s))
@@ -841,22 +838,26 @@ def killer_bunny():
     m.c("earR", PK, (-2.75, 39.4, 1.05), (1.4, 4.4, 0.2), (0, 0, 8), (-2.4, 36.6, 0))
     m.c("earR", "red_terracotta", (tip[0], tip[1], tip[2]), (1.4, 1, 0.8), (115, 0, 8))
     m.c("earR", FU2, (-3.2, 42.4, 0.4), (2.6, 1.2, 2.4), (0, 0, 8))
-    # the carrot: a huge root sharpened to a blade, rings drawn on it, leafy top for a grip
+    # the carrot: a huge root held by its thin tip like a club, widening up to the top, rings drawn on it,
+    # the leafy top sprouting out of the end
+    m.c("carrot", "orange_concrete", (-8.4, 13, 2), (1.2, 4, 1.2))
     for k in range(5):
-        m.c("carrot", "orange_concrete", (-8.4, 18 + k * 3.6, 2), (3 - k * 0.45, 3.6, 3 - k * 0.45))
-        m.c("carrot", "orange_terracotta", (-8.4, 19.6 + k * 3.6, 2), (3.1 - k * 0.45, 0.3, 3.1 - k * 0.45))
-    m.c("carrot", "orange_concrete", (-8.4, 36.6, 2), (0.6, 1.4, 0.6))
+        w = 1.6 + k * 0.45
+        m.c("carrot", "orange_concrete", (-8.4, 16.6 + k * 3.6, 2), (w, 3.6, w))
+        m.c("carrot", "orange_terracotta", (-8.4, 18.2 + k * 3.6, 2), (w + 0.1, 0.3, w + 0.1))
     for k, r in enumerate((-25, 0, 25)):
-        m.c("carrot", "green_concrete" if k != 1 else "lime_concrete", (-8.4, 13 - abs(r) * 0.04, 2), (1, 6, 1), (0, 0, r), (-8.4, 15.6, 2))
-    m.c("carrot", "brown_terracotta", (-8.4, 15.4, 2), (2.2, 1.2, 2.2))
-    # the egg basket: woven brown sides, a handle, grass and four painted eggs piled in
-    m.c("basket", "brown_terracotta", (8.4, 6, 4), (6.4, 4, 6.4))
+        m.c("carrot", "green_concrete" if k != 1 else "lime_concrete", (-8.4, 37 + (1 - abs(r) * 0.03), 2), (1, 5, 1), (0, 0, r), (-8.4, 34.6, 2))
+    # the egg basket: hanging straight under the fist by its handle, woven brown sides, grass and four
+    # painted eggs piled in
+    m.c("basket", "brown_terracotta", (8.4, 5, 2), (6.4, 4, 6.4))
     for k in range(3):
-        m.c("basket", "oak_planks", (8.4, 4.6 + k * 1.4, 4), (6.6, 0.4, 6.6))
-    m.c("basket", "brown_terracotta", (8.4, 10.6, 4), (0.6, 6, 0.6), (0, 0, 0))
-    m.c("basket", "lime_concrete", (8.4, 8.2, 4), (5.8, 0.6, 5.8))
+        m.c("basket", "oak_planks", (8.4, 3.6 + k * 1.4, 2), (6.6, 0.4, 6.6))
+    for s in (1, -1):
+        m.c("basket", "brown_terracotta", (8.4 + 2.9 * s, 9.6, 2), (0.6, 5.6, 0.6), (0, 0, 28 * s))
+    m.c("basket", "brown_terracotta", (8.4, 12.4, 2), (2.4, 0.6, 0.6))
+    m.c("basket", "lime_concrete", (8.4, 7.2, 2), (5.8, 0.6, 5.8))
     for (dx, dz, c, st) in ((-1.4, -1, "pink_concrete", "white_concrete"), (1.4, 1, "light_blue_concrete", "yellow_concrete"), (1.4, -1.6, "yellow_concrete", "magenta_concrete"), (-1.2, 1.6, "lime_concrete", "light_blue_concrete")):
-        egg(m, "basket", c, st, (8.4 + dx, 9.6, 4 + dz), (2, 2.6, 2), (0, 0, dx * 6))
+        egg(m, "basket", c, st, (8.4 + dx, 8.6, 2 + dz), (2, 2.6, 2), (0, 0, dx * 6))
     # battle wear: a stitched scar across the chest, fur tufts on the shoulders and cheeks, foot claws
     m.c("body", "red_terracotta", (-2.6, 22.6, 4.45), (4, 0.5, 0.3), (0, 0, -30))
     for k in range(3):
@@ -1084,20 +1085,23 @@ def headless_horseman():
     m.c("body", "dark_oak_planks", (0, 30.8, -1.6), (6.4, 1.4, 7))
     m.c("body", "dark_oak_planks", (0, 32, 1.8), (4.4, 1.6, 1.2))
     m.c("body", "dark_oak_planks", (0, 31.8, -5), (5.4, 1.2, 1))
-    # neck and head: a thick arched neck, a long head with a bone mask, burning eyes, a mane of fire
-    neck_tip = limb(m, "head", HB, (0, 27.6, 9.4), [(11, 5.6, (32, 0, 0))])
-    head_tip = limb(m, "head", HB, neck_tip, [(10.6, 5, (118, 0, 0))])
-    m.c("head", HB2, (0, head_tip[1] + 0.6, head_tip[2] - 0.6), (4, 3.4, 3.6), (118, 0, 0))
-    hx, hy, hz = neck_tip
-    m.c("head", BN, (0, hy - 1.6, hz + 3.4), (2, 0.6, 6), (118 - 90, 0, 0))
+    # neck and head: a thick arched neck with a mane of fire, the long horse head held high, a bone mask
+    # over the face, burning eyes, flared nostrils, ears laid back, a chain bridle
+    bevel(m, "head", HB, (0, 31.4, 11.6), (5.4, 11, 6), 1.0, (-32, 0, 0), (0, 27, 9.4))
+    bevel(m, "head", HB, (0, 36.6, 17.4), (5.2, 5.2, 10.6), 1.0, (32, 0, 0), (0, 37.4, 14))
+    hx, hy, hz = 0, 36.4, 15
+    head_tip = (0, 33.4, 21.4)
+    m.c("head", BN, (0, 37.7, 17.4), (5.4, 3.2, 8), (32, 0, 0), (0, 37.4, 14))
+    m.c("head", HB2, (0, 33.6, 21.8), (4.4, 2.6, 2.4), (32, 0, 0), (0, 37.4, 14))
     for s in (1, -1):
-        m.c("head", FL, (2.55 * s, hy - 0.4, hz + 3.2), (0.4, 1.2, 1.6), light=True)
-        m.c("head", HB, (1.6 * s, hy + 2.6, hz + 0.4), (1.2, 3, 1.2), (-15, 0, 12 * s))
-        m.c("head", "chain", (2.6 * s, hy - 4.6, hz + 4), (0.4, 0.4, 6), (60, 0, 0))
-    for k in range(5):
-        t = 1.4 + k * 2.2
-        x, y, z = 0, 27.6 + 0.85 * t + 0.53 * 2.6, 9.4 + 0.53 * t - 0.85 * 2.6
-        m.c("head", FL2 if k % 2 else FL, (0, y + 0.6, z), (1.4, 3.8 - k * 0.3, 2), (-25, 0, 0), light=True)
+        m.c("head", "black_concrete", (1.2 * s, 33.4, 23.0), (0.8, 0.8, 0.3), (32, 0, 0), (0, 37.4, 14))
+        m.c("head", FL, (2.75 * s, 38.6, 15.4), (0.3, 1.2, 1.8), light=True)
+        m.c("head", FL2, (2.85 * s, 38.6, 15.4), (0.2, 0.5, 0.8), light=True)
+        m.c("head", HB, (1.6 * s, 41.4, 12.6), (1.4, 3, 1.2), (-35, 0, 10 * s))
+        m.c("head", "chain", (2.75 * s, 35.4, 18.4), (0.3, 0.4, 6.4), (32, 0, 0), (0, 37.4, 14))
+    for k in range(6):
+        y, z = 29 + k * 2.2, 8.6 + k * 1.3
+        m.c("head", FL2 if k % 2 else FL, (0, y + 1.4, z - 2.4), (1.4, 3.4 - k * 0.2, 2.2), (-30, 0, 0), light=True)
     bevel(m, "jaw", HB, (0, head_tip[1] - 1.6, head_tip[2] - 3.2), (3.6, 1.6, 5), 0.5, (40, 0, 0), (0, head_tip[1] - 1.6, head_tip[2] - 3.2))
     # tail of fire
     limb(m, "tail", FL, (0, 27, -13), [(5, 2.6, (-140, 0, 0)), (4, 2, (-160, 0, 10), FL2), (3, 1.4, (-175, 0, -10))], light=True)
@@ -1121,7 +1125,8 @@ def headless_horseman():
         bevel(m, "rider", CO, (5.4 * s, RY + 11.4, -1), (3.6, 2.6, 5.6), 0.6)
         m.c("rider", "gold_block", (5.4 * s, RY + 12.8, -1), (3.4, 0.4, 5.2))
     # the neck: a ragged stump with fire roaring up out of it
-    m.c("rider", "red_terracotta", (0, RY + 12.4, -1), (3, 1.4, 3))
+    m.c("rider", "black_wool", (0, RY + 12.4, -1), (4, 1.4, 4))
+    m.c("rider", "white_concrete", (0, RY + 12.0, 1.1), (4.4, 1.2, 0.4))
     for k, (dx, dz, h) in enumerate(((0, 0, 6), (-1.2, 0.8, 3.8), (1.2, -0.6, 4.2), (0.4, 1, 2.6))):
         m.c("rider", FL2 if k == 0 else FL, (dx, RY + 13 + h / 2, -1 + dz), (1.8 - k * 0.15, h, 1.8 - k * 0.15), (0, k * 30, dx * 6), light=True)
     # the cape: tattered black with a purple lining, hanging back over the horse
@@ -1133,11 +1138,23 @@ def headless_horseman():
         m.c(a, CO, (6.6 * s, RY + 8.4, -1), (2.8, 9, 3))
         m.c(a, "white_concrete", (6.6 * s, RY + 4.2, -1), (3, 0.8, 3.2))
         m.c(a, HB2, (6.6 * s, RY + 3, -1), (2.4, 1.8, 2.4))
-    bevel(m, "riderArmL", FL, (7, RY - 1.6, 0), (6, 5.4, 6), 1.2)
-    m.c("riderArmL", OR, (7, RY - 1.6, 0), (2, 5.6, 6.2))
-    paint(m, "riderArmL", "front", (7, RY - 1.4, 3.05), ["K.K", "...", "KYK"], {"K": "black_concrete", "Y": (FL2, 0.3, True)}, px=1.2, depth=0.3)
-    m.c("riderArmL", "dark_oak_log", (7, RY + 1.6, 0), (1, 1.4, 1))
-    m.c("riderArmL", "shroomlight", (7, RY - 1.6, 0), (4.4, 3.4, 4.4), light=True)
+    # his own head, held out by the stem: a real carved pumpkin with ribs, a curling stem, triangle eyes and
+    # a jagged grin with the fire inside shining through
+    PX, PY, PZ = 7, RY - 2.4, 0.6
+    bevel(m, "riderArmL", FL, (PX, PY, PZ), (6, 5.6, 6), 1.0)
+    for dx in (-1.6, 1.6):
+        m.c("riderArmL", OR, (PX + dx, PY, PZ), (0.5, 5.7, 6.1))
+    m.c("riderArmL", "green_terracotta", (PX, PY + 3.4, PZ), (1, 1.6, 1))
+    m.c("riderArmL", "green_terracotta", (PX + 0.6, PY + 4.2, PZ), (1.4, 0.6, 0.6))
+    paint(m, "riderArmL", "front", (PX, PY - 0.2, PZ + 3.05), [
+        "......",
+        ".K..K.",
+        "KK..KK",
+        "......",
+        "KKKKKK",
+        ".K.K.K",
+    ], {"K": (FL2, 0.3, True)}, px=0.95, depth=0.3)
+    m.c("riderArmL", "shroomlight", (PX, PY, PZ), (4.4, 3.4, 4.4), light=True)
     m.c("riderArmR", HB2, (-6.6, RY + 1.2, -1), (0.8, 2.6, 0.8))
     m.c("riderArmR", "gold_block", (-6.6, RY + 2.6, -1), (1.2, 0.8, 3))
     m.c("riderArmR", "iron_block", (-6.6, RY - 7, 0.2), (0.6, 16, 2), (-8, 0, 0))

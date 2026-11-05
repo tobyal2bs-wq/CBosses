@@ -189,7 +189,7 @@ def grave_marshal():
     for (y, z, ry, rz) in ((16, 3.4, 25, 10), (9.4, -3.2, 35, -15), (7.6, 3.6, 15, 20)):
         m.c("shield", "dark_oak_log", (X + 2.4, y, z), (4, 0.35, 0.35), (0, ry, rz))
         m.c("shield", "white_concrete", (X + 4.1, y + rz * 0.03, z - ry * 0.03), (1, 0.9, 0.15), (0, ry, rz))
-    m.attacks = {"slam": "slam", "charge": "lunge", "volley": "cast", "bash": "swipe"}
+    m.attacks = {"slam": "slam", "charge": "lunge", "volley": "cast", "shockwave": "swipe"}
     m.melee = "swipe"
     return m
 
@@ -257,7 +257,7 @@ def mayor_grumble():
         for k, (y, z) in enumerate(((22.5, 4), (21, 1), (22, -3))):
             m.c("head", "light_gray_concrete", (8.3 * s, y, z), (0.8, 2.2, 2.6), (0, 0, 15 * s))
     m.c("head", "light_gray_concrete", (0, 21.5, -7.8), (12, 2.6, 0.8))
-    m.attacks = {"golems": "roar", "emeralds": "cast", "stomp": "stomp", "decree": "roar"}
+    m.attacks = {"minions": "roar", "volley": "cast", "quake": "stomp", "roar": "roar"}
     m.melee = "stomp"
     return m
 
@@ -463,7 +463,7 @@ def siegebreaker():
     for x in (-3, -1, 1, 3):
         m.c("jaw", "white_concrete", (x, 12.1, 27.0), (0.8, 1, 0.6))
     m.c("head", "gray_concrete", (0, 23.7, 19.5), (7, 0.8, 6))
-    m.attacks = {"charge": "charge", "roar": "howl", "trample": "rear", "toss": "toss"}
+    m.attacks = {"charge": "charge", "roar": "howl", "quake": "rear", "toss": "toss"}
     m.melee = "bite"
     return m
 
@@ -821,7 +821,7 @@ def elder_eye():
     m.c("ring2", SH2, (0, 14, -13.5), (4, 4, 4))
     m.c("ring3", SH, (0, 14, -17), (2.6, 2.6, 4))
     m.c("ring3", SP, (0, 14, -20), (0.6, 6, 4))
-    m.attacks = {"laser": "pulse", "spikes": "spin", "fatigue": "raise", "dive": "dive"}
+    m.attacks = {"sonic_boom": "pulse", "spikes": "spin", "darkness": "raise", "dive": "dive"}
     m.melee = "swipe"
     return m
 
@@ -911,7 +911,7 @@ def queen_bee():
     m.c("sceptre", "stripped_oak_log", (-5, 9, 4), (0.7, 8, 0.7))
     bevel(m, "sceptre", H2, (-5, 14, 4), (2.6, 2.6, 2.6), 0.4)
     m.c("sceptre", H, (-5, 14, 4), (2.9, 1, 2.9), light=True)
-    m.attacks = {"swarm": "pulse", "sting": "dive", "honey": "raise", "buzz": "spin"}
+    m.attacks = {"minions": "pulse", "dive": "dive", "poison": "raise", "levitate": "spin"}
     m.melee = "swipe"
     return m
 
@@ -964,6 +964,6 @@ def old_tusker():
     for k in range(4):
         m.c("head", MN if k % 2 == 0 else MN2, (-1.8 + k * 1.2, 21.2, 15 - k * 0.6), (1.2, 3, 1.2), (-25, 0, 0))
     m.c("jaw", HI2, (0, 9.4, 20.5), (9, 1.8, 7))
-    m.attacks = {"charge": "charge", "toss": "toss", "quake": "rear", "spores": "howl"}
+    m.attacks = {"charge": "charge", "toss": "toss", "quake": "rear", "poison": "howl"}
     m.melee = "bite"
     return m

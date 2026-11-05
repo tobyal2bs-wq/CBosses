@@ -23,18 +23,21 @@ public record BossDef(String id, String name, String title, String kind, int cha
                       double damage, double speed, double armor, String bar, String theme, String movement, double flyHeight,
                       List<Double> phases, Map<String, String> equipment, EntityType minion, int minions, List<String> abilities,
                       int abilitySeconds, String season, Rewards rewards, int size, String model, double healthPerPlayer,
-                      String spawnText, String deathText, String description) {
+                      String spawnText, String deathText, String description, String tier) {
 
     public record Rewards(long money, long topMoney, List<String> items, List<String> topItems, List<String> commands, List<String> topCommands) {
         static final Rewards NONE = new Rewards(0, 0, List.of(), List.of(), List.of(), List.of());
     }
 
-    public static final Set<String> KINDS = Set.of("world", "seasonal", "chapter");
+    public static final Set<String> KINDS = Set.of("world", "seasonal", "chapter", "mini");
+    /** Health tiers: mini (hourly), big (weekly and chapter) and mythic (legends and the finale). */
+    public static final Set<String> TIERS = Set.of("mini", "big", "mythic");
     public static final Set<String> MOVEMENTS = Set.of("walk", "fly", "hover", "still");
     public static final Set<String> SLOTS = Set.of("head", "chest", "legs", "feet", "hand", "offhand");
 
     public boolean seasonal() { return kind.equals("seasonal"); }
     public boolean chapterBoss() { return kind.equals("chapter"); }
+    public boolean mini() { return kind.equals("mini"); }
     public boolean flies() { return movement.equals("fly") || movement.equals("hover"); }
 
     /** Reads every boss; a broken entry is skipped with a warning that names it. */
@@ -92,7 +95,9 @@ public record BossDef(String id, String name, String title, String kind, int cha
         String season = s.getString("season", "").toLowerCase(Locale.ROOT);
         int chapter = Math.max(0, s.getInt("chapter", 0));
         String kind = s.getString("kind", chapter > 0 ? "chapter" : season.isEmpty() ? "world" : "seasonal").toLowerCase(Locale.ROOT);
-        if (!KINDS.contains(kind)) throw new IllegalArgumentException("kind must be world, seasonal or chapter");
+        if (!KINDS.contains(kind)) throw new IllegalArgumentException("kind must be world, seasonal, chapter or mini");
+        String tier = s.getString("tier", kind.equals("mini") ? "mini" : "big").toLowerCase(Locale.ROOT);
+        if (!TIERS.contains(tier)) throw new IllegalArgumentException("tier must be mini, big or mythic");
         if (kind.equals("seasonal") && season.isEmpty()) throw new IllegalArgumentException("a seasonal boss needs a season");
         if (kind.equals("chapter") && chapter <= 0) throw new IllegalArgumentException("a chapter boss needs chapter: <number>");
         String movement = s.getString("movement", "walk").toLowerCase(Locale.ROOT);
@@ -108,13 +113,13 @@ public record BossDef(String id, String name, String title, String kind, int cha
         String theme = s.getString("theme", "soul").toLowerCase(Locale.ROOT);
         if (!Theme.ALL.containsKey(theme)) throw new IllegalArgumentException("unknown theme " + theme + " (themes: " + String.join(", ", new java.util.TreeSet<>(Theme.ALL.keySet())) + ")");
         return new BossDef(id, s.getString("name", id), s.getString("title", ""), kind, chapter, entity,
-                Math.max(20, s.getDouble("health", 800)), Math.max(0.5, Math.min(4, s.getDouble("scale", 1.5))),
+                Math.max(20, s.getDouble("health", tier.equals("mythic") ? 8000 : tier.equals("mini") ? 3000 : 5000)), Math.max(0.5, Math.min(4, s.getDouble("scale", 1.5))),
                 Math.max(0, s.getDouble("damage", 8)), Math.max(0, s.getDouble("speed", 0)), Math.max(0, s.getDouble("armor", 0)),
                 s.getString("bar", "RED").toUpperCase(Locale.ROOT), theme, movement, Math.max(2, Math.min(20, s.getDouble("fly-height", 6))),
                 List.copyOf(phases), Map.copyOf(equipment), minion, Math.max(0, Math.min(8, s.getInt("minions", 3))), List.copyOf(abilities),
                 Math.max(3, s.getInt("ability-seconds", 7)), season, rewards,
                 Math.max(1, Math.min(16, s.getInt("size", 1))), s.getString("model", id).toLowerCase(Locale.ROOT),
                 Math.max(0, Math.min(2, s.getDouble("health-per-player", 0.25))),
-                s.getString("spawn-text", ""), s.getString("death-text", ""), s.getString("description", ""));
+                s.getString("spawn-text", ""), s.getString("death-text", ""), s.getString("description", ""), tier);
     }
 }

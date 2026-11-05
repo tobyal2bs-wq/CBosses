@@ -26,6 +26,7 @@ public final class CBossesPlugin extends JavaPlugin {
     private Seasons seasons;
     private CBossesAPI api;
     private com.cbosses.finale.Finale finale;
+    private com.cbosses.mini.MiniBosses minis;
     private YamlConfiguration messages = new YamlConfiguration();
 
     public static CBossesPlugin instance() { return instance; }
@@ -56,14 +57,19 @@ public final class CBossesPlugin extends JavaPlugin {
         getServer().getPluginManager().registerEvents(service, this);
         getServer().getPluginManager().registerEvents(chapters, this);
         getServer().getPluginManager().registerEvents(finale, this);
+        minis = new com.cbosses.mini.MiniBosses(this);
+        getServer().getPluginManager().registerEvents(minis, this);
+        var miniMenu = new com.cbosses.mini.MiniMenu(this, minis);
+        getServer().getPluginManager().registerEvents(miniMenu, this);
         BossMenu menu = new BossMenu(this);
         getServer().getPluginManager().registerEvents(menu, this);
         var settings = new com.cbosses.command.SettingsMenu(this);
         getServer().getPluginManager().registerEvents(settings, this);
-        BossCommand command = new BossCommand(this, menu, settings);
+        BossCommand command = new BossCommand(this, menu, settings, miniMenu);
         var cmd = getCommand("cbosses");
         if (cmd != null) { cmd.setExecutor(command); cmd.setTabCompleter(command); }
         service.start();
+        minis.start();
         if (getServer().getPluginManager().getPlugin("PlaceholderAPI") != null) {
             try { new com.cbosses.hook.Placeholders(this).register(); getLogger().info("PlaceholderAPI placeholders registered (%cbosses_...%)."); }
             catch (Throwable e) { getLogger().warning("Could not register placeholders: " + e); }
@@ -75,6 +81,7 @@ public final class CBossesPlugin extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        if (minis != null) minis.stop();
         if (service != null) service.shutdown();
     }
 
@@ -83,6 +90,7 @@ public final class CBossesPlugin extends JavaPlugin {
         loadMessages();
         service.reload();
         service.start();
+        minis.start();
     }
 
     private void loadMessages() {
@@ -118,5 +126,6 @@ public final class CBossesPlugin extends JavaPlugin {
     public ChapterBosses chapters() { return chapters; }
     public com.cbosses.finale.Finale finale() { return finale; }
     public Seasons seasons() { return seasons; }
+    public com.cbosses.mini.MiniBosses minis() { return minis; }
     public CBossesAPI api() { return api; }
 }

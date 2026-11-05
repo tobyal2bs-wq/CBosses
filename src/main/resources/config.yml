@@ -65,6 +65,33 @@ schedule:
 arenas:
   # Circle border (blocks around the spawn) for arenas without an outline or region.
   default-radius: 40
+  # Border radius for a boss spawned where an op stands (/cbosses menu left-click, /cbosses spawn <boss> here).
+  here-radius: 40
+
+# ----------------------------------------------------------------------------------- MINI BOSSES
+# Small bosses (kind: mini, 3000 health) that wake on a timer. Ops manage everything in /cbosses minis:
+# spots (barrier markers show them), mode, timer, how many at once. Spots are saved in minis.yml.
+minis:
+  enabled: true
+  # Minutes between rounds.
+  every-minutes: 60
+  # fixed: only at your spots. random: somewhere near a random player. mixed: either, at random.
+  mode: mixed
+  # Minis woken each round, and the most alive at once.
+  per-round: 1
+  max-alive: 3
+  # Border radius for random places and new spots.
+  radius: 24
+  # Random places are this far from the chosen player.
+  random-min-distance: 30
+  random-max-distance: 80
+  # Worlds random minis may wake in (empty: any world a player is in).
+  random-worlds: []
+  # Only these mini ids (empty: every mini).
+  bosses: []
+  # Chat lines when a mini is about to wake and when it wakes.
+  announce: true
+  warn-seconds: 60
 
 # ----------------------------------------------------------------------------------- FIGHTS
 fight:

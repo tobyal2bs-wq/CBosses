@@ -13,6 +13,7 @@ fns = {f.__name__: f for f in models.MODELS}
 for id in ids:
     m = fns[id]()
     if m.rig in ("biped", "float") and not getattr(m, "no_elbows", False): m.elbows(bend=getattr(m, "bend", -38), weapons=getattr(m, "hold", None))
+    if m.rig in ("biped", "quad"): m.knees()
     m.zones()
     j = m.json()
     import v2_recipes as _r

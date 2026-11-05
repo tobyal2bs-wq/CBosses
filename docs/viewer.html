@@ -93,6 +93,46 @@ function sample(keys, t) {
   return keys[keys.length - 1][1];
 }
 function animTime(anim, t) { return anim.loop ? ((t % anim.length) + anim.length) % anim.length : Math.min(t, anim.length); }
+
+// Knees and feet. A foot bone ("level") never tilts: it keeps the root's turn only. A foot pushed under
+// the ground (a crouch, a slam, a step up) is lifted back onto it by bending that leg at the knee,
+// solved as a two-bone chain hip -> knee -> ankle. ground(name) may give a per-foot ground height.
+function plantFeet(model, out, ground) {
+  const V = THREE.Vector3, M = THREE.Matrix4, by = {};
+  for (const b of model.bones) by[b.name] = b;
+  const root = out.root || new M(), rr = new M().extractRotation(root);
+  const at = (name, p) => new V(p[0], p[1], p[2]).applyMatrix4(out[name]);
+  const level = (name, w) => { const p = by[name].pivot; out[name] = new M().makeTranslation(w.x, w.y, w.z).multiply(rr).multiply(new M().makeTranslation(-p[0], -p[1], -p[2])); };
+  const turn = (from, to, c) => { const q = new THREE.Quaternion().setFromUnitVectors(from.clone().normalize(), to.clone().normalize());
+    return new M().makeTranslation(c.x, c.y, c.z).multiply(new M().makeRotationFromQuaternion(q)).multiply(new M().makeTranslation(-c.x, -c.y, -c.z)); };
+  for (const b of model.bones) {
+    if (!b.level) continue;
+    const shin = by[b.parent], leg = shin && by[shin.parent];
+    let F = at(b.parent, b.pivot);
+    if (leg && shin) {
+      const floor = b.pivot[1] + (ground ? ground(b.name) : 0) + root.elements[13];
+      if (F.y < floor - 0.01) {
+        const H = at(leg.name, leg.pivot), Kn = at(shin.name, shin.pivot);
+        const L1 = new V().fromArray(shin.pivot).distanceTo(new V().fromArray(leg.pivot));
+        const L2 = new V().fromArray(b.pivot).distanceTo(new V().fromArray(shin.pivot));
+        const T = F.clone(); T.y = floor;
+        let D = T.distanceTo(H); D = Math.max(Math.abs(L1 - L2) + 0.01, Math.min(L1 + L2 - 0.01, D));
+        const u = T.clone().sub(H).normalize();
+        const kh = Kn.clone().sub(H); let n = kh.clone().sub(u.clone().multiplyScalar(kh.dot(u)));
+        if (n.lengthSq() < 1e-4) n = new V(0, 0, 1).applyMatrix4(rr); n.normalize();
+        const a = (L1 * L1 - L2 * L2 + D * D) / (2 * D), h = Math.sqrt(Math.max(0, L1 * L1 - a * a));
+        const K2 = H.clone().add(u.clone().multiplyScalar(a)).add(n.multiplyScalar(h));
+        const d1 = turn(Kn.clone().sub(H), K2.clone().sub(H), H);
+        out[leg.name] = d1.clone().multiply(out[leg.name]);
+        const F1 = F.clone().applyMatrix4(d1);
+        const d2 = turn(F1.clone().sub(K2), T.clone().sub(K2), K2);
+        out[shin.name] = d2.multiply(d1).multiply(out[shin.name]);
+        F = T;
+      }
+    }
+    level(b.name, F);
+  }
+}
 // layers: [{anim, t, w}] later layers override earlier ones bone by bone
 function pose(model, layers) {
   const M = THREE.Matrix4, out = {};
@@ -117,6 +157,7 @@ function pose(model, layers) {
     r.makeTranslation(-p[0], -p[1], -p[2]); m.multiply(r);
     out[b.name] = b.parent ? out[b.parent].clone().multiply(m) : m;
   }
+  plantFeet(model, out, model.ground || null);
   return out;
 }
 function cubeLocal(c) {

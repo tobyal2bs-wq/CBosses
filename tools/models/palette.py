@@ -26,7 +26,7 @@ P = {
  "prismarine": ("noise", "#5fa092", "#4a8d84"), "prismarine_bricks": ("bricks", "#62ab9b", "#4b8f80"),
  "dark_prismarine": ("bricks", "#365c4c", "#25443a"), "sea_lantern": ("glow", "#a9c9c0", "#e6fff5"),
  "packed_mud": ("noise", "#8e6b50", "#7a5a41"), "mud_bricks": ("bricks", "#8a6a4f", "#6c5139"),
- "terracotta": ("flat", "#985e43", "#8c553b"), "quartz_block": ("flat", "#ece6df", "#e0d9d0"),
+ "terracotta": ("flat", "#985e43", "#8c553b"), "polished_granite": ("flat", "#9a6a59", "#8f6050"), "granite": ("noise", "#956755", "#7f5444"), "quartz_block": ("flat", "#ece6df", "#e0d9d0"),
  "quartz_pillar": ("stripes", "#ebe5dd", "#d9d1c6"), "chiseled_quartz_block": ("face", "#e8e1d8", "#c9c0b3"),
  "smooth_stone": ("flat", "#9e9e9e", "#8f8f8f"), "dripstone_block": ("stripes", "#86695a", "#6d5447"),
  "amethyst_block": ("ore", "#8a62c9", "#c9a2ff"), "budding_amethyst": ("ore", "#7f58bf", "#ffd0ff"),

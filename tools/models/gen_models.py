@@ -4,7 +4,7 @@ them, and its own opening and death from v2_recipes. Checks that every step poin
 real animations, so a typo shows up here and not on a server."""
 import json, sys, os
 sys.path.insert(0, os.path.dirname(__file__))
-import anims, models, palette, v2_general, v2_seasonal, v2_chapters, v2_legends, v2_recipes
+import anims, models, palette, roster
 
 SELECTORS = {"", "all", "lit", "unlit", "detail", "trim", "vein", "plain"}
 
@@ -62,7 +62,7 @@ def base(k):
 
 
 def check(m, j, steps, what):
-    rig = anims.RIGS[m.rig]
+    rig = dict(anims.RIGS[m.rig], **(getattr(m, "anims", None) or {}))
     bones = [b["name"] for b in m.bones]
     blocks = {base(c["k"]) for c in m.cubes}
     problems = []
@@ -78,26 +78,28 @@ def check(m, j, steps, what):
 
 out = {"version": 2, "rigs": anims.RIGS, "models": {}}
 used, problems = set(), []
-for fn in models.MODELS:
+SPAWN, DEATH = roster.recipes()
+for id, fn in roster.builders().items():
     m = fn()
     if m.rig in ("biped", "float") and not getattr(m, "no_elbows", False):
         m.elbows(bend=getattr(m, "bend", -38), weapons=getattr(m, "hold", None))
+    if m.rig in ("biped", "quad"): m.knees()
     m.zones()
     tag(m)
     m.attacks = fight_attacks(m)
     j = m.json()
-    if m.id not in v2_recipes.SPAWN or m.id not in v2_recipes.DEATH:
+    if m.id not in SPAWN or m.id not in DEATH:
         problems.append(f"{m.id}: no opening or death written")
         continue
-    spawn = list(v2_recipes.SPAWN[m.id])
+    spawn = list(SPAWN[m.id])
     end = max(st["at"] + st.get("dur", 0) for st in spawn)
     spawn.append({"op": "pose", "at": end + 2, "dur": 4})   # whatever the opening did, it ends in the model's own shape
-    j["spawn"], j["death"] = spawn, v2_recipes.DEATH[m.id]
+    j["spawn"], j["death"] = spawn, DEATH[m.id]
     problems += [f"{m.id}: {p}" for p in check(m, j, j["spawn"], "spawn") + check(m, j, j["death"], "death")]
     if not any(s["op"] == "flash" for s in j["death"]):
         problems.append(f"{m.id}: death has no flash")
     for a in set(m.attacks.values()) | ({m.melee} if m.melee else set()):
-        if a not in anims.RIGS[m.rig]:
+        if a not in anims.RIGS[m.rig] and a not in (getattr(m, "anims", None) or {}):
             problems.append(f"{m.id}: attack anim {a} not in {m.rig}")
     out["models"][m.id] = j
     used |= {base(c["k"]) for c in m.cubes}

@@ -92,7 +92,7 @@ def pillager_captain():
     m.c("banner", "white_wool", (0, 39.6, 0.5), (10, 12.6, 0.6))
     for face, z in (("front", 0.8), ("back", 0.2)):
         paint(m, "banner", face, (0, 39.8, z), OMINOUS, {"G": "light_gray_concrete", "K": "black_concrete", "C": "cyan_concrete"}, px=1.3, depth=0.15)
-    m.attacks = {"volley": "cast", "rocket": "roar", "kick": "stomp", "charge": "lunge"}
+    m.attacks = {"volley": "cast", "meteor": "roar", "shockwave": "stomp", "charge": "lunge"}
     m.melee = "swipe"
     return m
 
@@ -155,7 +155,7 @@ def pale_watcher():
         tip = limb(m, "head", BK2, (x, 50, 0), [(L * 0.6, 1.0, (0, 0, rz)), (L * 0.4, 0.7, (-20, 0, rz * 1.6))])
     m.c("head", MS, (0, 50.4, -1.6), (6, 1.0, 3))
     m.c("head", MS, (-2.4, 47, -3.1), (1.6, 6, 0.4))
-    m.attacks = {"roots": "slam", "freeze": "roar", "grab": "lunge", "swarm": "cast"}
+    m.attacks = {"spikes": "slam", "frost": "roar", "pull": "lunge", "minions": "cast"}
     m.melee = "swipe"
     return m
 
@@ -211,7 +211,7 @@ def weeping_ghast():
         idle["bones"]["tent%d" % i] = {"rot": anims.K((0, (a * sg, 0, b * sg)), (1.5, (-a * sg, 0, -b * sg)), (3.0, (a * sg, 0, b * sg)))}
     m.anims = {"idle": idle}
     m.no_elbows = True
-    m.attacks = {"fireball": "pulse", "wail": "raise", "tears": "spin", "dive": "dive"}
+    m.attacks = {"meteor": "pulse", "roar": "raise", "orbs": "spin", "dive": "dive"}
     m.melee = "pulse"
     return m
 
@@ -269,6 +269,280 @@ def elder_sniffer():
     m.c("jaw", "lime_terracotta", (0, 14.45, 26), (9, 0.2, 5))
     for s in (1, -1):
         m.c("jaw", DK, (2.4 * s, 14.6, 27.2), (1.6, 0.2, 1.0))
-    m.attacks = {"sniff": "howl", "dig": "rear", "charge": "charge", "spores": "toss"}
+    m.attacks = {"roar": "howl", "quake": "rear", "charge": "charge", "poison": "toss"}
     m.melee = "bite"
+    return m
+
+
+@model
+def cinderheart():
+    """Cinderheart, the magma cube that never cooled: the vanilla magma cube made of eight stacked slices
+    of dark crust, each its own piece so they spread apart and show the glowing core when it jumps; a
+    blazing orange core, the yellow eyes with red pupils, a ring of black basalt grown round its rim.
+    It splits off small magma cubes as it is hurt."""
+    m = Model("cinderheart", "slime", 2.4)
+    m.bone("body", "root", (0, 0, 0))
+    m.bone("inner", "body", (0, 12, 0))
+    m.bone("mouth", "body", (0, 8, 12))
+    CR, CR2, MG, GL, EY, BS = "red_nether_bricks", "nether_bricks", "magma_block", "shroomlight", "yellow_concrete", "polished_basalt"
+    # the core, glowing between the slices
+    m.c("inner", GL, (0, 12, 0), (18, 18, 18), light=True)
+    m.c("inner", "orange_concrete", (0, 12, 0), (20.4, 16, 20.4), light=True)
+    # eight slices of crust, each its own bone; the hop animation spreads them apart
+    hop = {"length": 1.0, "loop": False, "bones": {}}
+    for k in range(8):
+        b = "slice%d" % k
+        y = 1.5 + k * 3
+        m.bone(b, "body", (0, y, 0))
+        blk = CR if k % 2 == 0 else CR2
+        m.c(b, blk, (0, y, 0), (24, 2.4, 24))
+        # glowing spots on the crust, a few per slice, always in a different place
+        for j in range(3):
+            a = (k * 97 + j * 131) % 360
+            r = math.radians(a)
+            side = (k + j) % 4
+            px = [(11.95, (k * 5 + j * 7) % 18 - 9), (-11.95, (k * 3 + j * 11) % 18 - 9)][side % 2]
+            if side < 2:
+                m.c(b, MG, (px[0], y, px[1]), (0.3, 1.4, 2.4), light=True)
+            else:
+                m.c(b, MG, (px[1], y, px[0]), (2.4, 1.4, 0.3), light=True)
+        spread = (k - 3.5) * 1.6
+        hop["bones"][b] = {"pos": anims.K((0, (0, 0, 0)), (0.3, (0, spread, 0)), (0.7, (0, spread, 0)), (1.0, (0, 0, 0)))}
+    # a ring of black basalt grown round the top rim, like a crown that grew there
+    for k in range(8):
+        a = k * math.pi / 4
+        m.c("slice7", BS, (math.cos(a) * 11.4, 25.6, math.sin(a) * 11.4), (2.4, 3 + (k % 2) * 2, 2.4), (0, -math.degrees(a), 0))
+    # eyes: yellow with red pupils, on the fifth and sixth slices; a dark mouth on the third
+    for s in (1, -1):
+        m.c("slice5", EY, (5 * s, 16.5, 12.1), (4.6, 2.4, 0.4), light=True)
+        m.c("slice5", "red_concrete", (4 * s, 16.5, 12.3), (1.6, 2.0, 0.3), light=True)
+        m.c("slice4", EY, (5 * s, 13.5, 12.1), (4.6, 2.4, 0.4), light=True)
+        m.c("slice4", "red_concrete", (4 * s, 13.5, 12.3), (1.6, 2.0, 0.3), light=True)
+    m.c("slice2", "black_concrete", (0, 7.5, 12.1), (10, 2.4, 0.4))
+    m.anims = {"hop": hop}
+    m.attacks = {"minions": "burst", "slam": "slam", "volley": "spit", "leap": "hop"}
+    m.melee = "slam"
+    return m
+
+
+@model
+def shulker_matriarch():
+    """The Shulker Matriarch from the oldest End city: a huge purpur shell that opens to show the pale
+    yellow head inside, four smaller shulker boxes circling her, and an end rod lamp set on the lid."""
+    m = Model("shulker_matriarch", "float", 2.6)
+    m.bone("core", "root", (0, 8, 0))
+    m.bone("head", "core", (0, 13, 0))
+    m.bone("lid", "core", (0, 16, -8))
+    m.bone("ring1", "core", (0, 14, 0))
+    SH, SH2, HD, DK = "purpur_block", "purple_terracotta", "end_stone", "black_concrete"
+    # the lower shell
+    m.c("core", SH, (0, 4, 0), (16, 8, 16))
+    m.c("core", SH2, (0, 8.2, 0), (16.4, 0.6, 16.4))
+    m.c("core", SH2, (0, 0.3, 0), (16.6, 0.6, 16.6))
+    # the head inside: pale, two dark eyes, a little mouth
+    m.c("head", HD, (0, 12.6, 0), (7, 7, 7))
+    for s in (1, -1):
+        m.c("head", DK, (1.6 * s, 13.6, 3.55), (1.2, 1.4, 0.2))
+    m.c("head", DK, (0, 11.2, 3.55), (2.2, 0.6, 0.2))
+    # the lid, hinged at the back so it can open
+    m.c("lid", SH, (0, 12.6, 0), (16, 8, 16))
+    m.c("lid", SH2, (0, 8.6, 0), (16.4, 0.6, 16.4))
+    m.c("lid", SH2, (0, 16.7, 0), (14, 0.4, 14))
+    m.c("lid", "end_rod", (0, 19.4, 0), (1, 5, 1), light=True)
+    m.c("lid", SH2, (0, 17.2, 0), (2.4, 0.8, 2.4))
+    # four small shulker boxes in orbit, each with its own head peeking out
+    for k in range(4):
+        a = k * math.pi / 2
+        x, z = math.cos(a) * 16, math.sin(a) * 16
+        y = 14 + (k % 2) * 4
+        m.c("ring1", SH, (x, y - 1.2, z), (4, 2.4, 4))
+        m.c("ring1", SH, (x, y + 1.4, z), (4, 2.0, 4))
+        m.c("ring1", HD, (x, y + 0.1, z), (2.4, 0.8, 2.4))
+    m.rest("lid", (-24, 0, 0))
+    m.no_elbows = True
+    m.attacks = {"orbs": "spin", "levitate": "raise", "shockwave": "pulse", "dive": "dive"}
+    m.melee = "pulse"
+    return m
+
+
+@model
+def frostmaw():
+    """Frostmaw, the great polar bear of the ice spikes: the vanilla polar bear's white fur and black nose,
+    huge and scarred, its back crusted with packed ice and icicles, frost on its paws and a salmon still
+    caught in its jaw."""
+    m = Model("frostmaw", "quad", 2.2)
+    quad(m, body_y=14, legx=6, legz_front=9, legz_back=-9, neck_y=17, neck_z=14)
+    FU, FU2, IC, IC2, DK = "white_wool", "snow_block", "packed_ice", "blue_ice", "black_concrete"
+    for s, (b, z) in ((1, ("legFL", 9)), (-1, ("legFR", 9)), (1, ("legBL", -9)), (-1, ("legBR", -9))):
+        x = 6 * s
+        bevel(m, b, FU, (x, 8, z), (6, 13, 6.4), 0.8)
+        m.c(b, FU2, (x, 1.2, z + 0.8), (6.4, 2.4, 7.6))
+        for t in (-1.8, 0, 1.8):
+            m.c(b, "gray_concrete", (x + t, 0.6, z + 4.7), (0.8, 1, 1))
+    # body: big and round-shouldered, the back crusted with ice and icicles hanging off the flanks
+    bevel(m, "body", FU, (0, 17, -1), (14, 12, 26), 1.8)
+    bevel(m, "body", FU, (0, 19, 7), (15, 12, 10), 2.0)
+    for (x, z, w, d, h) in ((-2, 2, 7, 8, 2), (3, -6, 6, 7, 1.6), (0, 9, 8, 5, 2.2), (-3, -10, 5, 5, 1.4)):
+        m.c("body", IC, (x, 23.6 + h / 2, z), (w, h, d))
+    for (x, z, h) in ((-1, 3, 4), (2.4, -5, 3), (0.6, 9.4, 5), (-2.4, -10, 2.6)):
+        m.c("body", IC2, (x, 24.6 + h / 2, z), (1.4, h, 1.4), (10, 0, x * 5))
+    for s in (1, -1):
+        for z, L in ((6, 3), (0, 2), (-7, 3.6)):
+            m.c("body", IC, (7.1 * s, 11.6 - L / 2 + 2, z), (0.6, L, 1))
+        # old claw scars across the flank
+        for k in range(3):
+            m.c("body", "light_gray_wool", (7.05 * s, 19 - k * 1.6, -2 + k * 1.4), (0.2, 0.6, 5), (0, 0, 0))
+    m.c("tail", FU, (0, 18, -14.6), (3, 3, 2))
+    # head: the polar bear's head, small ears, a long muzzle with a black nose, dark eyes, a salmon in the jaw
+    bevel(m, "head", FU, (0, 18.6, 17.4), (10, 9, 8), 1.0)
+    bevel(m, "head", FU2, (0, 16.4, 22.6), (6, 4.6, 4), 0.6)
+    m.c("head", DK, (0, 17.8, 24.65), (2.6, 1.6, 0.3))
+    for s in (1, -1):
+        m.c("head", DK, (3 * s, 20, 21.45), (1.2, 1.2, 0.2))
+        m.c("head", FU, (4 * s, 23.8, 16), (2.6, 2, 1.6))
+        m.c("head", "light_gray_wool", (4 * s, 23.8, 16.85), (1.4, 1, 0.2))
+    m.c("jaw", FU2, (0, 13.6, 22), (5.4, 1.8, 4.6))
+    m.c("jaw", "red_concrete", (1, 14.2, 24.4), (8, 1.6, 1.6), (0, 20, 0))
+    m.c("jaw", "light_gray_terracotta", (5.2, 14.2, 26.2), (1, 2.6, 1.6), (0, 20, 0))
+    m.attacks = {"slam": "rear", "frost": "howl", "charge": "charge", "toss": "toss"}
+    m.melee = "bite"
+    return m
+
+
+@model
+def bogmaw():
+    """Bogmaw, the swamp's giant frog: the vanilla orange frog with its cream belly, big eyes on top of a
+    flat head, a wide mouth and the long sticky tongue it shoots out to grab you, a lily pad still stuck on
+    its back and mud on its feet."""
+    m = Model("bogmaw", "quad", 2.4)
+    quad(m, body_y=8, legx=6, legz_front=5, legz_back=-5, neck_y=10, neck_z=6)
+    for b in m.bones:
+        if b["name"] == "jaw": b["pivot"] = [0, 8, 2]
+    m.bone("tongue", "jaw", (0, 8.2, 8))
+    SK, SK2, BL, EY, DK, TG = "orange_terracotta", "terracotta", "white_terracotta", "yellow_concrete", "black_concrete", "pink_concrete"
+    # legs: folded back legs, short front legs, webbed feet
+    for s, (b, z) in ((1, ("legFL", 5)), (-1, ("legFR", 5)), (1, ("legBL", -5)), (-1, ("legBR", -5))):
+        x = 6 * s
+        if z > 0:
+            m.c(b, SK, (x, 3.4, z + 1), (2.6, 5, 2.6))
+        else:
+            bevel(m, b, SK, (x + 1.2 * s, 4.4, z - 1), (4.6, 6, 8), 0.8)
+        m.c(b, SK2, (x + (0 if z > 0 else 1.2 * s), 0.4, z + (2.6 if z > 0 else 1)), (5, 0.8, 4.6))
+        m.c(b, "brown_concrete", (x + (0 if z > 0 else 1.2 * s), 0.9, z + (2.6 if z > 0 else 1)), (5.2, 0.3, 4.8))
+    # body: a squat flat oval, cream belly, darker speckles on the back, a lily pad stuck on top
+    bevel(m, "body", SK, (0, 8.4, -1), (13, 8, 14), 1.6)
+    m.c("body", BL, (0, 4.6, 0), (10, 0.6, 11))
+    for (x, z) in ((-3, -4), (2.6, -1), (0, -6), (-2, 2)):
+        m.c("body", SK2, (x, 12.55, z), (2, 0.3, 2))
+    m.c("body", "green_concrete", (2, 12.9, -3), (6, 0.4, 6), (0, 20, 0))
+    m.c("body", "lime_concrete", (2, 13.15, -3), (2, 0.2, 2), (0, 20, 0))
+    # head: wide and flat, two big eyes up on top, a wide grin
+    bevel(m, "head", SK, (0, 9.6, 8.6), (15, 5, 9), 1.0)
+    for s in (1, -1):
+        bevel(m, "head", SK, (4.6 * s, 13, 8), (4, 3.4, 4), 0.5)
+        m.c("head", EY, (4.6 * s, 13.4, 10.05), (2.8, 2.2, 0.3))
+        m.c("head", DK, (4.6 * s, 13.2, 10.25), (2.8, 0.8, 0.2))
+    m.c("head", DK, (0, 7.6, 13.15), (13, 0.5, 0.3))
+    m.c("jaw", BL, (0, 6.4, 8.6), (14, 1.8, 9))
+    # the tongue, rolled up in the mouth, reaching out on its own bone when it strikes
+    m.c("tongue", TG, (0, 7.6, 10), (2.4, 0.6, 5))
+    m.c("tongue", "red_concrete", (0, 7.8, 12.6), (3, 1, 1.4))
+    m.attacks = {"pull": "bite", "leap": "pounce", "roar": "howl", "poison": "toss"}
+    m.melee = "bite"
+    return m
+
+
+@model
+def ramthunder():
+    """Ramthunder, the king of the mountain goats: the vanilla goat's white coat and long beard, black
+    hooves and a pair of great curled horns, so old that snow and stone have caught in its fleece, with
+    an old bell on a rope round its neck that rings when it charges."""
+    m = Model("ramthunder", "quad", 2.3)
+    quad(m, body_y=15, legx=4.6, legz_front=8, legz_back=-8, neck_y=21, neck_z=12)
+    FU, FU2, HN, HN2, HF, DK = "white_wool", "snow_block", "light_gray_concrete", "polished_andesite", "black_concrete", "gray_concrete"
+    for s, (b, z) in ((1, ("legFL", 8)), (-1, ("legFR", 8)), (1, ("legBL", -8)), (-1, ("legBR", -8))):
+        x = 4.6 * s
+        bevel(m, b, FU, (x, 11.6, z), (4.2, 7, 4.2), 0.6)
+        m.c(b, FU2, (x, 5.6, z), (3, 6, 3))
+        m.c(b, HF, (x, 1.3, z + 0.3), (3.2, 2.6, 3.6))
+    # body: a deep shaggy coat that hangs low on the flanks, stones and snow caught in the fleece
+    bevel(m, "body", FU, (0, 17.6, 0), (12, 10, 20), 1.6)
+    for s in (1, -1):
+        for k in range(5):
+            z = -8 + k * 4
+            L = 3 + (k % 2) * 1.4
+            m.c("body", FU, (5.6 * s, 12.6 - L / 2 + 1, z), (1.2, L, 3.4))
+    m.c("body", FU2, (0, 22.9, 0), (9, 0.6, 14))
+    for (x, z) in ((-2.6, 5), (2, -4)):
+        m.c("body", "cobblestone", (x, 23.2, z), (2, 1.2, 2), (0, 30, 0))
+    m.c("tail", FU, (0, 21, -10.6), (2, 3, 1.6), (30, 0, 0))
+    # head: a long goat head held high, a long beard, small ears, amber eyes with bar pupils
+    bevel(m, "head", FU, (0, 24.6, 15), (6.6, 6.6, 9), 0.8)
+    m.c("head", FU2, (0, 23, 19.8), (4.4, 3.4, 2))
+    m.c("head", DK, (0, 23.8, 20.85), (2.4, 0.8, 0.2))
+    for s in (1, -1):
+        m.c("head", "orange_concrete", (3.35 * s, 25.4, 16.4), (0.2, 1.2, 1.8))
+        m.c("head", HF, (3.45 * s, 25.4, 16.4), (0.1, 0.4, 1.4))
+        m.c("head", FU, (4.4 * s, 26.2, 12.4), (2.4, 1, 1.4), (0, 0, -20 * s))
+        # the horns: thick, ridged and curling back and out
+        horn(m, "head", HN, (2 * s, 28, 14), 5, (-30, 0, -20 * s), (-38, 0, -8 * s), 2.2, 0.86)
+    m.c("jaw", FU, (0, 18.6, 18.4), (2.4, 6, 2.4))
+    m.c("jaw", FU2, (0, 15.2, 18.6), (1.6, 2, 1.6))
+    # an old bell on a rope round the neck
+    m.c("head", "brown_wool", (0, 20.4, 12.6), (6.8, 0.8, 6))
+    m.c("head", "gold_block", (0, 18.2, 15.2), (2.4, 2.6, 2.4))
+    m.c("head", "yellow_concrete", (0, 16.8, 15.2), (2.8, 0.6, 2.8))
+    m.attacks = {"charge": "charge", "leap": "rear", "quake": "howl", "toss": "toss"}
+    m.melee = "bite"
+    return m
+
+
+@model
+def bogged_hunter():
+    """The Bogged Hunter, the oldest skeleton of the swamp: the vanilla bogged's mossy grey-green bones and
+    skull with glowing sockets, red and brown mushrooms growing out of its head and shoulders, vines and
+    moss hanging off it, and a long bow strung with a vine that fires poisoned arrows."""
+    m = Model("bogged_hunter", "biped", 2.1)
+    biped(m, hip=14, legx=2.4, neck=28, shoulder=26.4, armx=5.4)
+    m.bone("bow", "armL", (5.4, 13, 0.4))
+    m.hold = {"bow": 0}
+    m.bend = -24
+    BN, BN2, MS, MS2, RM, BM = "mossy_cobblestone", "tuff", "moss_block", "green_concrete", "red_concrete", "brown_concrete"
+    for s, b in ((1, "legL"), (-1, "legR")):
+        x = 2.4 * s
+        m.c(b, BN, (x, 7.4, 0), (1.8, 13, 1.8))
+        m.c(b, BN2, (x, 0.8, 0.4), (2.4, 1.6, 3))
+        m.c(b, MS, (x, 9, 0), (2.2, 1.2, 2.2))
+    m.c("hips", BN, (0, 15, 0), (5, 2, 2.4))
+    m.c("body", BN, (0, 21, -0.6), (1.6, 8, 1.6))
+    for k in range(4):
+        m.c("body", BN, (0, 18.6 + k * 1.8, 0.4), (6.4 - (k == 0) * 1.4, 0.9, 3))
+    m.c("body", BN, (0, 26.2, 0), (8, 1.2, 3))
+    for (x, z, L) in ((-2.6, 1.8, 5), (2.4, 1.8, 3.4), (0.6, -1.8, 6)):
+        m.c("body", MS2, (x, 26 - L / 2, z), (0.6, L, 0.6))
+        m.c("body", MS, (x, 25.6 - L, z), (1.2, 0.8, 1.2))
+    for s, a in ((1, "armL"), (-1, "armR")):
+        x = 5.4 * s
+        m.c(a, BN, (x, 20, 0), (1.6, 12, 1.6))
+        m.c(a, BN2, (x, 13.4, 0.2), (2.2, 2, 2.2))
+        # mushrooms on the shoulders: a red one on the left, a brown one on the right
+        m.c(a, "white_terracotta", (x, 27.2, 0), (0.8, 1.4, 0.8))
+        m.c(a, RM if s > 0 else BM, (x, 28.2, 0), (3, 0.8, 3))
+    m.c("armL", "white_concrete", (5.4, 28.7, 0.8), (0.5, 0.2, 0.5))
+    bevel(m, "head", BN, (0, 32, 0.3), (8, 8, 8), 0.4)
+    paint(m, "head", "front", (0, 31.6, 4.3), ["........", ".KK..KK.", ".KG..GK.", "...KK...", ".K.KK.K.", "..KKKK.."],
+          {"K": "black_concrete", "G": ("lime_concrete", 0.3, True)}, px=1, depth=0.3)
+    m.c("head", MS, (0, 36.3, 0.3), (8.4, 0.8, 8.4))
+    for (x, z, c, h) in ((-2.4, 1, RM, 2.4), (2, -1.6, BM, 1.8), (0.6, 2.4, RM, 1.4)):
+        m.c("head", "white_terracotta", (x, 36.6 + h / 2, z), (0.8, h, 0.8))
+        m.c("head", c, (x, 37 + h, z), (3.2 - h * 0.4, 0.9, 3.2 - h * 0.4))
+    for x in (-3.4, 3.4):
+        m.c("head", MS2, (x, 33, -4.4), (1, 6, 0.4))
+    # the bow: a long dark bow held upright in the left hand, strung with a vine
+    for k in range(5):
+        y = 13 + (k - 2) * 4
+        m.c("bow", "dark_oak_log", (5.4, y, 0.4 + abs(k - 2) * -1.0 + 1.6), (1, 4.2, 1), (-(k - 2) * 18, 0, 0))
+    m.c("bow", MS2, (5.4, 13, -0.6), (0.3, 16, 0.3))
+    m.attacks = {"volley": "cast", "poison": "swipe", "vines": "slam", "minions": "roar"}
+    m.melee = "swipe"
     return m

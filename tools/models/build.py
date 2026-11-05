@@ -87,6 +87,38 @@ class Model:
                     tx, ty, tz = tilt if isinstance(tilt, (tuple, list)) else (tilt, 0, 0)
                     b["rest"] = [round(-bend + tx, 2), ty, tz]
 
+    LEGS = ("legL", "legR", "legFL", "legFR", "legBL", "legBR", "legML", "legMR")
+
+    def knees(self, frac=0.5, foot=0.22):
+        """Splits each leg at the knee into leg (thigh), shin<side> and foot<side>. The shin bends in the
+        walk; the foot is kept level with the ground by the renderer, so feet stay flat when the boss
+        leans or crouches."""
+        pv = {b["name"]: b for b in self.bones}
+        for leg in self.LEGS:
+            if leg not in self.names or getattr(self, "no_knees", False): continue
+            mine = [c for c in self.cubes if c["b"] == leg]
+            if len(mine) < 2: continue
+            top = pv[leg]["pivot"][1]
+            low = min(c["f"][1] for c in mine)
+            if top - low < 4: continue
+            ky = low + (top - low) * frac
+            cy = lambda c: (c["f"][1] + c["t"][1]) / 2
+            lower = [c for c in mine if cy(c) < ky]
+            if not lower or len(lower) == len(mine): continue
+            suf = leg[3:]
+            sx = sum((c["f"][0] + c["t"][0]) / 2 for c in lower) / len(lower)
+            sz = sum((c["f"][2] + c["t"][2]) / 2 for c in lower) / len(lower)
+            i = next(k for k, b in enumerate(self.bones) if b["name"] == leg)
+            shin, ft = "shin" + suf, "foot" + suf
+            self.names.update((shin, ft))
+            fy = low + max(1.0, (ky - low) * foot)
+            self.bones.insert(i + 1, {"name": shin, "parent": leg, "pivot": [round(sx, 3), round(ky, 3), round(sz, 3)]})
+            self.bones.insert(i + 2, {"name": ft, "parent": shin, "pivot": [round(sx, 3), round(fy, 3), round(sz, 3)], "level": 1})
+            for c in lower:
+                c["b"] = ft if c["t"][1] <= fy + 0.05 else shin
+            for b in self.bones:
+                if b["parent"] == leg and b["name"] not in (shin,): b["parent"] = shin
+
     METAL = ("iron_block", "gold_block", "netherite_block", "polished_deepslate", "chain", "anvil", "copper", "polished_blackstone", "raw_gold_block", "raw_iron_block")
 
     def zones(self):

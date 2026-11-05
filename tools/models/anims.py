@@ -307,6 +307,22 @@ SLIME = {
     }},
 }
 
+# Knees: the shin folds back while its leg swings forward, and stays nearly straight while it carries
+# the weight. Bones a model lacks are skipped, so models without knees are unaffected.
+def _knee(peak, length, up=48, rest=4):
+    t0, t1 = (peak - length * 0.25) % length, (peak + length * 0.22) % length
+    keys = sorted([(0, rest), (t0, rest), (peak, up), (t1, rest), (length, rest)])
+    out, seen = [], set()
+    for t, v in keys:
+        t = round(t, 3)
+        if t in seen: continue
+        seen.add(t); out.append((t, (v, 0, 0)))
+    return K(*out)
+BIPED["walk"]["bones"]["shinL"] = {"rot": _knee(0.27, 1.1)}
+BIPED["walk"]["bones"]["shinR"] = {"rot": _knee(0.82, 1.1)}
+for _n, _p in (("shinFL", 0.22), ("shinBR", 0.22), ("shinFR", 0.67), ("shinBL", 0.67)):
+    QUAD["walk"]["bones"][_n] = {"rot": _knee(_p, 0.9, up=40)}
+
 RIGS = {"biped": BIPED, "quad": QUAD, "spider": SPIDER, "float": FLOAT, "slime": SLIME}
 MELEE = {"biped": "swipe", "quad": "bite", "spider": "fang", "float": "swipe", "slime": "hop"}
 

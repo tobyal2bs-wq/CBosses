@@ -64,17 +64,18 @@ public final class BossMenu implements Listener {
 
     private ItemStack icon(BossDef d) {
         Material egg = Material.matchMaterial(d.entity().name() + "_SPAWN_EGG");
-        ItemStack item = new ItemStack(egg != null ? egg : d.chapterBoss() ? Material.WRITTEN_BOOK : d.seasonal() ? Material.CAKE : Material.WITHER_SKELETON_SKULL);
+        ItemStack item = new ItemStack(egg != null ? egg : d.mini() ? Material.TURTLE_EGG : d.chapterBoss() ? Material.WRITTEN_BOOK : d.seasonal() ? Material.CAKE : Material.WITHER_SKELETON_SKULL);
         item.editMeta(meta -> {
             meta.displayName(Text.mm(d.name()).decoration(TextDecoration.ITALIC, false));
             List<Component> lore = new ArrayList<>();
             if (!d.title().isBlank()) lore.add(Text.mm("<gray><italic>" + Text.escape(d.title())));
-            lore.add(Text.mm(d.chapterBoss() ? T.t("menu.chapter", "<aqua>Chapter ") + d.chapter() + " boss" : d.seasonal() ? T.t("menu.seasonal", "<light_purple>Seasonal: ") + d.season() : T.t("menu.world-boss", "<gold>World boss"))
+            lore.add(Text.mm(d.mini() ? T.t("menu.mini", "<yellow>Mini boss") : d.chapterBoss() ? T.t("menu.chapter", "<aqua>Chapter ") + d.chapter() + " boss" : d.seasonal() ? T.t("menu.seasonal", "<light_purple>Seasonal: ") + d.season() : T.t("menu.world-boss", "<gold>World boss"))
                     .decoration(TextDecoration.ITALIC, false));
             lore.add(Text.mm(T.t("menu.health-attacks", "<gray>Health <white><health></white>  Attacks <white><size></white>  <movement>", "health", (int) d.health(), "size", d.abilities().size(), "movement", d.movement())).decoration(TextDecoration.ITALIC, false));
             if (!d.description().isBlank()) for (String line : wrap(d.description(), 38)) lore.add(Text.mm("<dark_gray>" + Text.escape(line)).decoration(TextDecoration.ITALIC, false));
             lore.add(Component.empty());
-            lore.add(Text.mm(T.t("menu.left-click-test-it-here", "<yellow>Left-click</yellow> <gray>test it here")).decoration(TextDecoration.ITALIC, false));
+            lore.add(Text.mm(T.t("menu.left-click-spawn-here", "<yellow>Left-click</yellow> <gray>spawn it where you stand (real fight)")).decoration(TextDecoration.ITALIC, false));
+            lore.add(Text.mm(T.t("menu.shift-click-test", "<yellow>Shift-left</yellow> <gray>test it in front of you (no rewards)")).decoration(TextDecoration.ITALIC, false));
             lore.add(Text.mm(T.t("menu.right-click-spawn-at-the", "<yellow>Right-click</yellow> <gray>spawn at the main arena")).decoration(TextDecoration.ITALIC, false));
             meta.lore(lore);
         });
@@ -98,6 +99,7 @@ public final class BossMenu implements Listener {
         if (!(event.getInventory().getHolder(false) instanceof Holder h)) return;
         event.setCancelled(true);
         if (!(event.getWhoClicked() instanceof Player p) || event.getClickedInventory() != event.getInventory()) return;
+        if (!BossCommand.canControl(p)) { p.closeInventory(); return; }
         int slot = event.getRawSlot();
         if (slot == 45 && h.page > 0) { open(p, h.page - 1); return; }
         if (slot == 53) { open(p, h.page + 1); return; }
@@ -106,7 +108,8 @@ public final class BossMenu implements Listener {
         p.closeInventory();
         if (event.getClick() == ClickType.RIGHT || event.getClick() == ClickType.SHIFT_RIGHT)
             plugin.service().spawnAt(p, id, plugin.getConfig().getString("schedule.arena", "main"));
-        else plugin.service().test(p, id);
+        else if (event.getClick() == ClickType.SHIFT_LEFT) plugin.service().test(p, id);
+        else plugin.service().spawnHere(p, id);
     }
 
     @EventHandler

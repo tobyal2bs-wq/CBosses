@@ -20,12 +20,15 @@ import java.util.Locale;
 
 /** /cbosses (aliases /cb, /bosses). Players see /cbosses next; controlling bosses needs op or the bosses.use permission. */
 public final class BossCommand implements CommandExecutor, TabCompleter {
-    private static final List<String> ADMIN = List.of("menu", "list", "spawn", "test", "stop", "selftest", "arena", "schedule", "chapter", "season", "finale", "settings", "reload", "info", "next", "help");
+    private static final List<String> ADMIN = List.of("menu", "list", "spawn", "test", "stop", "selftest", "arena", "schedule", "chapter", "season", "finale", "settings", "reload", "info", "next", "help", "minis");
     private final CBossesPlugin plugin;
     private final BossMenu menu;
     private final SettingsMenu settings;
+    private final com.cbosses.mini.MiniMenu miniMenu;
 
-    public BossCommand(CBossesPlugin plugin, BossMenu menu, SettingsMenu settings) { this.plugin = plugin; this.menu = menu; this.settings = settings; }
+    public BossCommand(CBossesPlugin plugin, BossMenu menu, SettingsMenu settings, com.cbosses.mini.MiniMenu miniMenu) {
+        this.plugin = plugin; this.menu = menu; this.settings = settings; this.miniMenu = miniMenu;
+    }
 
     /** Controlling bosses is for operators, and for anyone given bosses.use (cbosses.admin still works). */
     public static boolean canControl(CommandSender sender) {
@@ -49,6 +52,11 @@ public final class BossCommand implements CommandExecutor, TabCompleter {
             case "list" -> s().listBosses(sender);
             case "spawn" -> {
                 if (args.length < 2) { plugin.send(sender, T.t("command.spawn-arena", "<yellow>/<label> spawn <boss> [arena]", "label", label)); return true; }
+                if (args.length > 2 && args[2].equalsIgnoreCase("here")) {
+                    if (player == null) plugin.send(sender, T.t("command.players-only", "<red>Players only."));
+                    else s().spawnHere(player, args[1]);
+                    return true;
+                }
                 String arena = args.length > 2 ? args[2] : plugin.getConfig().getString("schedule.arena", "main");
                 BossDef def = s().def(args[1]);
                 var a = s().arena(arena, false);
@@ -91,6 +99,7 @@ public final class BossCommand implements CommandExecutor, TabCompleter {
                 plugin.send(sender, plugin.chapters().trigger(target, n, true) ? T.t("command.chapter-boss-coming", "<green>Chapter <n> boss is coming for <player>.", "n", n, "player", target.getName()) : T.t("command.they-already-have-a-boss", "<yellow>They already have a boss coming."));
             }
             case "season", "seasons" -> plugin.seasons().command(sender, args);
+            case "minis", "mini" -> minis(sender, player, label, args);
             case "finale" -> {
                 String what = args.length > 1 ? args[1].toLowerCase(Locale.ROOT) : "info";
                 switch (what) {
@@ -104,6 +113,46 @@ public final class BossCommand implements CommandExecutor, TabCompleter {
             default -> help(sender, label);
         }
         return true;
+    }
+
+    private void minis(CommandSender sender, Player player, String label, String[] args) {
+        var m = plugin.minis();
+        String what = args.length > 1 ? args[1].toLowerCase(Locale.ROOT) : (player != null ? "menu" : "info");
+        switch (what) {
+            case "menu" -> { if (player == null) plugin.send(sender, T.t("command.players-only", "<red>Players only.")); else miniMenu.open(player); }
+            case "info", "list" -> m.info(sender);
+            case "add" -> {
+                if (player == null) { plugin.send(sender, T.t("command.players-only", "<red>Players only.")); return; }
+                int r = plugin.getConfig().getInt("minis.radius", 24);
+                try { if (args.length > 2) r = Integer.parseInt(args[2]); } catch (NumberFormatException ignored) { }
+                var s = m.add(player.getLocation(), Math.max(8, r));
+                plugin.send(sender, T.t("mini.added", "<green>Spot <white><id></white> added where you stand.", "id", s.id));
+            }
+            case "remove" -> {
+                String id = args.length > 2 ? args[2] : null;
+                if (id == null && player != null) { var near = m.nearest(player.getLocation(), 16); id = near == null ? null : near.id; }
+                plugin.send(sender, id != null && m.remove(id) ? T.t("mini.removed", "<gray>Spot <white><id></white> removed.", "id", id) : T.t("mini.no-spot", "<red>No spot there. <gray>/<label> minis remove <id>", "label", label));
+            }
+            case "show" -> { if (player != null) { m.toggleMarkers(player); plugin.send(player, m.showing(player) ? T.t("mini.markers-on", "<green>Spot markers on.") : T.t("mini.markers-off", "<gray>Spot markers off.")); } }
+            case "mode" -> {
+                if (args.length < 3 || !com.cbosses.mini.MiniBosses.MODES.contains(args[2].toLowerCase(Locale.ROOT))) { plugin.send(sender, "<yellow>/" + label + " minis mode fixed|random|mixed"); return; }
+                m.set("mode", args[2].toLowerCase(Locale.ROOT)); m.info(sender);
+            }
+            case "every" -> {
+                try { m.set("every-minutes", Math.max(1, Integer.parseInt(args[2]))); m.setNext(System.currentTimeMillis() + m.everyMinutes() * 60_000L); m.info(sender); }
+                catch (Exception e) { plugin.send(sender, "<yellow>/" + label + " minis every <minutes>"); }
+            }
+            case "next" -> {
+                try { m.setNext(System.currentTimeMillis() + Math.max(0, Integer.parseInt(args[2])) * 60_000L); m.info(sender); }
+                catch (Exception e) { plugin.send(sender, "<yellow>/" + label + " minis next <minutes from now>"); }
+            }
+            case "now" -> {
+                int n = m.spawnRound(args.length > 2 ? args[2] : null);
+                plugin.send(sender, n > 0 ? T.t("mini.woke", "<green>A mini boss is waking.") : T.t("mini.none", "<yellow>No mini could wake (max alive reached, no spots or no minis)."));
+            }
+            case "on", "off" -> { m.set("enabled", what.equals("on")); m.info(sender); }
+            default -> plugin.send(sender, "<yellow>/" + label + " minis menu|info|add [radius]|remove [id]|show|mode <m>|every <min>|next <min>|now [boss]|on|off");
+        }
     }
 
     private void arena(CommandSender sender, Player player, String label, String[] args) {
@@ -135,7 +184,8 @@ public final class BossCommand implements CommandExecutor, TabCompleter {
                 {"menu", "<cmd> menu <gray>every boss in a menu"},
                 {"list", "<cmd> list <gray>boss ids"},
                 {"test", "<cmd> test <boss>|phase|stop <gray>try a boss in front of you, nothing is paid"},
-                {"spawn", "<cmd> spawn <boss> [arena] <gray>start a real fight"},
+                {"spawn", "<cmd> spawn <boss> [arena|here] <gray>start a real fight (here: where you stand)"},
+                {"minis", "<cmd> minis <gray>mini boss spots, timer, mode and markers"},
                 {"stop", "<cmd> stop [arena|boss] <gray>send bosses away"},
                 {"arena", "<cmd> arena setspawn|wand|region|radius|show|clear|delete <arena>"},
                 {"schedule", "<cmd> schedule on|off <gray>the weekly boss"},
@@ -161,6 +211,7 @@ public final class BossCommand implements CommandExecutor, TabCompleter {
             case "arena" -> filter(List.of("setspawn", "wand", "show", "region", "radius", "clear", "delete", "list"), args[1]);
             case "schedule" -> filter(List.of("on", "off"), args[1]);
             case "finale" -> filter(List.of("info", "wake", "reset"), args[1]);
+            case "minis", "mini" -> filter(List.of("menu", "info", "add", "remove", "show", "mode", "every", "next", "now", "on", "off"), args[1]);
             case "settings", "config" -> filter(List.of("effects", "schedule", "fight", "chapters", "seasons", "set"), args[1]);
             case "season", "seasons" -> filter(plugin.seasons().ids(), args[1]);
             case "chapter" -> { List<String> out = new ArrayList<>(List.of("reset", "retry")); for (Player p : Bukkit.getOnlinePlayers()) out.add(p.getName()); yield filter(out, args[1]); }
@@ -172,7 +223,11 @@ public final class BossCommand implements CommandExecutor, TabCompleter {
             return filter(paths, args[2]);
         }
         if (args.length == 3) return switch (sub) {
-            case "spawn", "arena" -> filter(s().arenaIds(), args[2]);
+            case "spawn" -> { List<String> out = new ArrayList<>(s().arenaIds()); out.add("here"); yield filter(out, args[2]); }
+            case "arena" -> filter(s().arenaIds(), args[2]);
+            case "minis", "mini" -> args[1].equalsIgnoreCase("mode") ? filter(com.cbosses.mini.MiniBosses.MODES, args[2])
+                    : args[1].equalsIgnoreCase("now") ? filter(plugin.minis().minis().stream().map(com.cbosses.fight.BossDef::id).toList(), args[2])
+                    : args[1].equalsIgnoreCase("remove") ? filter(plugin.minis().spots().stream().map(x -> x.id).toList(), args[2]) : List.of();
             case "season", "seasons" -> filter(List.of("on", "off", "auto"), args[2]);
             case "chapter" -> filter(List.of("1", "2", "3", "4", "5", "6", "7", "8", "9", "10"), args[2]);
             default -> List.of();
