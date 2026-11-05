@@ -20,6 +20,12 @@ def tag(m):
             c["g"] = "detail"
         elif vol <= 4 and small <= 0.6:
             c["g"] = "trim"
+    # every model must lose something on low detail: tag its smallest untagged tenth
+    if not any(c.get("g") in ("detail", "trim") for c in m.cubes):
+        vol = lambda c: (c["t"][0] - c["f"][0]) * (c["t"][1] - c["f"][1]) * (c["t"][2] - c["f"][2])
+        free = sorted((c for c in m.cubes if not c.get("g") and not c.get("l")), key=vol)
+        for c in free[:max(1, len(free) // 10)]:
+            c["g"] = "detail"
 
 
 ABILITIES = ["lightning", "shockwave", "minions", "fire_ring", "pull", "leap", "poison", "blink", "frost", "volley", "darkness", "levitate",
