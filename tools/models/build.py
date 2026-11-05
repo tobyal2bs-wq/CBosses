@@ -186,4 +186,5 @@ class Model:
         for c in self.cubes: assert c["b"] in bn
         return {"rig": self.rig, "scale": self.scale, "height": round(self.height(), 2), "bones": self.bones, "cubes": self.cubes,
                 "attacks": self.attacks, "melee": self.melee, "spawn": self.spawn, "death": self.death,
-                "zones": getattr(self, "zone_list", []), "hitbox": getattr(self, "hitbox", 1)}
+                "zones": getattr(self, "zone_list", []), "hitbox": getattr(self, "hitbox", 1),
+                **({"anims": self.anims} if getattr(self, "anims", None) else {})}

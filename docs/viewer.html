@@ -277,7 +277,7 @@ function choose(id) {
   const n = model.cubes.length;
   const parentOf = Object.fromEntries(model.bones.map(b => [b.name, b.parent]));
   const shellOf = b => { while (b) { if (b.startsWith("shell")) return true; b = parentOf[b]; } return false; };
-  cur = { boss, model, group, meshes, locals, rig: DATA.rigs[model.rig], H: model.height * model.scale / 16,
+  cur = { boss, model, group, meshes, locals, rig: Object.assign({}, DATA.rigs[model.rig], model.anims || {}), H: model.height * model.scale / 16,
     pose: Array.from({ length: n }, () => new Mt()), op: Array.from({ length: n }, () => new Mt()),
     anim: Array.from({ length: n }, () => null), shell: model.cubes.map(c => shellOf(c.b)), block: model.cubes.map(c => c.k), lit: model.cubes.map(c => !!c.l), zoneBoxes, mobBox };
   attack = null; timeline = null; mode = "live"; hurtT = 9;

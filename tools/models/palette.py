@@ -59,7 +59,7 @@ P = {
  "mushroom_stem": ("flat", "#d8d3c4", "#c8c2b1"), "red_mushroom_block": ("ore", "#b42620", "#e8e0d0"),
  "brown_mushroom_block": ("noise", "#946b4c", "#7f593c"), "shroomlight": ("glow", "#f2a24a", "#ffd88a"),
  "nether_wart_block": ("noise", "#7a0b0b", "#5a0606"), "warped_wart_block": ("noise", "#167a7a", "#0f5c5c"),
- "sculk": ("ore", "#0d1f26", "#2ec5d6"), "sculk_catalyst": ("glow", "#2b3a3a", "#5ef0ff"),
+ "sculk": ("ore", "#0d1f26", "#1a6f7a"), "sculk_catalyst": ("glow", "#2b3a3a", "#5ef0ff"),
  "dried_kelp_block": ("stripes", "#3a4127", "#2a301b"), "cactus": ("stripes", "#5c8a2e", "#3f6b1c"),
  "slime_block": ("glass", "#6fc35a", "#8ad86f"), "honey_block": ("glass", "#f1a42a", "#f7c25a"),
  "honeycomb_block": ("bricks", "#e09a24", "#c47e14"), "sponge": ("ore", "#c5c04a", "#a29d33"),

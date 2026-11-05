@@ -2027,24 +2027,14 @@ def king_gloop():
     for x, z, h in ((-9, 15.2, 5), (4, 15.2, 3.4), (15.2, 6, 4), (-15.2, -3, 6), (8, -15.2, 4.4)):
         m.c("body", "lime_stained_glass", (x, 4 + h / 2, z), (1.6, h, 1.6))
         m.c("body", "lime_stained_glass", (x, 3.6, z), (2.2, 1.6, 2.2))
-    # what it swallowed: an adventurer's skull and ribs, a sword, gold, a potion, the old core
+    # the core: a darker heart of jelly
     m.c("inner", "lime_concrete", (0, 14, 0), (11, 11, 11))
     m.c("inner", "green_concrete", (0, 14, 0), (7, 7, 11.4))
     m.c("inner", "green_concrete", (0, 14, 0), (11.4, 7, 7))
-    m.c("inner", "bone_block", (-6, 5.4, -4), (4.4, 4, 4.4), (0, 25, 12))
-    m.c("inner", "black_concrete", (-5.4, 5.6, -1.7), (1, 1, 0.2), (0, 25, 12))
-    m.c("inner", "black_concrete", (-7.4, 5.6, -2.6), (1, 1, 0.2), (0, 25, 12))
-    for k in range(4):
-        m.c("inner", "bone_block", (5, 4 + k * 1.6, -6), (5, 0.7, 0.7), (0, 30, 0))
-    m.c("inner", "bone_block", (5, 6.4, -6), (0.8, 7, 0.8), (0, 30, 0))
+    # only one thing it swallowed is still in there: the old king's sword, standing in the core
     m.c("inner", "iron_block", (7, 21, -6), (1, 10, 1.4), (35, 0, 25))
     m.c("inner", "gold_block", (4.6, 16.6, -5.2), (3.4, 0.8, 1), (35, 0, 25))
     m.c("inner", "brown_wool", (3.6, 15.4, -4.8), (0.9, 2.6, 0.9), (35, 0, 25))
-    for x, z, r in ((8, 5, 30), (9.4, 6.8, 70), (6.6, 7, 10), (-8, 7, 50)):
-        m.c("inner", "gold_block", (x, 3.4, z), (2.6, 0.7, 2.6), (0, r, 0))
-    m.c("inner", "pink_stained_glass", (-7, 19, 6), (2.6, 3.4, 2.6), (0, 0, 20), light=True)
-    m.c("inner", "white_wool", (-7.6, 21, 6), (1, 1, 1), (0, 0, 20))
-    m.c("inner", "diamond_block", (-3, 23, -4), (2, 2, 2), (45, 45, 0), light=True)
     # face: big glossy eyes with highlights, angry brows, cheeks, a wide mouth with a tongue
     m.m("body", "black_concrete", (6, 17.6, 15.1), (5, 6, 0.4))
     m.m("body", "white_concrete", (7, 19.4, 15.35), (1.8, 1.8, 0.2))
