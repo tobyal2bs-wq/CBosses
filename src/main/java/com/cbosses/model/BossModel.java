@@ -211,7 +211,46 @@ public final class BossModel {
     private Matrix4f world() {
         float r = ModelRig.rad(yaw);
         Vector3f off = new Matrix4f().rotationY(-r).transformDirection(new Vector3f(attach));
-        return new Matrix4f().translation(-off.x, -off.y, -off.z).rotateY(-r);
+        return new Matrix4f().translation(-off.x, -off.y + drop, -off.z).rotateY(-r);
+    }
+
+    /** Per foot ground height (model pixels) and how far the whole body sinks (blocks) on uneven ground. */
+    private float[] footGround;
+    private float drop;
+
+    /**
+     * Looks at the ground under each foot a few times a second: steps up to one block are climbed by the
+     * leg bending (IK in ModelRig), and when every foot is lower the body sinks with them, up to 0.6 blocks.
+     * At most three block reads a foot, only blocks this region owns.
+     */
+    private void sampleGround(Location at) {
+        int n = model.feet.length;
+        if (n == 0) return;
+        if (footGround == null) footGround = new float[n];
+        if (flying || !mob.isOnGround()) { java.util.Arrays.fill(footGround, 0); drop = 0; return; }
+        float s = model.scale / 16f, r = ModelRig.rad(yaw);
+        Matrix4f turn = new Matrix4f().rotationY(-r);
+        org.bukkit.World w = at.getWorld();
+        float low = 0;
+        for (int i = 0; i < n; i++) {
+            Vector3f p = model.bones.get(model.feet[i]).pivot();
+            Vector3f o = turn.transformDirection(new Vector3f(p.x * s - attach.x, 0, p.z * s - attach.z));
+            Location spot = new Location(w, at.getX() + o.x, at.getY(), at.getZ() + o.z);
+            if (!Bukkit.isOwnedByCurrentRegion(spot)) { footGround[i] = 0; continue; }
+            int bx = spot.getBlockX(), by = spot.getBlockY(), bz = spot.getBlockZ();
+            double top;
+            org.bukkit.block.Block b0 = w.getBlockAt(bx, by, bz);
+            if (!b0.isPassable()) top = b0.getBoundingBox().getMaxY();
+            else {
+                org.bukkit.block.Block b1 = w.getBlockAt(bx, by - 1, bz);
+                top = !b1.isPassable() ? b1.getBoundingBox().getMaxY() : by - 1;
+            }
+            float g = (float) Math.max(-0.6, Math.min(1.0, top - at.getY()));
+            low = Math.min(low, g);
+            footGround[i] = g;
+        }
+        drop = low;
+        for (int i = 0; i < n; i++) footGround[i] = (footGround[i] - low) / s;
     }
 
     // ------------------------------------------------------------------ live
@@ -280,7 +319,8 @@ public final class BossModel {
             layers.add(new ModelRig.Layer(attack, attackT, Math.max(0, w)));
         }
         if (hurtT < 0.35f) layers.add(new ModelRig.Layer(model.anim("hurt"), hurtT, 1));
-        bones = ModelRig.pose(model, layers);
+        if (model.feet.length > 0 && frame % 4 == 0) sampleGround(now);
+        bones = ModelRig.pose(model, layers, footGround);
         Matrix4f[] cubes = ModelRig.cubes(model, bones);
         System.arraycopy(cubes, 0, pose, 0, cubes.length);
         for (int i = 0; i < model.entranceOnly.length && i < pose.length; i++) if (model.entranceOnly[i]) pose[i] = new Matrix4f().scale(0);
