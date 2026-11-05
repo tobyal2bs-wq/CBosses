@@ -271,8 +271,7 @@ public final class ModelRig {
                 if (b.level() && shin >= 0 && leg >= 0) feet.add(i);
             }
             model.feet = feet.stream().mapToInt(Integer::intValue).toArray();
-            int root = index.getOrDefault("root", -1);
-            model.root = root;
+            model.root = index.getOrDefault("root", -1);
             out.put(e.getKey(), model);
         }
         return out;
