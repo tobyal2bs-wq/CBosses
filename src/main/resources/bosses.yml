@@ -24,12 +24,13 @@
 # description: shown in /cbosses menu and the README.
 bosses:
 
-  # ------------------------------------------------------------ the 25 general bosses (weekly rotation)
+  # ------------------------------------------------------------ the weekly bosses (5000 health)
   slagheart:
     name: "<gradient:#3d3d3d:#ff6a00><bold>Slagheart</bold></gradient>"
     title: "The Molten Colossus"
+    tier: big
     entity: IRON_GOLEM
-    health: 2000
+    health: 5000
     damage: 12
     armor: 10
     bar: RED
@@ -52,8 +53,9 @@ bosses:
   warlord_gruk:
     name: "<gradient:#ffb300:#fff176><bold>Warlord Gruk</bold></gradient>"
     title: "Gold-Hungry Tyrant of the Bastion"
+    tier: big
     entity: PIGLIN_BRUTE
-    health: 1700
+    health: 5000
     scale: 2.0
     damage: 15
     armor: 10
@@ -82,8 +84,9 @@ bosses:
   grand_augur:
     name: "<gradient:#4a5a8a:#ffd54f><bold>The Grand Augur</bold></gradient>"
     title: "King of the Illagers"
+    tier: big
     entity: EVOKER
-    health: 1700
+    health: 5000
     damage: 11
     armor: 6
     bar: BLUE
@@ -106,8 +109,9 @@ bosses:
   crimson_ronin:
     name: "<gradient:#8b0000:#ff6b6b><bold>The Crimson Oni</bold></gradient>"
     title: "Warlord of the Red Mountain"
+    tier: big
     entity: VINDICATOR
-    health: 1800
+    health: 5000
     damage: 13
     armor: 8
     bar: RED
@@ -130,8 +134,9 @@ bosses:
   thunderback:
     name: "<gradient:#5d3a1a:#ffe14d><bold>Thunderback</bold></gradient>"
     title: "The Storm Ape"
+    tier: big
     entity: RAVAGER
-    health: 2100
+    health: 5000
     damage: 12
     armor: 8
     bar: YELLOW
@@ -152,8 +157,9 @@ bosses:
   gorehorn:
     name: "<gradient:#3e2723:#ffcc80><bold>Gorehorn</bold></gradient>"
     title: "Champion of the Pit"
+    tier: big
     entity: RAVAGER
-    health: 2000
+    health: 5000
     damage: 13
     armor: 8
     bar: WHITE
@@ -174,8 +180,9 @@ bosses:
   abyssal_eye:
     name: "<gradient:#003b46:#66fcf1><bold>The Abyssal Eye</bold></gradient>"
     title: "Sentinel of the Drowned Temple"
+    tier: big
     entity: BLAZE
-    health: 1700
+    health: 5000
     damage: 11
     armor: 10
     bar: BLUE
@@ -199,8 +206,9 @@ bosses:
   overgrowth:
     name: "<gradient:#2d6a4f:#d8a657><bold>Overgrowth</bold></gradient>"
     title: "The Guardian the Jungle Took"
+    tier: big
     entity: IRON_GOLEM
-    health: 1900
+    health: 5000
     damage: 11
     armor: 10
     bar: GREEN
@@ -223,8 +231,9 @@ bosses:
   prism_sentinel:
     name: "<gradient:#7b2ff7:#4ef0ff><bold>The Prism Sentinel</bold></gradient>"
     title: "Cut From the Heart of the Mountain"
+    tier: big
     entity: IRON_GOLEM
-    health: 1900
+    health: 5000
     damage: 11
     armor: 14
     bar: PURPLE
@@ -245,8 +254,9 @@ bosses:
   tiki_warden:
     name: "<gradient:#bf360c:#ffb300><bold>The Tiki Warden</bold></gradient>"
     title: "Idol of the Burning Isle"
+    tier: big
     entity: ZOMBIE
-    health: 1800
+    health: 5000
     damage: 12
     armor: 8
     bar: YELLOW
@@ -269,8 +279,9 @@ bosses:
   hollow_king:
     name: "<gradient:#1b263b:#7fd1ff><bold>THE HOLLOW KING</bold></gradient>"
     title: "The King Wakes"
+    tier: big
     entity: WITHER_SKELETON
-    health: 2200
+    health: 5000
     damage: 13
     armor: 12
     bar: BLUE
@@ -293,8 +304,9 @@ bosses:
   broodmother:
     name: "<gradient:#33691e:#aed581><bold>The Broodmother</bold></gradient>"
     title: "Queen of the Deep Webs"
+    tier: big
     entity: SPIDER
-    health: 1400
+    health: 5000
     scale: 3.0
     damage: 10
     speed: 0.34
@@ -319,8 +331,9 @@ bosses:
   ironhide_behemoth:
     name: "<gradient:#5d4037:#bcaaa4><bold>The Ironhide Behemoth</bold></gradient>"
     title: "War Beast of the Raid"
+    tier: big
     entity: RAVAGER
-    health: 2400
+    health: 5000
     scale: 1.7
     damage: 15
     armor: 12
@@ -342,8 +355,9 @@ bosses:
   fenrir:
     name: "<gradient:#424242:#e0e0e0><bold>Fenrir</bold></gradient>"
     title: "The Wolf That Swallows the Moon"
+    tier: big
     entity: WOLF
-    health: 1500
+    health: 5000
     scale: 3.0
     damage: 13
     speed: 0.42
@@ -368,8 +382,9 @@ bosses:
   tide_tyrant:
     name: "<gradient:#00838f:#80deea><bold>The Tide Tyrant</bold></gradient>"
     title: "Drowned King of the Sunken Fleet"
+    tier: big
     entity: DROWNED
-    health: 1500
+    health: 5000
     scale: 2.2
     damage: 12
     armor: 8
@@ -396,8 +411,9 @@ bosses:
   void_walker:
     name: "<gradient:#311b92:#b388ff><bold>The Void Walker</bold></gradient>"
     title: "It Was Never Really Here"
+    tier: big
     entity: ENDERMAN
-    health: 1400
+    health: 5000
     scale: 1.6
     damage: 13
     armor: 6
@@ -419,8 +435,9 @@ bosses:
   storm_herald:
     name: "<gradient:#3949ab:#b3e5fc><bold>The Storm Herald</bold></gradient>"
     title: "Voice of the Thunderhead"
+    tier: big
     entity: EVOKER
-    health: 1200
+    health: 5000
     scale: 2.0
     damage: 10
     armor: 6
@@ -442,8 +459,9 @@ bosses:
   pharaoh:
     name: "<gradient:#f9a825:#fff59d><bold>Pharaoh Ankhamun</bold></gradient>"
     title: "Risen from the Buried Temple"
+    tier: big
     entity: HUSK
-    health: 1600
+    health: 5000
     scale: 2.2
     damage: 12
     armor: 8
@@ -471,8 +489,9 @@ bosses:
   executioner:
     name: "<gradient:#263238:#90a4ae><bold>The Executioner</bold></gradient>"
     title: "Axe of the Woodland Mansion"
+    tier: big
     entity: VINDICATOR
-    health: 1500
+    health: 5000
     scale: 1.9
     damage: 17
     armor: 10
@@ -499,8 +518,9 @@ bosses:
   ember_queen:
     name: "<gradient:#9d0208:#ffba08><bold>The Ember Queen</bold></gradient>"
     title: "Queen of the Ember Court"
+    tier: big
     entity: BLAZE
-    health: 2000
+    health: 5000
     damage: 11
     armor: 8
     bar: RED
@@ -524,8 +544,9 @@ bosses:
   gravelord:
     name: "<gradient:#6a1b9a:#e040fb><bold>The Gravelord</bold></gradient>"
     title: "Lord of the Restless Dead"
+    tier: big
     entity: WITHER_SKELETON
-    health: 1600
+    health: 5000
     scale: 2.2
     damage: 13
     armor: 10
@@ -553,8 +574,9 @@ bosses:
   captain_brine:
     name: "<gradient:#005f73:#94d2bd><bold>Captain Brine</bold></gradient>"
     title: "Captain of the Drowned"
+    tier: big
     entity: DROWNED
-    health: 1900
+    health: 5000
     damage: 10
     armor: 8
     bar: BLUE
@@ -577,8 +599,9 @@ bosses:
   keywarden:
     name: "<gradient:#b8860b:#fff3b0><bold>The Keywarden</bold></gradient>"
     title: "Guardian of the Five Keys"
+    tier: big
     entity: IRON_GOLEM
-    health: 1800
+    health: 5000
     damage: 9
     armor: 12
     bar: YELLOW
@@ -601,8 +624,9 @@ bosses:
   bloodtusk:
     name: "<gradient:#b71c1c:#ff8a80><bold>Bloodtusk</bold></gradient>"
     title: "The Crimson Charger"
+    tier: big
     entity: HOGLIN
-    health: 1800
+    health: 5000
     scale: 2.0
     damage: 14
     speed: 0.36
@@ -627,8 +651,9 @@ bosses:
   king_gloop:
     name: "<gradient:#7cb342:#dce775><bold>King Gloop</bold></gradient>"
     title: "Monarch of the Swamp"
+    tier: big
     entity: SLIME
-    health: 1600
+    health: 5000
     scale: 1
     damage: 12
     armor: 6
@@ -649,12 +674,281 @@ bosses:
       commands: []
       top-commands: []
     description: "The slime king. Bounces, quakes the arena and splits into a crowd of little slimes."
-  # ------------------------------------------------------------ legends: Warden, Wither, Ender Dragon, Breeze and the finale
+  clockwork_colossus:
+    name: "<gradient:#b87333:#ffd54f><bold>The Clockwork Colossus</bold></gradient>"
+    title: "Wound Up and Furious"
+    tier: big
+    entity: IRON_GOLEM
+    health: 5000
+    damage: 12
+    armor: 8
+    bar: YELLOW
+    theme: iron
+    movement: walk
+    phases: [0.5]
+    ability-seconds: 7
+    abilities: [slam, charge, blink, darkness]
+    health-per-player: 0.25
+    rewards:
+      money: 60000
+      top-money: 180000
+      items: ["COPPER_BLOCK 16", "REDSTONE_BLOCK 4", "DIAMOND 3"]
+      top-items: ["NETHERITE_SCRAP 1"]
+      commands: []
+      top-commands: []
+    description: "A copper and iron giant wound up by a great key in its back. Its chest is a round window onto a turning gold gear with a glowing core; its eyes are lit slits in an iron helm with a steam whistle on top, and twin exhaust stacks rise behind its shoulders."
+  mossback:
+    name: "<gradient:#33691e:#a1887f><bold>Mossback</bold></gradient>"
+    title: "The Walking Hill"
+    tier: big
+    entity: RAVAGER
+    health: 5000
+    damage: 12
+    armor: 8
+    bar: GREEN
+    theme: nature
+    movement: walk
+    phases: [0.5]
+    minion: SPIDER
+    minions: 2
+    ability-seconds: 7
+    abilities: [slam, quake, blink, shockwave]
+    health-per-player: 0.25
+    rewards:
+      money: 60000
+      top-money: 180000
+      items: ["MOSS_BLOCK 32", "AZALEA 8", "DIAMOND 3"]
+      top-items: ["ENCHANTED_GOLDEN_APPLE 1"]
+      commands: []
+      top-commands: []
+    description: "An old tortoise the size of a house that has slept so long a ruined watchtower and a tree grew on its shell. Its shell is ringed with dark scutes, moss spills over the rim, and its wrinkled head peers out with tired yellow eyes."
+  old_wizard:
+    name: "<gradient:#4a148c:#e1bee7><bold>Archmage Bramblebeard</bold></gradient>"
+    title: "Older Than the Mountains"
+    tier: big
+    entity: EVOKER
+    health: 5000
+    damage: 12
+    armor: 8
+    bar: PURPLE
+    theme: witch
+    movement: walk
+    phases: [0.5]
+    minion: VEX
+    minions: 3
+    ability-seconds: 7
+    abilities: [blink, slam, orbs, minions]
+    health-per-player: 0.25
+    rewards:
+      money: 60000
+      top-money: 180000
+      items: ["LAPIS_BLOCK 8", "EXPERIENCE_BOTTLE 32", "DIAMOND 3"]
+      top-items: ["ENCHANTED_BOOK 1"]
+      commands: []
+      top-commands: []
+    description: "An old wizard in a tall purple hat with a brown band and a gold buckle, the tip bent over. Bushy white brows hide his eyes, a big nose sits over a long white beard, his purple robe is belted, he leans on a crooked staff topped with a glowing crystal and holds a heavy open spell book."
+  hollow_mage:
+    name: "<gradient:#0d47a1:#ffd54f><bold>The Hollow Mage</bold></gradient>"
+    title: "Nothing Under the Hat"
+    tier: big
+    entity: WITCH
+    health: 5000
+    damage: 12
+    armor: 8
+    bar: BLUE
+    theme: void
+    movement: walk
+    phases: [0.5]
+    ability-seconds: 7
+    abilities: [blink, slam, orbs, fire_ring]
+    health-per-player: 0.25
+    rewards:
+      money: 60000
+      top-money: 180000
+      items: ["ENDER_PEARL 16", "GLOWSTONE 16", "DIAMOND 3"]
+      top-items: ["TOTEM_OF_UNDYING 1"]
+      commands: []
+      top-commands: []
+    description: "A small shadow-faced mage under a huge battered straw hat with a green band and a crumpled crown folding forward. Under the brim there is only darkness and two glowing yellow eyes. A tall-collared blue coat with crossed leather straps and a pale blue buckle, white sleeves with a green stripe, striped trousers, big brown shoes, and a bent wooden staff."
+  horned_brute:
+    name: "<gradient:#5d4037:#d7ccc8><bold>Gorrak the Horned</bold></gradient>"
+    title: "Brute of the High Pass"
+    tier: big
+    entity: RAVAGER
+    health: 5000
+    damage: 12
+    armor: 8
+    bar: WHITE
+    theme: earth
+    movement: walk
+    phases: [0.5]
+    ability-seconds: 7
+    abilities: [slam, charge, roar, shockwave, quake]
+    health-per-player: 0.25
+    rewards:
+      money: 60000
+      top-money: 180000
+      items: ["LEATHER 32", "IRON_BLOCK 4", "DIAMOND 3"]
+      top-items: ["NETHERITE_SCRAP 1"]
+      commands: []
+      top-commands: []
+    description: "A squat mountain brute: a huge boxy tan body with mottled hide, a heavy head with thick dark brows, a long striped snout, two stubby white tusks and great curled black horns. Long arms hang to the ground, a ragged hide loincloth hangs in strips and he drags an iron-headed spear."
+  rotting_giant:
+    name: "<gradient:#33691e:#26c6da><bold>The Rotting Giant</bold></gradient>"
+    title: "Too Big to Stay Buried"
+    tier: big
+    entity: GIANT
+    health: 5000
+    damage: 12
+    armor: 8
+    bar: GREEN
+    theme: toxic
+    movement: walk
+    phases: [0.5]
+    minion: ZOMBIE
+    minions: 4
+    ability-seconds: 7
+    abilities: [slam, charge, roar, quake, shockwave]
+    health-per-player: 0.25
+    rewards:
+      money: 60000
+      top-money: 180000
+      items: ["ROTTEN_FLESH 64", "IRON_INGOT 24", "DIAMOND 3"]
+      top-items: ["ENCHANTED_GOLDEN_APPLE 1"]
+      commands: []
+      top-commands: []
+    description: "A towering rotting giant: a small green head with sunken black eyes on a broad body, a torn cyan shirt stained with moss and rot, ragged purple trousers torn off at the knee, and long gangly green arms and legs. Flies and a rot cloud hang round him."
+  dusk_scorpion:
+    name: "<gradient:#311b92:#ff1744><bold>The Dusk Scorpion</bold></gradient>"
+    title: "Sting of the Badlands"
+    tier: big
+    entity: SPIDER
+    health: 5000
+    damage: 12
+    armor: 8
+    bar: PURPLE
+    theme: toxic
+    movement: walk
+    phases: [0.5]
+    minion: CAVE_SPIDER
+    minions: 3
+    ability-seconds: 7
+    abilities: [charge, slam, poison]
+    health-per-player: 0.25
+    rewards:
+      money: 60000
+      top-money: 180000
+      items: ["SPIDER_EYE 16", "GOLD_BLOCK 4", "DIAMOND 3"]
+      top-items: ["NETHERITE_SCRAP 1"]
+      commands: []
+      top-commands: []
+    description: "A giant slate-purple scorpion: a long plated body with glowing red eye clusters, two heavy pincers held forward, ragged fins along its sides, eight thin legs, and a segmented tail that arches right over its back to a blocky stinger."
+  grave_marshal:
+    name: "<gradient:#37474f:#b0bec5><bold>The Grave Marshal</bold></gradient>"
+    title: "Keeps the Dead in Line"
+    tier: big
+    entity: WITHER_SKELETON
+    health: 5000
+    damage: 12
+    armor: 8
+    bar: WHITE
+    theme: bone
+    movement: walk
+    phases: [0.5]
+    minion: SKELETON
+    minions: 3
+    ability-seconds: 7
+    abilities: [slam, charge, volley, shockwave]
+    health-per-player: 0.25
+    rewards:
+      money: 60000
+      top-money: 180000
+      items: ["BONE_BLOCK 16", "IRON_BLOCK 4", "DIAMOND 3"]
+      top-items: ["NETHERITE_SCRAP 1"]
+      commands: []
+      top-commands: []
+    description: "A skeleton general from a lost war: the vanilla skeleton's skull and ribs inside dark purple plate, with huge frayed pauldrons, armoured boots and bracers, a stone war hammer in its right hand and a tower shield on its left arm with the arrows of its last battle still stuck in it."
+  mayor_grumble:
+    name: "<gradient:#6d4c41:#ffcc80><bold>Mayor Grumble</bold></gradient>"
+    title: "Taxes Are Due"
+    tier: big
+    entity: VINDICATOR
+    health: 5000
+    damage: 12
+    armor: 8
+    bar: YELLOW
+    theme: gold
+    movement: walk
+    phases: [0.5]
+    minion: VINDICATOR
+    minions: 2
+    ability-seconds: 7
+    abilities: [minions, volley, quake, roar]
+    health-per-player: 0.25
+    rewards:
+      money: 60000
+      top-money: 180000
+      items: ["EMERALD_BLOCK 4", "GOLD_INGOT 16", "DIAMOND 3"]
+      top-items: ["TOTEM_OF_UNDYING 1"]
+      commands: []
+      top-commands: []
+    description: "The mayor as the meme: one big villager head walking on two stubby legs that stand right in front of its face, with flat feet poking forward. A thick dark unibrow sticks out over the eyes, the left leg stands where the nose would be, the right one at the corner of the face, the mouth peeks out between."
+  shulker_matriarch:
+    name: "<gradient:#6a1b9a:#f3e5f5><bold>The Shulker Matriarch</bold></gradient>"
+    title: "Mother of the End City"
+    tier: big
+    entity: BLAZE
+    health: 5000
+    damage: 12
+    armor: 8
+    bar: PURPLE
+    theme: void
+    movement: hover
+    fly-height: 2
+    phases: [0.5]
+    minion: ENDERMITE
+    minions: 3
+    ability-seconds: 7
+    abilities: [orbs, levitate, shockwave, dive]
+    health-per-player: 0.25
+    rewards:
+      money: 60000
+      top-money: 180000
+      items: ["SHULKER_SHELL 4", "ENDER_PEARL 16", "DIAMOND 3"]
+      top-items: ["ELYTRA 1"]
+      commands: []
+      top-commands: []
+    description: "The Shulker Matriarch from the oldest End city: a huge purpur shell that opens to show the pale yellow head inside, four smaller shulker boxes circling her, and an end rod lamp set on the lid."
+  old_ironroot:
+    name: "<gradient:#455a64:#9ccc65><bold>Old Ironroot</bold></gradient>"
+    title: "The Golem the Forest Kept"
+    tier: big
+    entity: IRON_GOLEM
+    health: 5000
+    damage: 12
+    armor: 8
+    bar: GREEN
+    theme: nature
+    movement: walk
+    phases: [0.5]
+    ability-seconds: 7
+    abilities: [slam, quake, shockwave, spikes]
+    health-per-player: 0.25
+    rewards:
+      money: 60000
+      top-money: 180000
+      items: ["IRON_BLOCK 6", "MOSS_BLOCK 32", "DIAMOND 3"]
+      top-items: ["ENCHANTED_GOLDEN_APPLE 1"]
+      commands: []
+      top-commands: []
+    description: "An iron golem left standing in a meadow for a hundred years: the vanilla golem's build, its plates gone pale, moss and dandelions grown over its shoulders, back and legs, and a sapling in a clump of moss rooted on its left shoulder."
+  # ------------------------------------------------------------ mythic: Warden, Wither, Ender Dragon, Breeze and the finale (8000 health)
   the_listener:
     name: "<gradient:#052e33:#4ae3e3><bold>THE LISTENER BELOW</bold></gradient>"
     title: "It Hears Your Heartbeat"
+    tier: mythic
     entity: IRON_GOLEM
-    health: 3600
+    health: 8000
     damage: 15
     armor: 14
     bar: BLUE
@@ -662,7 +956,7 @@ bosses:
     movement: walk
     phases: [0.75, 0.5, 0.25]
     ability-seconds: 5
-    abilities: [slam, darkness, quake, sonic_boom, shockwave, pull, charge]
+    abilities: [sonic_boom, slam, quake, darkness, shockwave, pull, charge]
     health-per-player: 0.25
     rewards:
       money: 100000
@@ -675,8 +969,9 @@ bosses:
   withered_tyrant:
     name: "<gradient:#2b2b2b:#8b0000><bold>The Withered Tyrant</bold></gradient>"
     title: "Three Skulls, One Hunger"
+    tier: mythic
     entity: WITHER_SKELETON
-    health: 2600
+    health: 8000
     damage: 14
     armor: 12
     bar: PURPLE
@@ -700,8 +995,9 @@ bosses:
   ender_wyrm:
     name: "<gradient:#1a0033:#d14bff><bold>Vorthax the Ender Wyrm</bold></gradient>"
     title: "Dragon of the Outer Dark"
+    tier: mythic
     entity: PHANTOM
-    health: 3000
+    health: 8000
     damage: 13
     armor: 8
     bar: PINK
@@ -725,8 +1021,9 @@ bosses:
   gale_sovereign:
     name: "<gradient:#5fb3a8:#e0f7fa><bold>The Gale Sovereign</bold></gradient>"
     title: "Lord of the Trial Winds"
+    tier: mythic
     entity: BREEZE
-    health: 2800
+    health: 8000
     damage: 13
     armor: 10
     bar: WHITE
@@ -750,8 +1047,9 @@ bosses:
   the_unmaker:
     name: "<gradient:#2a0845:#ff4fd8:#2a0845><bold>THE UNMAKER</bold></gradient>"
     title: "Heart of the Void"
+    tier: mythic
     entity: IRON_GOLEM
-    health: 6000
+    health: 8000
     damage: 17
     armor: 16
     bar: PINK
@@ -777,8 +1075,9 @@ bosses:
     name: "<gradient:#b30000:#ffffff><bold>Killer Claus</bold></gradient>"
     title: "He Knows If You've Been Bad"
     season: winter
+    tier: big
     entity: ZOMBIE
-    health: 2000
+    health: 5000
     damage: 12
     armor: 6
     bar: RED
@@ -802,8 +1101,9 @@ bosses:
     name: "<gradient:#e1f5fe:#ff7043><bold>Frostbottom</bold></gradient>"
     title: "The Snowman With a Grudge"
     season: winter
+    tier: big
     entity: STRAY
-    health: 1600
+    health: 5000
     scale: 2.0
     damage: 12
     armor: 8
@@ -814,7 +1114,7 @@ bosses:
     minion: STRAY
     minions: 4
     ability-seconds: 8
-    abilities: [frost, minions, volley, charge, gifts, shockwave]
+    abilities: [volley, quake, minions, slam, gifts, shockwave]
     health-per-player: 0.25
     rewards:
       money: 60000
@@ -823,13 +1123,14 @@ bosses:
       top-items: ["DIAMOND 8"]
       commands: []
       top-commands: []
-    description: "A snow golem grown huge and grumpy: three packed snowballs, a cracked ice face with coal eyes that glow cold blue, a carrot nose, stick arms with twig fingers, a striped scarf, a dented bucket for a hat and icicles hanging off every ledge. It slides around on a patch of ice instead of walking."
+    description: "Frostbottom, the snowman who wanted to walk: three great snowballs packed hard, the bottom one split into two stomping snowball legs, long stick arms with red mittens that wave and throw, a carrot nose, coal eyes and a coal grin, a striped scarf and a battered top hat. Snow golems follow him into battle."
   old_man_winter:
     name: "<gradient:#b3e5fc:#ffffff><bold>Old Man Winter</bold></gradient>"
     title: "The Blizzard Returns"
     season: winter
+    tier: big
     entity: STRAY
-    health: 1700
+    health: 5000
     scale: 2.6
     damage: 12
     armor: 8
@@ -859,8 +1160,9 @@ bosses:
     name: "<gradient:#ff6d00:#ffea00><bold>Sunscorch</bold></gradient>"
     title: "Melting On Holiday"
     season: summer
+    tier: big
     entity: MAGMA_CUBE
-    health: 1500
+    health: 5000
     scale: 1
     damage: 12
     armor: 8
@@ -880,13 +1182,14 @@ bosses:
       top-items: ["NETHERITE_SCRAP 2"]
       commands: []
       top-commands: []
-    description: "A grumpy sun on a pool float. Sets the arena on fire and cannonballs into players."
+    description: "A small sun that came to the beach and is melting: a glowing orange jelly with a white-hot core, a crown of flame rays, big pink sunglasses, a melting grin with its tongue out, drips running down its sides and a rubber duck swim ring round its middle."
   admiral_pinchworth:
     name: "<gradient:#ff5252:#ffd180><bold>Admiral Pinchworth</bold></gradient>"
     title: "Lord of the Sandcastle"
     season: summer
+    tier: big
     entity: SPIDER
-    health: 1500
+    health: 5000
     scale: 2.0
     damage: 12
     speed: 0.32
@@ -912,8 +1215,9 @@ bosses:
     name: "<gradient:#ff8fc8:#9fffd0><bold>Brain Freeze</bold></gradient>"
     title: "The Sundae Supreme"
     season: summer
+    tier: big
     entity: ZOMBIE
-    health: 1800
+    health: 5000
     damage: 10
     armor: 4
     bar: PINK
@@ -923,7 +1227,7 @@ bosses:
     minion: SLIME
     minions: 4
     ability-seconds: 6
-    abilities: [sprinkles, minions, frost, slam, orbs, shockwave]
+    abilities: [slam, sprinkles, frost, levitate, orbs, shockwave]
     health-per-player: 0.25
     rewards:
       money: 55000
@@ -932,14 +1236,15 @@ bosses:
       top-items: ["ENCHANTED_GOLDEN_APPLE 1"]
       commands: []
       top-commands: []
-    description: "A walking ice-cream cone with a headache: a waffle cone body, three scoops for a head (vanilla, strawberry with an angry face, chocolate with rows of sprinkles), whipped cream and a cherry, ice shards sticking out of its skull from the brain freeze. It swings a giant spoon and a rocket ice lolly."
+    description: "An ice cream with a brain freeze and a bad temper: a waffle cone for legs and hips, three scoops stacked up (mint, vanilla, strawberry) dripping over each other, an angry face on the vanilla scoop with frosted brows, sprinkles, a cherry on top, two wafer-stick arms and a giant silver spoon."
   # ------------------------------------------------------------ spring
   clucksworth:
     name: "<gradient:#ffffff:#ff5252><bold>Clucksworth</bold></gradient>"
     title: "The Chicken That Came First"
     season: spring
+    tier: big
     entity: ZOMBIE
-    health: 1400
+    health: 5000
     scale: 2.0
     damage: 12
     speed: 0.3
@@ -965,8 +1270,9 @@ bosses:
     name: "<gradient:#ffffff:#ff1744><bold>The Killer Bunny</bold></gradient>"
     title: "Small, Fluffy, Merciless"
     season: spring
+    tier: big
     entity: RABBIT
-    health: 900
+    health: 5000
     scale: 3.5
     damage: 12
     speed: 0.5
@@ -992,8 +1298,9 @@ bosses:
     name: "<gradient:#4e2a1e:#ffcf6b><bold>The Cocoa Colossus</bold></gradient>"
     title: "The Egg That Fought Back"
     season: spring
+    tier: big
     entity: IRON_GOLEM
-    health: 1700
+    health: 5000
     damage: 11
     armor: 10
     bar: YELLOW
@@ -1014,38 +1321,39 @@ bosses:
       top-commands: []
     description: "A chocolate egg golem: a giant hollow egg with half its gold and purple foil still on, cracked open across the chest where a glowing caramel heart shows, arms and legs made of chocolate-bar squares and a smaller egg for a head with a jagged crack for a face."
   # ------------------------------------------------------------ halloween
-  great_gourd:
-    name: "<gradient:#ff9100:#7c4dff><bold>The Great Gourd</bold></gradient>"
-    title: "Trick or Treat, Mostly Trick"
+  gourd_king:
+    name: "<gradient:#e65100:#76ff03><bold>The Gourd King</bold></gradient>"
+    title: "His Face Says It All"
     season: halloween
+    tier: big
     entity: ZOMBIE
-    health: 1500
-    scale: 2.0
+    health: 5000
     damage: 12
     armor: 8
     bar: YELLOW
     theme: pumpkin
     movement: walk
-    phases: [0.66, 0.33]
+    phases: [0.5]
     minion: ZOMBIE
-    minions: 4
-    ability-seconds: 8
-    abilities: [minions, volley, charge, fire_ring, meteor, slam]
+    minions: 3
+    ability-seconds: 7
+    abilities: [slam, fire_ring, minions, volley, leap]
     health-per-player: 0.25
     rewards:
       money: 60000
-      top-money: 200000
-      items: ["PUMPKIN_PIE 16", "COOKIE 32"]
-      top-items: ["DIAMOND 8"]
+      top-money: 180000
+      items: ["PUMPKIN_PIE 16", "JACK_O_LANTERN 8", "DIAMOND 3"]
+      top-items: ["ENCHANTED_GOLDEN_APPLE 1"]
       commands: []
       top-commands: []
-    description: "A scarecrow whose pumpkin head came alive: a huge carved jack-o'-lantern lit from inside, a curled stem with leaves, a patched burlap shirt stuffed with straw that pokes out at the cuffs and collar, a rope belt, a tattered dark coat, a crow on its shoulder and a rusty pitchfork."
+    description: "The Gourd King: a giant ribbed pumpkin head on a body of twisted vines, a lantern of embers glowing in its chest, leaves for shoulders and a lantern on a chain. Its face changes as it fights: a toothy grin, a snarl when it attacks, a yelp when it is hit, burning eyes and mouth below half health. Two of the goofy pumpkins ride its shoulders and pull faces of their own."
   headless_horseman:
     name: "<gradient:#e65100:#ffab40><bold>The Headless Horseman</bold></gradient>"
     title: "Rider of All Hallows' Eve"
     season: halloween
+    tier: big
     entity: SKELETON
-    health: 1600
+    health: 5000
     scale: 1.8
     damage: 12
     armor: 8
@@ -1075,8 +1383,9 @@ bosses:
     name: "<gradient:#6a1b9a:#ce93d8><bold>Hexmother Morwen</bold></gradient>"
     title: "Brewer of a Thousand Curses"
     season: halloween
+    tier: big
     entity: WITCH
-    health: 1200
+    health: 5000
     scale: 1.9
     damage: 8
     armor: 4
@@ -1239,7 +1548,7 @@ bosses:
     minion: HOGLIN
     minions: 2
     ability-seconds: 7
-    abilities: [charge, quake, roar, slam, fire_ring]
+    abilities: [charge, quake, minions, slam, fire_ring]
     health-per-player: 0.25
     rewards:
       money: 28000
@@ -1248,7 +1557,7 @@ bosses:
       top-items: []
       commands: []
       top-commands: []
-    description: "Chapter 6, The Iron Tusk: a war boar the smiths armoured for the raiders. Bristly brown hide, iron plates riveted down its back, a spiked iron face guard, two tusks capped in iron, a chain dragging from its collar and a little war banner on its saddle."
+    description: "Chapter 6, The Iron Tusk: a zoglin the raiders caught, chained and armoured, and that turned on them. The vanilla zoglin's pale pink hide with rotten patches and bare ribs, its pale green-grey mane, and great tusks the smiths capped in iron; an iron face plate bolted on, iron plates down its back and a broken chain still hanging from its collar."
   reef_hulk:
     name: "<gradient:#1b4965:#ff8fab><bold>The Reef Hulk</bold></gradient>"
     title: "Where the Reef Grew"
@@ -1298,7 +1607,7 @@ bosses:
       top-items: []
       commands: []
       top-commands: []
-    description: "Chapter 8, The Ember Court: the court's champion. Plate armour forged from nether brick and gold, the visor a grille of fire, a mantle of flame on the shoulders, three blaze rods turning round him and a sword whose blade is a bar of fire."
+    description: "Chapter 8, The Ember Court: the court's champion is a wither skeleton, the tallest in the fortress. The vanilla wither skeleton's charcoal bones and black skull with its dark sockets, in pieces of gilded blackstone armour taken from the bastion (a crowned helm, one heavy pauldron, a breastplate and a belt with a gold buckle), embers glowing in the cracks of the stone, and the stone sword every wither skeleton carries, grown into a greatsword."
   choirmaster:
     name: "<gradient:#e9e3c9:#6c757d><bold>The Choirmaster</bold></gradient>"
     title: "Conductor of the Bone Choir"
@@ -1351,3 +1660,740 @@ bosses:
       commands: []
       top-commands: []
     description: "Chapter 10, The Listener Below: the thing that wakes the Listener. A floating mass of sculk shaped like a ribcage with a shrieker for a mouth, sensor tendrils sweeping the air, soul-blue light pulsing from its veins and two long clawed arms; it has no eyes, it hears you."
+  # ------------------------------------------------------------ mini bosses: wake on the mini timer (/cbosses minis), 3000 health
+  bark_ape:
+    name: "<gradient:#5d3a1a:#c8a27a><bold>Bark Ape</bold></gradient>"
+    title: "The Jungle Thief"
+    kind: mini
+    tier: mini
+    entity: ZOMBIE
+    health: 3000
+    damage: 8
+    armor: 4
+    bar: YELLOW
+    theme: nature
+    movement: walk
+    phases: [0.5]
+    ability-seconds: 6
+    abilities: [leap, volley, slam]
+    health-per-player: 0.15
+    rewards:
+      money: 15000
+      top-money: 45000
+      items: ["DIAMOND 1", "GOLD_INGOT 8", "EXPERIENCE_BOTTLE 8"]
+      top-items: ["GOLDEN_APPLE 2"]
+      commands: []
+      top-commands: []
+    description: "A cheeky brown ape with a pale face and big ears, long arms that drag its knuckles, and a curled tail."
+  old_blindman:
+    name: "<gradient:#8d6e63:#ffe0b2><bold>Old Blindman</bold></gradient>"
+    title: "He Hears Every Step"
+    kind: mini
+    tier: mini
+    entity: ZOMBIE
+    health: 3000
+    damage: 8
+    armor: 4
+    bar: WHITE
+    theme: bone
+    movement: walk
+    phases: [0.5]
+    ability-seconds: 6
+    abilities: [pull, darkness, slam]
+    health-per-player: 0.15
+    rewards:
+      money: 15000
+      top-money: 45000
+      items: ["DIAMOND 1", "GOLD_INGOT 8", "EXPERIENCE_BOTTLE 8"]
+      top-items: ["GOLDEN_APPLE 2"]
+      commands: []
+      top-commands: []
+    description: "A bald old hermit with a huge white beard and milky eyes, a ragged brown robe, bare feet, and a crooked staff wrapped in a vine that he taps on the ground to find you."
+  bog_orc:
+    name: "<gradient:#2e7d32:#a5d6a7><bold>Bog Orc</bold></gradient>"
+    title: "Bully of the Swamp"
+    kind: mini
+    tier: mini
+    entity: ZOMBIE
+    health: 3000
+    damage: 8
+    armor: 4
+    bar: GREEN
+    theme: toxic
+    movement: walk
+    phases: [0.5]
+    ability-seconds: 6
+    abilities: [charge, slam, shockwave]
+    health-per-player: 0.15
+    rewards:
+      money: 15000
+      top-money: 45000
+      items: ["DIAMOND 1", "GOLD_INGOT 8", "EXPERIENCE_BOTTLE 8"]
+      top-items: ["GOLDEN_APPLE 2"]
+      commands: []
+      top-commands: []
+    description: "A hunched green orc, all shoulders and fists, with a heavy brow, tusks poking up from a jutting jaw, a leather strap across its chest and torn brown trousers."
+  king_oldbeard:
+    name: "<gradient:#b71c1c:#ffd54f><bold>King Oldbeard</bold></gradient>"
+    title: "Ruler of One Village"
+    kind: mini
+    tier: mini
+    entity: VINDICATOR
+    health: 3000
+    damage: 8
+    armor: 4
+    bar: RED
+    theme: gold
+    movement: walk
+    phases: [0.5]
+    minion: VILLAGER
+    minions: 2
+    ability-seconds: 6
+    abilities: [minions, orbs, slam]
+    health-per-player: 0.15
+    rewards:
+      money: 15000
+      top-money: 45000
+      items: ["DIAMOND 1", "GOLD_INGOT 8", "EXPERIENCE_BOTTLE 8"]
+      top-items: ["GOLDEN_APPLE 2"]
+      commands: []
+      top-commands: []
+    description: "An old villager king: the big villager nose, bushy white brows and a long white beard, a gold crown with red gems, a red robe trimmed with white fur and gold, and a gold sceptre topped with a sun."
+  frost_yeti:
+    name: "<gradient:#90caf9:#ffffff><bold>Frost Yeti</bold></gradient>"
+    title: "Keeper of the Ice Cave"
+    kind: mini
+    tier: mini
+    entity: ZOMBIE
+    health: 3000
+    damage: 8
+    armor: 4
+    bar: WHITE
+    theme: frost
+    movement: walk
+    phases: [0.5]
+    ability-seconds: 6
+    abilities: [frost, slam, shockwave]
+    health-per-player: 0.15
+    rewards:
+      money: 15000
+      top-money: 45000
+      items: ["DIAMOND 1", "GOLD_INGOT 8", "EXPERIENCE_BOTTLE 8"]
+      top-items: ["GOLDEN_APPLE 2"]
+      commands: []
+      top-commands: []
+    description: "A shaggy white yeti with a blue-grey face, a wide fanged mouth, two short curved horns, frost tufts on its shoulders and a block of ice frozen to one fist."
+  straw_farmer:
+    name: "<gradient:#6d4c41:#ffe082><bold>Farmer Grimbly</bold></gradient>"
+    title: "Illager of the Wheat Field"
+    kind: mini
+    tier: mini
+    entity: VINDICATOR
+    health: 3000
+    damage: 8
+    armor: 4
+    bar: YELLOW
+    theme: earth
+    movement: walk
+    phases: [0.5]
+    minion: VINDICATOR
+    minions: 2
+    ability-seconds: 6
+    abilities: [minions, volley, charge]
+    health-per-player: 0.15
+    rewards:
+      money: 15000
+      top-money: 45000
+      items: ["DIAMOND 1", "GOLD_INGOT 8", "EXPERIENCE_BOTTLE 8"]
+      top-items: ["GOLDEN_APPLE 2"]
+      commands: []
+      top-commands: []
+    description: "A grumpy illager farmer: grey skin, the long illager nose and a heavy unibrow, a wide straw hat, brown dungarees over a pale shirt, and a pitchfork."
+  gilded_mimic:
+    name: "<gradient:#ff8f00:#fff176><bold>Gilded Mimic</bold></gradient>"
+    title: "Too Shiny to Trust"
+    kind: mini
+    tier: mini
+    entity: SLIME
+    health: 3000
+    damage: 8
+    armor: 4
+    bar: YELLOW
+    theme: gold
+    movement: walk
+    phases: [0.5]
+    ability-seconds: 6
+    abilities: [orbs, leap, slam]
+    health-per-player: 0.15
+    rewards:
+      money: 15000
+      top-money: 45000
+      items: ["DIAMOND 1", "GOLD_INGOT 8", "EXPERIENCE_BOTTLE 8"]
+      top-items: ["GOLDEN_APPLE 2"]
+      commands: []
+      top-commands: []
+    description: "A golden treasure chest on stubby legs: a crown of gold studs on the lid, purple gems, a grin full of white teeth inside, and a long red tongue lolling out."
+  plump_pigeon:
+    name: "<gradient:#78909c:#80cbc4><bold>Sir Coo</bold></gradient>"
+    title: "The Plump Pigeon"
+    kind: mini
+    tier: mini
+    entity: ZOMBIE
+    health: 3000
+    damage: 8
+    armor: 4
+    bar: WHITE
+    theme: feather
+    movement: walk
+    phases: [0.5]
+    minion: CHICKEN
+    minions: 2
+    ability-seconds: 6
+    abilities: [minions, dive]
+    health-per-player: 0.15
+    rewards:
+      money: 15000
+      top-money: 45000
+      items: ["DIAMOND 1", "GOLD_INGOT 8", "EXPERIENCE_BOTTLE 8"]
+      top-items: ["GOLDEN_APPLE 2"]
+      commands: []
+      top-commands: []
+    description: "A very round city pigeon: grey with a shining green and purple neck, an orange eye, pink feet, two dark bars on each wing and a small grey beak with a white cere."
+  cinder_imp:
+    name: "<gradient:#8b0000:#ff7043><bold>Cinder Imp</bold></gradient>"
+    title: "Little Horned Trouble"
+    kind: mini
+    tier: mini
+    entity: ZOMBIE
+    health: 3000
+    damage: 8
+    armor: 4
+    bar: RED
+    theme: fire
+    movement: walk
+    phases: [0.5]
+    ability-seconds: 6
+    abilities: [fire_ring, leap]
+    health-per-player: 0.15
+    rewards:
+      money: 15000
+      top-money: 45000
+      items: ["DIAMOND 1", "GOLD_INGOT 8", "EXPERIENCE_BOTTLE 8"]
+      top-items: ["GOLDEN_APPLE 2"]
+      commands: []
+      top-commands: []
+    description: "A small red demon with curved black horns, glowing yellow eyes, a wide fanged grin, dark bat wings and a thin tail ending in a spade."
+  apple_crab:
+    name: "<gradient:#c62828:#aed581><bold>Applecrab</bold></gradient>"
+    title: "Orchard Pincher"
+    kind: mini
+    tier: mini
+    entity: SPIDER
+    health: 3000
+    damage: 8
+    armor: 4
+    bar: RED
+    theme: nature
+    movement: walk
+    phases: [0.5]
+    ability-seconds: 6
+    abilities: [charge, spikes]
+    health-per-player: 0.15
+    rewards:
+      money: 15000
+      top-money: 45000
+      items: ["DIAMOND 1", "GOLD_INGOT 8", "EXPERIENCE_BOTTLE 8"]
+      top-items: ["GOLDEN_APPLE 2"]
+      commands: []
+      top-commands: []
+    description: "A crab whose shell is a shiny red apple with a stalk and a green leaf, pale pink claws and legs, and two black stalk eyes peeking over the rim."
+  pink_burrower:
+    name: "<gradient:#f48fb1:#fce4ec><bold>The Pink Burrower</bold></gradient>"
+    title: "It Came Up Through the Lawn"
+    kind: mini
+    tier: mini
+    entity: SILVERFISH
+    health: 3000
+    damage: 8
+    armor: 4
+    bar: PINK
+    theme: earth
+    movement: walk
+    phases: [0.5]
+    minion: SILVERFISH
+    minions: 2
+    ability-seconds: 6
+    abilities: [minions, quake, charge]
+    health-per-player: 0.15
+    rewards:
+      money: 15000
+      top-money: 45000
+      items: ["DIAMOND 1", "GOLD_INGOT 8", "EXPERIENCE_BOTTLE 8"]
+      top-items: ["GOLDEN_APPLE 2"]
+      commands: []
+      top-commands: []
+    description: "A long pink grub-worm with a blunt face, tiny black eyes, a little smile, soft ridges down its back and four stubby feet; it rears its head up when angry."
+  moss_imp:
+    name: "<gradient:#558b2f:#d7ccc8><bold>Moss Imp</bold></gradient>"
+    title: "Small and Very Old"
+    kind: mini
+    tier: mini
+    entity: ZOMBIE
+    health: 3000
+    damage: 8
+    armor: 4
+    bar: GREEN
+    theme: nature
+    movement: walk
+    phases: [0.5]
+    ability-seconds: 6
+    abilities: [levitate, pull]
+    health-per-player: 0.15
+    rewards:
+      money: 15000
+      top-money: 45000
+      items: ["DIAMOND 1", "GOLD_INGOT 8", "EXPERIENCE_BOTTLE 8"]
+      top-items: ["GOLDEN_APPLE 2"]
+      commands: []
+      top-commands: []
+    description: "A tiny wrinkled green creature with enormous pointed ears, big dark eyes with a shine, a few white wisps of hair and a baggy tan robe with a rope belt. It lifts you with its mind."
+  garden_gnome:
+    name: "<gradient:#2e7d32:#e53935><bold>Gnome Twins</bold></gradient>"
+    title: "Do Not Kick the Gnome"
+    kind: mini
+    tier: mini
+    entity: ZOMBIE
+    health: 3000
+    damage: 8
+    armor: 4
+    bar: GREEN
+    theme: earth
+    movement: walk
+    phases: [0.5]
+    ability-seconds: 6
+    abilities: [quake, volley]
+    health-per-player: 0.15
+    rewards:
+      money: 15000
+      top-money: 45000
+      items: ["DIAMOND 1", "GOLD_INGOT 8", "EXPERIENCE_BOTTLE 8"]
+      top-items: ["GOLDEN_APPLE 2"]
+      commands: []
+      top-commands: []
+    description: "A garden gnome: a tall pointed green hat that flops over at the tip, a huge white beard, a round red nose, a blue tunic and brown boots; a little red-hatted twin rides on its shoulder."
+  angry_goose:
+    name: "<gradient:#eceff1:#ff9800><bold>The Goose</bold></gradient>"
+    title: "Peace Was Never an Option"
+    kind: mini
+    tier: mini
+    entity: ZOMBIE
+    health: 3000
+    damage: 8
+    armor: 4
+    bar: WHITE
+    theme: feather
+    movement: walk
+    phases: [0.5]
+    ability-seconds: 6
+    abilities: [charge, roar]
+    health-per-player: 0.15
+    rewards:
+      money: 15000
+      top-money: 45000
+      items: ["DIAMOND 1", "GOLD_INGOT 8", "EXPERIENCE_BOTTLE 8"]
+      top-items: ["GOLDEN_APPLE 2"]
+      commands: []
+      top-commands: []
+    description: "A big white goose with a long neck, an orange beak and feet, beady black eyes under an angry brow, grey wingtips, and a honk that shakes the ground."
+  pack_goblin:
+    name: "<gradient:#33691e:#8d6e63><bold>Pack Goblin</bold></gradient>"
+    title: "Carries Everything He Stole"
+    kind: mini
+    tier: mini
+    entity: ZOMBIE
+    health: 3000
+    damage: 8
+    armor: 4
+    bar: GREEN
+    theme: earth
+    movement: walk
+    phases: [0.5]
+    ability-seconds: 6
+    abilities: [volley, leap]
+    health-per-player: 0.15
+    rewards:
+      money: 15000
+      top-money: 45000
+      items: ["DIAMOND 1", "GOLD_INGOT 8", "EXPERIENCE_BOTTLE 8"]
+      top-items: ["GOLDEN_APPLE 2"]
+      commands: []
+      top-commands: []
+    description: "A hunched olive goblin in a patched brown tunic, long arms, pointy ears and yellow eyes, carrying a huge wooden backpack stacked with a chest, a bedroll and a lantern."
+  goblin_king:
+    name: "<gradient:#558b2f:#ffd54f><bold>King Snivel</bold></gradient>"
+    title: "Goblin King of the Ditch"
+    kind: mini
+    tier: mini
+    entity: ZOMBIE
+    health: 3000
+    damage: 8
+    armor: 4
+    bar: GREEN
+    theme: gold
+    movement: walk
+    phases: [0.5]
+    minion: ZOMBIE
+    minions: 2
+    ability-seconds: 6
+    abilities: [minions, charge, slam]
+    health-per-player: 0.15
+    rewards:
+      money: 15000
+      top-money: 45000
+      items: ["DIAMOND 1", "GOLD_INGOT 8", "EXPERIENCE_BOTTLE 8"]
+      top-items: ["GOLDEN_APPLE 2"]
+      commands: []
+      top-commands: []
+    description: "A pot-bellied goblin king: green with huge sideways ears, a grin of crooked teeth, a dented gold crown, a red cloak with a gold clasp and a gnawed bone for a sceptre."
+  sprout_sprite:
+    name: "<gradient:#33691e:#ccff90><bold>Sprout Sprite</bold></gradient>"
+    title: "A Seedling With a Grudge"
+    kind: mini
+    tier: mini
+    entity: VEX
+    health: 3000
+    damage: 8
+    armor: 4
+    bar: GREEN
+    theme: nature
+    movement: walk
+    phases: [0.5]
+    ability-seconds: 6
+    abilities: [spikes, heal]
+    health-per-player: 0.15
+    rewards:
+      money: 15000
+      top-money: 45000
+      items: ["DIAMOND 1", "GOLD_INGOT 8", "EXPERIENCE_BOTTLE 8"]
+      top-items: ["GOLDEN_APPLE 2"]
+      commands: []
+      top-commands: []
+    description: "A floating green seed-pod spirit with a big sprouting leaf on a long stem, two leaf arms, round dark eyes and a tiny frown."
+  cap_brothers:
+    name: "<gradient:#b71c1c:#ffccbc><bold>Toadstool</bold></gradient>"
+    title: "The Grumpier Mushroom"
+    kind: mini
+    tier: mini
+    entity: ZOMBIE
+    health: 3000
+    damage: 8
+    armor: 4
+    bar: RED
+    theme: toxic
+    movement: walk
+    phases: [0.5]
+    minion: SILVERFISH
+    minions: 2
+    ability-seconds: 6
+    abilities: [poison, minions]
+    health-per-player: 0.15
+    rewards:
+      money: 15000
+      top-money: 45000
+      items: ["DIAMOND 1", "GOLD_INGOT 8", "EXPERIENCE_BOTTLE 8"]
+      top-items: ["GOLDEN_APPLE 2"]
+      commands: []
+      top-commands: []
+    description: "A stout walking mushroom with a wide red cap spotted white, a pale stalk body with a cross little face, stubby legs, and a smaller brown-capped brother clinging to its back."
+  puffneck:
+    name: "<gradient:#7cb342:#f5f5f5><bold>Puffneck</bold></gradient>"
+    title: "Blows Away in the Wind"
+    kind: mini
+    tier: mini
+    entity: ZOMBIE
+    health: 3000
+    damage: 8
+    armor: 4
+    bar: WHITE
+    theme: wind
+    movement: walk
+    phases: [0.5]
+    ability-seconds: 6
+    abilities: [levitate, volley]
+    health-per-player: 0.15
+    rewards:
+      money: 15000
+      top-money: 45000
+      items: ["DIAMOND 1", "GOLD_INGOT 8", "EXPERIENCE_BOTTLE 8"]
+      top-items: ["GOLDEN_APPLE 2"]
+      commands: []
+      top-commands: []
+    description: "A tall stalk creature: a long green neck with leaves, a little yellow face with sleepy eyes and a round white dandelion clock for a head that sheds seeds when it is hit."
+  mallard:
+    name: "<gradient:#1b5e20:#ffeb3b><bold>Sir Mallard</bold></gradient>"
+    title: "Crosses Any Road"
+    kind: mini
+    tier: mini
+    entity: ZOMBIE
+    health: 3000
+    damage: 8
+    armor: 4
+    bar: GREEN
+    theme: water
+    movement: walk
+    phases: [0.5]
+    minion: CHICKEN
+    minions: 2
+    ability-seconds: 6
+    abilities: [minions, charge]
+    health-per-player: 0.15
+    rewards:
+      money: 15000
+      top-money: 45000
+      items: ["DIAMOND 1", "GOLD_INGOT 8", "EXPERIENCE_BOTTLE 8"]
+      top-items: ["GOLDEN_APPLE 2"]
+      commands: []
+      top-commands: []
+    description: "A chunky mallard drake: a glossy green head, a broad yellow bill, a white collar ring, a chestnut breast, a grey body, a curl of black tail and orange feet."
+  piggy_farmer:
+    name: "<gradient:#f48fb1:#ffe082><bold>Farmer Trotter</bold></gradient>"
+    title: "Owns the Mud Patch"
+    kind: mini
+    tier: mini
+    entity: ZOMBIE
+    health: 3000
+    damage: 8
+    armor: 4
+    bar: PINK
+    theme: earth
+    movement: walk
+    phases: [0.5]
+    minion: PIG
+    minions: 2
+    ability-seconds: 6
+    abilities: [minions, charge, slam]
+    health-per-player: 0.15
+    rewards:
+      money: 15000
+      top-money: 45000
+      items: ["DIAMOND 1", "GOLD_INGOT 8", "EXPERIENCE_BOTTLE 8"]
+      top-items: ["GOLDEN_APPLE 2"]
+      commands: []
+      top-commands: []
+    description: "A pink pig standing up in blue dungarees and a check shirt, a straw hat pushed back, a big snout, small black eyes and floppy ears, and a muddy shovel."
+  ring_frog:
+    name: "<gradient:#558b2f:#ffeb3b><bold>Floaty Frog</bold></gradient>"
+    title: "Pool Party Crasher"
+    kind: mini
+    tier: mini
+    entity: SLIME
+    health: 3000
+    damage: 8
+    armor: 4
+    bar: GREEN
+    theme: water
+    movement: walk
+    phases: [0.5]
+    ability-seconds: 6
+    abilities: [leap, volley]
+    health-per-player: 0.15
+    rewards:
+      money: 15000
+      top-money: 45000
+      items: ["DIAMOND 1", "GOLD_INGOT 8", "EXPERIENCE_BOTTLE 8"]
+      top-items: ["GOLDEN_APPLE 2"]
+      commands: []
+      top-commands: []
+    description: "A fat green frog sitting in a yellow rubber-duck swim ring, a pink flower behind one eye, a wide content smile, and a tiny turtle friend riding on its head."
+  ghost_jelly:
+    name: "<gradient:#7e57c2:#e1f5fe><bold>Jellyboo</bold></gradient>"
+    title: "The Floating Fright"
+    kind: mini
+    tier: mini
+    entity: VEX
+    health: 3000
+    damage: 8
+    armor: 4
+    bar: PURPLE
+    theme: void
+    movement: walk
+    phases: [0.5]
+    ability-seconds: 6
+    abilities: [darkness, blink]
+    health-per-player: 0.15
+    rewards:
+      money: 15000
+      top-money: 45000
+      items: ["DIAMOND 1", "GOLD_INGOT 8", "EXPERIENCE_BOTTLE 8"]
+      top-items: ["GOLDEN_APPLE 2"]
+      commands: []
+      top-commands: []
+    description: "A floating jelly ghost: a soft lilac-to-white dome with two big round eyes and a little open mouth, long wavy ribbon tentacles trailing under it, glowing faintly."
+  hay_golem:
+    name: "<gradient:#f9a825:#8d6e63><bold>Hay Golem</bold></gradient>"
+    title: "The Scarecrow Walks"
+    kind: mini
+    tier: mini
+    entity: IRON_GOLEM
+    health: 3000
+    damage: 8
+    armor: 4
+    bar: YELLOW
+    theme: earth
+    movement: walk
+    phases: [0.5]
+    ability-seconds: 6
+    abilities: [slam, fire_ring]
+    health-per-player: 0.15
+    rewards:
+      money: 15000
+      top-money: 45000
+      items: ["DIAMOND 1", "GOLD_INGOT 8", "EXPERIENCE_BOTTLE 8"]
+      top-items: ["GOLDEN_APPLE 2"]
+      commands: []
+      top-commands: []
+    description: "A golem of bound hay bales: a straw head with a stitched burlap face and button eyes, red twine bands round the chest and limbs, straw poking out everywhere and a crown of wheat."
+  fisher_duck:
+    name: "<gradient:#fbc02d:#4fc3f7><bold>Captain Quackers</bold></gradient>"
+    title: "Has Caught Bigger Things Than You"
+    kind: mini
+    tier: mini
+    entity: ZOMBIE
+    health: 3000
+    damage: 8
+    armor: 4
+    bar: YELLOW
+    theme: water
+    movement: walk
+    phases: [0.5]
+    ability-seconds: 6
+    abilities: [pull, volley]
+    health-per-player: 0.15
+    rewards:
+      money: 15000
+      top-money: 45000
+      items: ["DIAMOND 1", "GOLD_INGOT 8", "EXPERIENCE_BOTTLE 8"]
+      top-items: ["GOLDEN_APPLE 2"]
+      commands: []
+      top-commands: []
+    description: "A round yellow duckling in a green bucket hat, an orange bill, a smug half-lidded look and a fishing rod with a red-and-white bobber; it reels players in."
+  baby_minotaur:
+    name: "<gradient:#4e342e:#ffccbc><bold>Little Moo</bold></gradient>"
+    title: "Baby of the Labyrinth"
+    kind: mini
+    tier: mini
+    entity: ZOMBIE
+    health: 3000
+    damage: 8
+    armor: 4
+    bar: RED
+    theme: earth
+    movement: walk
+    phases: [0.5]
+    ability-seconds: 6
+    abilities: [charge, quake, stomp]
+    health-per-player: 0.15
+    rewards:
+      money: 15000
+      top-money: 45000
+      items: ["DIAMOND 1", "GOLD_INGOT 8", "EXPERIENCE_BOTTLE 8"]
+      top-items: ["GOLDEN_APPLE 2"]
+      commands: []
+      top-commands: []
+    description: "A chubby little minotaur: a big brown bull head with white curved horns, a pink muzzle with a gold nose ring, a shaggy fringe, and a tiny body in a leather kilt; small but it charges hard."
+  boo_twins:
+    name: "<gradient:#eceff1:#90a4ae><bold>The Boo Twins</bold></gradient>"
+    title: "Two Sheets to the Wind"
+    kind: mini
+    tier: mini
+    entity: VEX
+    health: 3000
+    damage: 8
+    armor: 4
+    bar: WHITE
+    theme: soul
+    movement: walk
+    phases: [0.5]
+    ability-seconds: 6
+    abilities: [blink, darkness]
+    health-per-player: 0.15
+    rewards:
+      money: 15000
+      top-money: 45000
+      items: ["DIAMOND 1", "GOLD_INGOT 8", "EXPERIENCE_BOTTLE 8"]
+      top-items: ["GOLDEN_APPLE 2"]
+      commands: []
+      top-commands: []
+    description: "Two little bedsheet ghosts holding hands, one taller with round black eyes, one smaller with oval eyes and a wobbly mouth; their sheets ripple at the hem."
+  mandrake:
+    name: "<gradient:#a1887f:#c5e1a5><bold>Mandrake</bold></gradient>"
+    title: "Do Not Pull It Up"
+    kind: mini
+    tier: mini
+    entity: ZOMBIE
+    health: 3000
+    damage: 8
+    armor: 4
+    bar: GREEN
+    theme: nature
+    movement: walk
+    phases: [0.5]
+    ability-seconds: 6
+    abilities: [roar, poison]
+    health-per-player: 0.15
+    rewards:
+      money: 15000
+      top-money: 45000
+      items: ["DIAMOND 1", "GOLD_INGOT 8", "EXPERIENCE_BOTTLE 8"]
+      top-items: ["GOLDEN_APPLE 2"]
+      commands: []
+      top-commands: []
+    description: "A pale knobbly root with a scrunched little face, stubby root arms and legs and a big tuft of leaves on its head. Its scream hurts."
+  mossy_turtle:
+    name: "<gradient:#2e7d32:#8d6e63><bold>Old Shellby</bold></gradient>"
+    title: "Slow, Stubborn, Armoured"
+    kind: mini
+    tier: mini
+    entity: ZOMBIE
+    health: 3000
+    damage: 8
+    armor: 4
+    bar: GREEN
+    theme: water
+    movement: walk
+    phases: [0.5]
+    ability-seconds: 6
+    abilities: [shockwave, heal, charge]
+    health-per-player: 0.15
+    rewards:
+      money: 15000
+      top-money: 45000
+      items: ["DIAMOND 1", "GOLD_INGOT 8", "EXPERIENCE_BOTTLE 8"]
+      top-items: ["GOLDEN_APPLE 2"]
+      commands: []
+      top-commands: []
+    description: "A stocky turtle with a tall brown shell ringed in plates, moss and a little flower on top, a bright green head with sleepy eyes and a beak, and chunky green legs."
+  stumpy:
+    name: "<gradient:#5d4037:#aed581><bold>Stumpy</bold></gradient>"
+    title: "What's Left of the Old Oak"
+    kind: mini
+    tier: mini
+    entity: ZOMBIE
+    health: 3000
+    damage: 8
+    armor: 4
+    bar: GREEN
+    theme: nature
+    movement: walk
+    phases: [0.5]
+    ability-seconds: 6
+    abilities: [spikes, heal]
+    health-per-player: 0.15
+    rewards:
+      money: 15000
+      top-money: 45000
+      items: ["DIAMOND 1", "GOLD_INGOT 8", "EXPERIENCE_BOTTLE 8"]
+      top-items: ["GOLDEN_APPLE 2"]
+      commands: []
+      top-commands: []
+    description: "A walking tree stump: rough bark with deep grooves, two big white eyes with dark pupils carved into the trunk, a sapling growing out of its flat top, stubby root feet and twiggy arms."

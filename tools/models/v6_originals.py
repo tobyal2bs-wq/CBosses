@@ -162,7 +162,7 @@ def clockwork_colossus():
         m.c("body", EX, (x, 35.4, -4.2), (3, 1, 3))
         m.c("body", BK, (x, 35.95, -4.2), (1.6, 0.1, 1.6))
     m.hold = {}
-    m.attacks = {"slam": "slam", "spin": "spin", "steam": "roar", "charge": "charge"}
+    m.attacks = {"slam": "slam", "spin": "sweep", "steam": "roar", "charge": "lunge"}
     m.melee = "swipe"
     return m
 

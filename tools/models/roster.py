@@ -4,18 +4,27 @@ import importlib
 import models
 
 MODULES = ["v2_general", "v2_seasonal", "v2_chapters", "v2_legends", "v3_general", "v3_mythic", "v3_seasonal",
-           "v4_normal", "v4_chapters", "v4_seasonal"]
+           "v4_normal", "v4_chapters", "v4_seasonal", "v5_normal", "v5_mythic", "v6_originals", "v7_bigs", "v8_pumpkins", "v9_minis"]
 
-NORMAL = ["grand_augur", "king_gloop", "grave_marshal", "mayor_grumble", "old_ironroot", "siegebreaker", "old_tusker",
-          "elder_eye", "queen_bee", "pillager_captain", "pale_watcher", "weeping_ghast", "elder_sniffer", "cinderheart",
-          "shulker_matriarch", "frostmaw", "bogmaw", "ramthunder", "gale_sovereign", "bogged_hunter"]
-MYTHIC = ["the_listener", "withered_tyrant", "ender_wyrm"]
-FINALE = ["the_unmaker"]
+# the weekly rotation: the first 25 bosses, then the new ones drawn from the user's pictures
+GENERAL = ["slagheart", "warlord_gruk", "grand_augur", "crimson_ronin", "thunderback", "gorehorn", "abyssal_eye", "overgrowth",
+           "prism_sentinel", "tiki_warden", "hollow_king", "broodmother", "ironhide_behemoth", "fenrir", "tide_tyrant", "void_walker",
+           "storm_herald", "pharaoh", "executioner", "ember_queen", "gravelord", "captain_brine", "keywarden", "bloodtusk", "king_gloop",
+           "clockwork_colossus", "mossback", "old_wizard", "hollow_mage", "horned_brute", "rotting_giant", "dusk_scorpion",
+           "grave_marshal", "mayor_grumble", "shulker_matriarch", "old_ironroot"]
+MYTHIC = ["the_listener", "withered_tyrant", "ender_wyrm", "gale_sovereign", "the_unmaker"]
 SEASONAL = {"winter": ["killer_claus", "frostbottom", "old_man_winter"], "summer": ["sunscorch", "admiral_pinchworth", "brain_freeze"],
-            "spring": ["clucksworth", "killer_bunny", "cocoa_colossus"], "halloween": ["great_gourd", "headless_horseman", "hexmother"]}
-CHAPTERS = ["brakka", "nightwing", "oakheart", "vault_mimic", "crypt_knight", "iron_tusk", "deep_mother", "ember_knight",
-            "bellwarden", "the_shrieker"]
-ALL = NORMAL + MYTHIC + FINALE + [b for s in SEASONAL.values() for b in s] + CHAPTERS
+            "spring": ["clucksworth", "killer_bunny", "cocoa_colossus"], "halloween": ["gourd_king", "headless_horseman", "hexmother"]}
+CHAPTERS = ["brakka", "gate_shade", "oakheart", "vault_mimic", "crypt_knight", "iron_tusk", "reef_hulk", "ember_knight", "choirmaster", "sculk_herald"]
+DECOR = ["decor_pumpkin_tall", "decor_pumpkin_flat", "decor_pumpkin_cube"]
+
+
+def minis():
+    import v9_minis
+    return list(v9_minis.MINIS)
+
+
+ALL = GENERAL + MYTHIC + [b for s in SEASONAL.values() for b in s] + CHAPTERS + DECOR
 
 
 def builders():
@@ -25,15 +34,17 @@ def builders():
     by_id = {}
     for fn in models.MODELS:
         by_id[fn.__name__] = fn
-    missing = [i for i in ALL if i not in by_id]
+    ids = ALL + minis()
+    missing = [i for i in ids if i not in by_id]
     if missing:
         raise SystemExit("no model for " + ", ".join(missing))
-    return {i: by_id[i] for i in ALL}
+    return {i: by_id[i] for i in ids}
 
 
 def recipes():
-    import v2_recipes, v4_recipes
+    import v2_recipes, v4_recipes, v8_recipes, v9_minis
     spawn, death = dict(v2_recipes.SPAWN), dict(v2_recipes.DEATH)
-    spawn.update(v4_recipes.SPAWN)
-    death.update(v4_recipes.DEATH)
+    for r in (v4_recipes, v8_recipes, v9_minis):
+        spawn.update(r.SPAWN)
+        death.update(r.DEATH)
     return spawn, death

@@ -27,6 +27,7 @@ public final class CBossesPlugin extends JavaPlugin {
     private CBossesAPI api;
     private com.cbosses.finale.Finale finale;
     private com.cbosses.mini.MiniBosses minis;
+    private com.cbosses.decor.Decor decor;
     private YamlConfiguration messages = new YamlConfiguration();
 
     public static CBossesPlugin instance() { return instance; }
@@ -58,6 +59,7 @@ public final class CBossesPlugin extends JavaPlugin {
         getServer().getPluginManager().registerEvents(chapters, this);
         getServer().getPluginManager().registerEvents(finale, this);
         minis = new com.cbosses.mini.MiniBosses(this);
+        decor = new com.cbosses.decor.Decor(this);
         getServer().getPluginManager().registerEvents(minis, this);
         var miniMenu = new com.cbosses.mini.MiniMenu(this, minis);
         getServer().getPluginManager().registerEvents(miniMenu, this);
@@ -70,6 +72,7 @@ public final class CBossesPlugin extends JavaPlugin {
         if (cmd != null) { cmd.setExecutor(command); cmd.setTabCompleter(command); }
         service.start();
         minis.start();
+        decor.start();
         if (getServer().getPluginManager().getPlugin("PlaceholderAPI") != null) {
             try { new com.cbosses.hook.Placeholders(this).register(); getLogger().info("PlaceholderAPI placeholders registered (%cbosses_...%)."); }
             catch (Throwable e) { getLogger().warning("Could not register placeholders: " + e); }
@@ -82,6 +85,7 @@ public final class CBossesPlugin extends JavaPlugin {
     @Override
     public void onDisable() {
         if (minis != null) minis.stop();
+        if (decor != null) decor.stop();
         if (service != null) service.shutdown();
     }
 
@@ -91,6 +95,7 @@ public final class CBossesPlugin extends JavaPlugin {
         service.reload();
         service.start();
         minis.start();
+        decor.start();
     }
 
     private void loadMessages() {
@@ -127,5 +132,6 @@ public final class CBossesPlugin extends JavaPlugin {
     public com.cbosses.finale.Finale finale() { return finale; }
     public Seasons seasons() { return seasons; }
     public com.cbosses.mini.MiniBosses minis() { return minis; }
+    public com.cbosses.decor.Decor decor() { return decor; }
     public CBossesAPI api() { return api; }
 }

@@ -231,6 +231,10 @@ public final class BossService implements Listener {
     double damageMultiplier() { return Math.max(0, plugin.getConfig().getDouble("fight.damage-multiplier", 1)); }
     boolean introDarkness() { return plugin.getConfig().getBoolean("effects.intro-darkness", true); }
 
+    /** A model from models.json by id, or null. */
+    public ModelRig.Model model(String id) { return id == null ? null : models.get(id.toLowerCase(Locale.ROOT)); }
+    public java.util.Set<String> modelIds() { return models.keySet(); }
+
     /** The block model a boss is drawn with, or null (models off, "model: none", or no model by that name). */
     public ModelRig.Model modelFor(BossDef def) {
         if (!plugin.getConfig().getBoolean("models", true) || def.model().equals("none")) return null;

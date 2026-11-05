@@ -45,7 +45,7 @@ class BossDataTest {
     void everyBossHasAModelWithAnEntranceAndADeath() throws Exception {
         var models = models();
         var defs = bosses();
-        assertEquals(52, defs.size(), "25 general, 5 legends, 12 seasonal and 10 chapter bosses");
+        assertEquals(93, defs.size(), "36 weekly, 5 mythic, 12 seasonal, 10 chapter and 30 mini bosses");
         for (BossDef d : defs.values()) {
             ModelRig.Model m = models.get(d.model());
             assertNotNull(m, d.id() + " has no model");
@@ -67,7 +67,8 @@ class BossDataTest {
         var defs = bosses();
         for (BossDef d : defs.values()) {
             int n = full.get(d.model()).cubes.size();
-            if (d.chapterBoss()) assertTrue(n >= 80 && n <= 130, d.id() + " is a chapter boss with " + n + " blocks");
+            if (d.mini()) assertTrue(n >= 25 && n <= 200, d.id() + " is a mini boss with " + n + " blocks");
+            else if (d.chapterBoss()) assertTrue(n >= 80 && n <= 130, d.id() + " is a chapter boss with " + n + " blocks");
             else if (!d.id().equals("grand_augur")) assertTrue(n >= 150, d.id() + " has only " + n + " blocks");
         }
         int was = ModelRig.detail;
@@ -86,7 +87,37 @@ class BossDataTest {
         var defs = bosses();
         for (String season : new String[]{"winter", "summer", "spring", "halloween"})
             assertEquals(3, defs.values().stream().filter(d -> d.seasonal() && season.equals(d.season())).count(), season);
-        assertEquals(30, defs.values().stream().filter(d -> !d.seasonal() && !d.chapterBoss()).count(), "25 general bosses and 5 legends");
+        assertEquals(41, defs.values().stream().filter(d -> !d.seasonal() && !d.chapterBoss() && !d.mini()).count(), "36 weekly bosses and 5 mythic");
+    }
+
+    @Test
+    void healthTiersAndMiniBosses() throws Exception {
+        var defs = bosses();
+        assertEquals(30, defs.values().stream().filter(BossDef::mini).count(), "30 mini bosses");
+        for (BossDef d : defs.values()) {
+            if (d.mini()) assertEquals(3000, d.health(), 0.01, d.id());
+            else if (d.tier().equals("mythic")) assertEquals(8000, d.health(), 0.01, d.id());
+            else if (!d.chapterBoss()) assertEquals(5000, d.health(), 0.01, d.id());
+        }
+        for (String id : new String[]{"the_unmaker", "withered_tyrant", "ender_wyrm", "gale_sovereign", "the_listener"}) assertEquals("mythic", defs.get(id).tier(), id);
+    }
+
+    @Test
+    void faceChangingModels() throws Exception {
+        var models = models();
+        ModelRig.Model king = models.get("gourd_king");
+        assertNotNull(king.faceOf, "the Gourd King changes faces");
+        for (String f : new String[]{"idle", "angry", "hurt", "rage", "dead"}) assertTrue(king.faces.contains(f), "gourd king face " + f);
+        for (String id : new String[]{"decor_pumpkin_tall", "decor_pumpkin_flat", "decor_pumpkin_cube"}) {
+            ModelRig.Model m = models.get(id);
+            assertNotNull(m, id);
+            assertTrue(m.faces.size() >= 5, id + " has faces");
+        }
+        // only one face shows at a time
+        var pose = ModelRig.cubes(king, ModelRig.pose(king, java.util.List.of(new ModelRig.Layer(king.anim("idle"), 0, 1))));
+        king.showFace(pose, "angry");
+        for (int i = 0; i < pose.length; i++) if (king.faceOf[i] != null && !king.faceOf[i].equals("angry"))
+            assertTrue(pose[i].getScale(new org.joml.Vector3f()).length() < 1e-4, "hidden face piece " + i);
     }
 
     @Test

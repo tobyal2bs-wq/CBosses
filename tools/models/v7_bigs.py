@@ -145,7 +145,7 @@ def old_wizard():
         for dz in (-3.3, 3.3):
             m.c("book", AU, (bx + sgn * 4.9, by + 0.6 + 0.6, bz + dz), (0.8, 0.6, 0.8), (0, 0, sgn * 14), (bx, by, bz))
     m.c("book", "orange_concrete", (bx, by + 2.4, bz), (0.8, 0.8, 0.8), (45, 45, 0), light=True)
-    m.attacks = {"spells": "cast", "blink": "spin", "summon": "roar", "slam": "slam"}
+    m.attacks = {"spells": "cast", "blink": "sweep", "summon": "roar", "slam": "slam"}
     m.melee = "swipe"
     return m
 
@@ -252,7 +252,7 @@ def hollow_mage():
     m.c("staff", "white_wool", (sx, 7, sz + 1.4), (1.8, 2.6, 1.8))
     m.c("staff", GR, (sx, 6.5, sz + 1.4), (1.9, 0.6, 1.9))
     m.c("staff", YL, (sx, 26.2, sz + 6), (1.6, 1.6, 1.6), (45, 45, 0), light=True)
-    m.attacks = {"spells": "cast", "fire": "roar", "blink": "spin", "slam": "slam"}
+    m.attacks = {"spells": "cast", "fire": "roar", "blink": "sweep", "slam": "slam"}
     m.melee = "swipe"
     return m
 

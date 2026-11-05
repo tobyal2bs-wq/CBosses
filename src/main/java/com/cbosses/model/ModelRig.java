@@ -128,6 +128,17 @@ public final class ModelRig {
         /** Level foot bones (each has a shin and a leg above it), and the root bone or -1. */
         public int[] feet = new int[0];
         public int root = -1;
+        /** Face pieces: faceOf[cube] is the face it belongs to (idle, angry, hurt, rage, dead...), or null. */
+        public String[] faceOf;
+        public Set<String> faces = Set.of();
+
+        /** Hides every face piece that is not part of face (falls back to idle). */
+        public void showFace(Matrix4f[] pose, String face) {
+            if (faceOf == null) return;
+            String f = faces.contains(face) ? face : "idle";
+            for (int i = 0; i < faceOf.length && i < pose.length; i++)
+                if (faceOf[i] != null && !faceOf[i].equals(f)) pose[i].scale(0);
+        }
 
         Model(String id, String rig, float scale, float height, List<Bone> bones, List<Cube> cubes, Map<String, String> attacks,
               String melee, List<Step> spawn, List<Step> death, Map<String, Anim> anims) {
@@ -246,6 +257,13 @@ public final class ModelRig {
                 while (b >= 0 && !only[i]) { if (bones.get(b).name().startsWith("shell")) only[i] = true; b = bones.get(b).parent(); }
             }
             model.entranceOnly = only;
+            String[] faceOf = new String[cubes.size()];
+            Set<String> faces = new java.util.HashSet<>();
+            for (int i = 0; i < cubes.size(); i++) {
+                String tg = cubes.get(i).tag();
+                if (tg.startsWith("face:")) { faceOf[i] = tg.substring(5); faces.add(faceOf[i]); }
+            }
+            if (!faces.isEmpty()) { model.faceOf = faceOf; model.faces = Set.copyOf(faces); }
             List<Integer> feet = new ArrayList<>();
             for (int i = 0; i < bones.size(); i++) {
                 Bone b = bones.get(i);

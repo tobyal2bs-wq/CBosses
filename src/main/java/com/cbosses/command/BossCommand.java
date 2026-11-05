@@ -20,7 +20,7 @@ import java.util.Locale;
 
 /** /cbosses (aliases /cb, /bosses). Players see /cbosses next; controlling bosses needs op or the bosses.use permission. */
 public final class BossCommand implements CommandExecutor, TabCompleter {
-    private static final List<String> ADMIN = List.of("menu", "list", "spawn", "test", "stop", "selftest", "arena", "schedule", "chapter", "season", "finale", "settings", "reload", "info", "next", "help", "minis");
+    private static final List<String> ADMIN = List.of("menu", "list", "spawn", "test", "stop", "selftest", "arena", "schedule", "chapter", "season", "finale", "settings", "reload", "info", "next", "help", "minis", "decor");
     private final CBossesPlugin plugin;
     private final BossMenu menu;
     private final SettingsMenu settings;
@@ -100,6 +100,7 @@ public final class BossCommand implements CommandExecutor, TabCompleter {
             }
             case "season", "seasons" -> plugin.seasons().command(sender, args);
             case "minis", "mini" -> minis(sender, player, label, args);
+            case "decor", "decoration" -> plugin.decor().command(sender, player, label, args);
             case "finale" -> {
                 String what = args.length > 1 ? args[1].toLowerCase(Locale.ROOT) : "info";
                 switch (what) {
@@ -186,6 +187,7 @@ public final class BossCommand implements CommandExecutor, TabCompleter {
                 {"test", "<cmd> test <boss>|phase|stop <gray>try a boss in front of you, nothing is paid"},
                 {"spawn", "<cmd> spawn <boss> [arena|here] <gray>start a real fight (here: where you stand)"},
                 {"minis", "<cmd> minis <gray>mini boss spots, timer, mode and markers"},
+                {"decor", "<cmd> decor place <model>|remove|list <gray>pumpkins and other models that sit and pull faces"},
                 {"stop", "<cmd> stop [arena|boss] <gray>send bosses away"},
                 {"arena", "<cmd> arena setspawn|wand|region|radius|show|clear|delete <arena>"},
                 {"schedule", "<cmd> schedule on|off <gray>the weekly boss"},
@@ -211,6 +213,7 @@ public final class BossCommand implements CommandExecutor, TabCompleter {
             case "arena" -> filter(List.of("setspawn", "wand", "show", "region", "radius", "clear", "delete", "list"), args[1]);
             case "schedule" -> filter(List.of("on", "off"), args[1]);
             case "finale" -> filter(List.of("info", "wake", "reset"), args[1]);
+            case "decor", "decoration" -> filter(List.of("place", "remove", "list"), args[1]);
             case "minis", "mini" -> filter(List.of("menu", "info", "add", "remove", "show", "mode", "every", "next", "now", "on", "off"), args[1]);
             case "settings", "config" -> filter(List.of("effects", "schedule", "fight", "chapters", "seasons", "set"), args[1]);
             case "season", "seasons" -> filter(plugin.seasons().ids(), args[1]);
@@ -225,6 +228,8 @@ public final class BossCommand implements CommandExecutor, TabCompleter {
         if (args.length == 3) return switch (sub) {
             case "spawn" -> { List<String> out = new ArrayList<>(s().arenaIds()); out.add("here"); yield filter(out, args[2]); }
             case "arena" -> filter(s().arenaIds(), args[2]);
+            case "decor", "decoration" -> args[1].equalsIgnoreCase("place") ? filter(plugin.decor().models(), args[2])
+                    : args[1].equalsIgnoreCase("remove") ? filter(plugin.decor().ids(), args[2]) : List.of();
             case "minis", "mini" -> args[1].equalsIgnoreCase("mode") ? filter(com.cbosses.mini.MiniBosses.MODES, args[2])
                     : args[1].equalsIgnoreCase("now") ? filter(plugin.minis().minis().stream().map(com.cbosses.fight.BossDef::id).toList(), args[2])
                     : args[1].equalsIgnoreCase("remove") ? filter(plugin.minis().spots().stream().map(x -> x.id).toList(), args[2]) : List.of();

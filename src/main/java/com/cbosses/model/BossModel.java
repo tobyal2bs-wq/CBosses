@@ -205,6 +205,7 @@ public final class BossModel {
         bones = ModelRig.pose(model, List.of(new ModelRig.Layer(idle, 0, 1)));
         Matrix4f[] cubes = ModelRig.cubes(model, bones);
         System.arraycopy(cubes, 0, pose, 0, cubes.length);
+        if (model.faceOf != null) model.showFace(pose, "idle");
         placeZones();
     }
 
@@ -269,6 +270,21 @@ public final class BossModel {
 
     public void hurt() { if (hurtT > 0.25f) hurtT = 0; }
 
+    private static final org.bukkit.attribute.Attribute MAX_HEALTH = maxHealth();
+    private static org.bukkit.attribute.Attribute maxHealth() {
+        var a = org.bukkit.Registry.ATTRIBUTE.get(org.bukkit.NamespacedKey.minecraft("max_health"));
+        return a != null ? a : org.bukkit.Registry.ATTRIBUTE.get(org.bukkit.NamespacedKey.minecraft("generic.max_health"));
+    }
+
+    /** Which face a face-changing model shows right now: hurt when hit, angry while attacking, rage below half health. */
+    private String face() {
+        if (hurtT < 0.5f) return "hurt";
+        if (attack != null) return "angry";
+        var max = MAX_HEALTH == null ? null : mob.getAttribute(MAX_HEALTH);
+        if (max != null && mob.getHealth() < max.getValue() * 0.5) return "rage";
+        return "idle";
+    }
+
     /** One live frame. False stops the loop. */
     private boolean update() {
         if (!live || dying || gone) return false;
@@ -324,6 +340,7 @@ public final class BossModel {
         Matrix4f[] cubes = ModelRig.cubes(model, bones);
         System.arraycopy(cubes, 0, pose, 0, cubes.length);
         for (int i = 0; i < model.entranceOnly.length && i < pose.length; i++) if (model.entranceOnly[i]) pose[i] = new Matrix4f().scale(0);
+        if (model.faceOf != null) model.showFace(pose, face());
         send(Math.abs(turn) > 90 ? 1 : PERIOD * stride);
         if (frame % 2 == 0 || stride == 1) placeZones();
         return true;
@@ -346,7 +363,7 @@ public final class BossModel {
     }
 
     /** translation x rotation x scale, without the shear a general matrix could have. */
-    static Transformation transformation(Matrix4f m) {
+    public static Transformation transformation(Matrix4f m) {
         Vector3f t = m.getTranslation(new Vector3f());
         Vector3f s = m.getScale(new Vector3f());
         Quaternionf q = s.x < 1e-4f || s.y < 1e-4f || s.z < 1e-4f ? new Quaternionf() : m.getNormalizedRotation(new Quaternionf());
@@ -419,6 +436,7 @@ public final class BossModel {
                 List<ModelRig.Layer> layers = List.of(new ModelRig.Layer(model.anim("idle"), idleT, 1), new ModelRig.Layer(anim[0], t, 1));
                 Matrix4f[] cubes = ModelRig.cubes(model, ModelRig.pose(model, layers));
                 System.arraycopy(cubes, 0, pose, 0, cubes.length);
+                if (model.faceOf != null) model.showFace(pose, dying ? "dead" : "idle");
                 for (int i = 0; i < pose.length; i++) dirty.merge(i, 2, Math::max);
                 if (k >= animEnd[0]) anim[0] = null;
             }

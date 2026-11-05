@@ -43,15 +43,17 @@ text:
     help:
       arena: " <yellow><cmd> arena setspawn|wand|region|radius|show|clear|delete <arena>"
       chapter: " <yellow><cmd> chapter <player> <n> | reset <player> | retry"
+      decor: " <yellow><cmd> decor place <model>|remove|list <gray>pumpkins and other models that sit and pull faces"
       finale: " <yellow><cmd> finale [wake|reset] <gray>the boss after the three legends"
       list: " <yellow><cmd> list <gray>boss ids"
       menu: " <yellow><cmd> menu <gray>every boss in a menu"
+      minis: " <yellow><cmd> minis <gray>mini boss spots, timer, mode and markers"
       reload: " <yellow><cmd> reload"
       schedule: " <yellow><cmd> schedule on|off <gray>the weekly boss"
       season: " <yellow><cmd> season <id> on|off|auto"
       selftest: " <yellow><cmd> selftest <gray>spawn every boss, run every attack and death"
       settings: " <yellow><cmd> settings [page] <gray>every option in a settings screen | settings set <path> <value>"
-      spawn: " <yellow><cmd> spawn <boss> [arena] <gray>start a real fight"
+      spawn: " <yellow><cmd> spawn <boss> [arena|here] <gray>start a real fight (here: where you stand)"
       stop: " <yellow><cmd> stop [arena|boss] <gray>send bosses away"
       test: " <yellow><cmd> test <boss>|phase|stop <gray>try a boss in front of you, nothing is paid"
     is-not-online: "<red><input> is not online."
@@ -72,6 +74,13 @@ text:
     they-already-have-a-boss: "<yellow>They already have a boss coming."
     you-can-t-use-that: "<red>You can't use that. <gray>Try /<label> next"
     you-have-no-test-boss: "<gray>You have no test boss."
+  # decor
+  decor:
+    list: "<yellow>Decorations: <white><count></white> <gray>· models: <white><list>"
+    models: "<yellow>/<label> decor place <model> <gray>Models: <white><list>"
+    none: "<red>No decoration within 6 blocks. <gray>/<label> decor remove <id>"
+    placed: "<green>Placed <white><model></white> (<id>). <gray>Remove it with /<label> decor remove"
+    removed: "<gray>Removed <white><id></white>."
   # fights, arenas and rewards
   fight:
     a-boss-is-already-alive: "<yellow>A boss is already alive in <arena>. /cbosses stop <arena>"
@@ -154,13 +163,29 @@ text:
     bosses: "<dark_gray>Bosses <gray>(<page>/<pages>)"
     chapter: "<aqua>Chapter "
     health-attacks: "<gray>Health <white><health></white>  Attacks <white><size></white>  <movement>"
-    left-click-test-it-here: "<yellow>Left-click</yellow> <gray>test it here"
+    left-click-spawn-here: "<yellow>Left-click</yellow> <gray>spawn it where you stand (real fight)"
+    mini: "<yellow>Mini boss"
     next-page: "<yellow>Next page"
     next-weekly-boss: "<gold>Next weekly boss: <white>"
     previous-page: "<yellow>Previous page"
     right-click-spawn-at-the: "<yellow>Right-click</yellow> <gray>spawn at the main arena"
     seasonal: "<light_purple>Seasonal: "
+    shift-click-test: "<yellow>Shift-left</yellow> <gray>test it in front of you (no rewards)"
     world-boss: "<gold>World boss"
+  # mini
+  mini:
+    added: "<green>Spot <white><id></white> added where you stand."
+    awake: "<yellow><bold>✦ MINI BOSS</bold></yellow> <boss> <gray>woke at <white><x>, <z></white> (<world>)."
+    info: "<yellow>Mini bosses <white><state></white> <gray>· mode <white><mode></white> · every <white><every>m</white> · next in <white><next></white> · alive <white><alive>/<max></white> · spots <white><spots></white> · minis <white><count></white>"
+    markers-off: "<gray>Spot markers off."
+    markers-on: "<green>Spot markers on."
+    menu: "<dark_gray>Mini bosses"
+    no-spot: "<red>No spot there. <gray>/<label> minis remove <id>"
+    none: "<yellow>No mini could wake (max alive reached, no spots or no minis)."
+    removed: "<gray>Spot <white><id></white> removed."
+    spot-line: " <gray>• <white><id></white> <world> <x> <y> <z> r<radius><off><bosses>"
+    warning: "<yellow><bold>✦ MINI BOSS</bold></yellow> <gray>Something small and angry wakes in <white><seconds>s</white>."
+    woke: "<green>A mini boss is waking."
   # seasons
   season:
     cbosses-season-on-off-auto: "<yellow>/cbosses season <id> on|off|auto"

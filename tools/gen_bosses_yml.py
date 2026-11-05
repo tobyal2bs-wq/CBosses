@@ -11,20 +11,22 @@ import os, sys, json, yaml, importlib
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
 sys.path.insert(0, os.path.join(ROOT, "tools", "models"))
 import models as _m
-for mod in ("v2_general", "v2_seasonal", "v2_chapters", "v2_legends"):
+import roster
+for mod in roster.MODULES:
     importlib.import_module(mod)
+import v9_minis
 DOCS = {f.__name__: " ".join((f.__doc__ or "").split()) for f in _m.MODELS}
 MODELS = json.load(open(os.path.join(ROOT, "src/main/resources/models.json")))["models"]
 YML = os.path.join(ROOT, "src/main/resources/bosses.yml")
 OLD = yaml.safe_load(open(YML))["bosses"]
 
-GENERAL = ["slagheart", "warlord_gruk", "grand_augur", "crimson_ronin", "thunderback", "gorehorn", "abyssal_eye", "overgrowth",
-           "prism_sentinel", "tiki_warden", "hollow_king", "broodmother", "ironhide_behemoth", "fenrir", "tide_tyrant", "void_walker",
-           "storm_herald", "pharaoh", "executioner", "ember_queen", "gravelord", "captain_brine", "keywarden", "bloodtusk", "king_gloop"]
-LEGENDS = ["the_listener", "withered_tyrant", "ender_wyrm", "gale_sovereign", "the_unmaker"]
-SEASONAL = {"winter": ["killer_claus", "frostbottom", "old_man_winter"], "summer": ["sunscorch", "admiral_pinchworth", "brain_freeze"],
-            "spring": ["clucksworth", "killer_bunny", "cocoa_colossus"], "halloween": ["great_gourd", "headless_horseman", "hexmother"]}
-CHAPTERS = ["brakka", "gate_shade", "oakheart", "vault_mimic", "crypt_knight", "iron_tusk", "reef_hulk", "ember_knight", "choirmaster", "sculk_herald"]
+GENERAL = roster.GENERAL
+LEGENDS = roster.MYTHIC
+SEASONAL = roster.SEASONAL
+CHAPTERS = roster.CHAPTERS
+MINIS = roster.minis()
+# health tiers asked for: big bosses 5000, mythic 8000, minis 3000 (chapter bosses are one-on-one and keep their own curve)
+TIER_HEALTH = {"big": 5000, "mythic": 8000, "mini": 3000}
 
 # extra abilities on top of the model's own attack moves (these use its melee swing)
 EXTRA = {
@@ -100,6 +102,46 @@ NEW = {
      items=["ECHO_SHARD 4", "SCULK_CATALYST 1", "DIAMOND 4"], top_items=[]),
 }
 
+def big(name, title, entity, bar, theme, minion=None, minions=0, money=60000, items=(), top=(), **kw):
+    d = dict(name=name, title=title, entity=entity, health=5000, damage=12, armor=8, bar=bar, theme=theme, minion=minion, minions=minions,
+             money=money, top_money=money * 3, items=list(items), top_items=list(top))
+    d.update(kw)
+    return d
+
+
+NEW.update({
+ "clockwork_colossus": big("<gradient:#b87333:#ffd54f><bold>The Clockwork Colossus</bold></gradient>", "Wound Up and Furious", "IRON_GOLEM", "YELLOW", "iron",
+     items=["COPPER_BLOCK 16", "REDSTONE_BLOCK 4", "DIAMOND 3"], top=["NETHERITE_SCRAP 1"]),
+ "mossback": big("<gradient:#33691e:#a1887f><bold>Mossback</bold></gradient>", "The Walking Hill", "RAVAGER", "GREEN", "nature",
+     minion="SPIDER", minions=2, items=["MOSS_BLOCK 32", "AZALEA 8", "DIAMOND 3"], top=["ENCHANTED_GOLDEN_APPLE 1"]),
+ "old_wizard": big("<gradient:#4a148c:#e1bee7><bold>Archmage Bramblebeard</bold></gradient>", "Older Than the Mountains", "EVOKER", "PURPLE", "witch",
+     minion="VEX", minions=3, items=["LAPIS_BLOCK 8", "EXPERIENCE_BOTTLE 32", "DIAMOND 3"], top=["ENCHANTED_BOOK 1"]),
+ "hollow_mage": big("<gradient:#0d47a1:#ffd54f><bold>The Hollow Mage</bold></gradient>", "Nothing Under the Hat", "WITCH", "BLUE", "void",
+     items=["ENDER_PEARL 16", "GLOWSTONE 16", "DIAMOND 3"], top=["TOTEM_OF_UNDYING 1"]),
+ "horned_brute": big("<gradient:#5d4037:#d7ccc8><bold>Gorrak the Horned</bold></gradient>", "Brute of the High Pass", "RAVAGER", "WHITE", "earth",
+     items=["LEATHER 32", "IRON_BLOCK 4", "DIAMOND 3"], top=["NETHERITE_SCRAP 1"]),
+ "rotting_giant": big("<gradient:#33691e:#26c6da><bold>The Rotting Giant</bold></gradient>", "Too Big to Stay Buried", "GIANT", "GREEN", "toxic",
+     minion="ZOMBIE", minions=4, items=["ROTTEN_FLESH 64", "IRON_INGOT 24", "DIAMOND 3"], top=["ENCHANTED_GOLDEN_APPLE 1"]),
+ "dusk_scorpion": big("<gradient:#311b92:#ff1744><bold>The Dusk Scorpion</bold></gradient>", "Sting of the Badlands", "SPIDER", "PURPLE", "toxic",
+     minion="CAVE_SPIDER", minions=3, items=["SPIDER_EYE 16", "GOLD_BLOCK 4", "DIAMOND 3"], top=["NETHERITE_SCRAP 1"]),
+ "grave_marshal": big("<gradient:#37474f:#b0bec5><bold>The Grave Marshal</bold></gradient>", "Keeps the Dead in Line", "WITHER_SKELETON", "WHITE", "bone",
+     minion="SKELETON", minions=3, items=["BONE_BLOCK 16", "IRON_BLOCK 4", "DIAMOND 3"], top=["NETHERITE_SCRAP 1"]),
+ "mayor_grumble": big("<gradient:#6d4c41:#ffcc80><bold>Mayor Grumble</bold></gradient>", "Taxes Are Due", "VINDICATOR", "YELLOW", "gold",
+     minion="VINDICATOR", minions=2, items=["EMERALD_BLOCK 4", "GOLD_INGOT 16", "DIAMOND 3"], top=["TOTEM_OF_UNDYING 1"]),
+ "shulker_matriarch": big("<gradient:#6a1b9a:#f3e5f5><bold>The Shulker Matriarch</bold></gradient>", "Mother of the End City", "BLAZE", "PURPLE", "void", movement="hover", fly_height=2,
+     minion="ENDERMITE", minions=3, items=["SHULKER_SHELL 4", "ENDER_PEARL 16", "DIAMOND 3"], top=["ELYTRA 1"]),
+ "old_ironroot": big("<gradient:#455a64:#9ccc65><bold>Old Ironroot</bold></gradient>", "The Golem the Forest Kept", "IRON_GOLEM", "GREEN", "nature",
+     items=["IRON_BLOCK 6", "MOSS_BLOCK 32", "DIAMOND 3"], top=["ENCHANTED_GOLDEN_APPLE 1"]),
+ "gourd_king": big("<gradient:#e65100:#76ff03><bold>The Gourd King</bold></gradient>", "His Face Says It All", "ZOMBIE", "YELLOW", "pumpkin",
+     minion="ZOMBIE", minions=3, items=["PUMPKIN_PIE 16", "JACK_O_LANTERN 8", "DIAMOND 3"], top=["ENCHANTED_GOLDEN_APPLE 1"]),
+})
+for _id, _i in v9_minis.INFO.items():
+    NEW[_id] = dict(name=_i["name"], title=_i["title"], entity=_i["entity"], health=3000, damage=8, armor=4, bar=_i["bar"], theme=_i["theme"],
+                    minion=_i["minion"], minions=2 if _i["minion"] else 0, ability_seconds=6, phases=[0.5], hpp=0.15,
+                    money=15000, top_money=45000, items=["DIAMOND 1", "GOLD_INGOT 8", "EXPERIENCE_BOTTLE 8"], top_items=["GOLDEN_APPLE 2"])
+    EXTRA[_id] = _i["extra"]
+
+
 # bosses that used to close a chapter and now join the weekly rotation get general boss health
 PROMOTED = {"keywarden": 1800, "hollow_king": 2200, "captain_brine": 1900, "ember_queen": 2000}
 # minions for bosses whose model has a summon move
@@ -131,8 +173,11 @@ def entry(id, kind, season=None, chapter=None):
     if chapter:
         d["health"] = CHAPTER_HEALTH[chapter - 1]
         d["top_money"] = 0
-    elif id in PROMOTED:
-        d["health"] = PROMOTED[id]
+    else:
+        d["tier"] = "mythic" if id in LEGENDS else "mini" if id in MINIS else "big"
+        d["health"] = TIER_HEALTH[d["tier"]]
+    if id in MINIS:
+        d["kind"] = "mini"
     if not chapter and not d.get("top_money"):
         d["top_money"] = d.get("money", 0) * 3
     if id == "gale_sovereign":
@@ -192,6 +237,8 @@ def emit(id, d):
         w(f"    {k}: {q(d[k])}")
     if d.get("chapter"): w(f"    chapter: {d['chapter']}")
     if d.get("season"): w(f"    season: {d['season']}")
+    if d.get("kind"): w(f"    kind: {d['kind']}")
+    if d.get("tier"): w(f"    tier: {d['tier']}")
     w(f"    entity: {d['entity']}")
     w(f"    health: {d['health']}")
     if d.get("scale"): w(f"    scale: {d['scale']}")
@@ -222,17 +269,19 @@ def emit(id, d):
     w(f"    description: {q(d['description'])}")
 
 
-w("  # ------------------------------------------------------------ the 25 general bosses (weekly rotation)")
+w("  # ------------------------------------------------------------ the weekly bosses (5000 health)")
 for id in GENERAL: emit(id, entry(id, "world"))
-w("  # ------------------------------------------------------------ legends: Warden, Wither, Ender Dragon, Breeze and the finale")
+w("  # ------------------------------------------------------------ mythic: Warden, Wither, Ender Dragon, Breeze and the finale (8000 health)")
 for id in LEGENDS: emit(id, entry(id, "world"))
 for season, ids in SEASONAL.items():
     w(f"  # ------------------------------------------------------------ {season}")
     for id in ids: emit(id, entry(id, "seasonal", season=season))
 w("  # ------------------------------------------------------------ chapter bosses, one after every CQuests chapter")
 for n, id in enumerate(CHAPTERS, 1): emit(id, entry(id, "chapter", chapter=n))
+w("  # ------------------------------------------------------------ mini bosses: wake on the mini timer (/cbosses minis), 3000 health")
+for id in MINIS: emit(id, entry(id, "mini"))
 
-all_ids = GENERAL + LEGENDS + sum(SEASONAL.values(), []) + CHAPTERS
-assert len(all_ids) == 52 and len(set(all_ids)) == 52 and set(all_ids) == set(MODELS), set(MODELS) ^ set(all_ids)
+all_ids = GENERAL + LEGENDS + sum(SEASONAL.values(), []) + CHAPTERS + MINIS
+assert len(set(all_ids)) == len(all_ids) and set(all_ids) | set(roster.DECOR) == set(MODELS), set(MODELS) ^ set(all_ids)
 open(YML, "w").write("\n".join(out) + "\n")
 print("wrote", YML, len(all_ids), "bosses")

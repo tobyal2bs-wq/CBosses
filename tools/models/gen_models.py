@@ -37,7 +37,8 @@ ALIAS = {"vex": ["minions"], "beam": ["sonic_boom", "orbs"], "fangs": ["spikes"]
          "thorns": ["volley", "spikes"], "anchor": ["slam"], "hymn": ["darkness", "orbs"], "bell": ["shockwave", "slam"], "sonic": ["sonic_boom"],
          "claws": ["charge", "slam"], "blast": ["shockwave", "orbs"], "gust": ["shockwave", "levitate"], "charges": ["orbs"], "dash": ["charge"],
          "smash": ["slam"], "blade": ["charge"], "orb": ["orbs"], "crown": ["meteor"], "toss": ["slam", "shockwave"], "pounce": ["leap"],
-         "sword": ["charge"]}
+         "sword": ["charge"], "spin": ["blink", "shockwave"], "sweep": ["shockwave", "slam"], "sting": ["poison", "charge"],
+         "stomp": ["quake", "shockwave"], "spells": ["orbs", "darkness"], "summon": ["minions"], "magic": ["orbs", "levitate"], "bolt": ["lightning"], "shards2": ["volley"]}
 
 
 def fight_attacks(m):
