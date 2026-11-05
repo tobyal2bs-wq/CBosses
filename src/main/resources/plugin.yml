@@ -12,6 +12,11 @@ commands:
     aliases: [cb, bosses]
     usage: /cbosses help
 permissions:
-  cbosses.admin:
-    description: Every CBosses command
+  bosses.use:
+    description: Control bosses (spawn, stop, test, arenas, settings). Operators have it; give it to anyone else who should.
     default: op
+  cbosses.admin:
+    description: Old name for bosses.use, still works
+    default: op
+    children:
+      bosses.use: true

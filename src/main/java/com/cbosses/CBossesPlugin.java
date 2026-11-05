@@ -58,7 +58,9 @@ public final class CBossesPlugin extends JavaPlugin {
         getServer().getPluginManager().registerEvents(finale, this);
         BossMenu menu = new BossMenu(this);
         getServer().getPluginManager().registerEvents(menu, this);
-        BossCommand command = new BossCommand(this, menu);
+        var settings = new com.cbosses.command.SettingsMenu(this);
+        getServer().getPluginManager().registerEvents(settings, this);
+        BossCommand command = new BossCommand(this, menu, settings);
         var cmd = getCommand("cbosses");
         if (cmd != null) { cmd.setExecutor(command); cmd.setTabCompleter(command); }
         service.start();

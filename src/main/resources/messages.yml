@@ -50,6 +50,7 @@ text:
       schedule: " <yellow><cmd> schedule on|off <gray>the weekly boss"
       season: " <yellow><cmd> season <id> on|off|auto"
       selftest: " <yellow><cmd> selftest <gray>spawn every boss, run every attack and death"
+      settings: " <yellow><cmd> settings [page] <gray>every option in a settings screen | settings set <path> <value>"
       spawn: " <yellow><cmd> spawn <boss> [arena] <gray>start a real fight"
       stop: " <yellow><cmd> stop [arena|boss] <gray>send bosses away"
       test: " <yellow><cmd> test <boss>|phase|stop <gray>try a boss in front of you, nothing is paid"
@@ -167,3 +168,10 @@ text:
     mode: " <dark_gray>-</dark_gray> <white><id></white> <id2> <gray>mode <white><id3></white><off>"
     no-season-seasons: "<red>No season <id>. <gray>Seasons: <list>"
     seasons-cbosses-season-on-off: "<gold>Seasons</gold> <gray>(/cbosses season <id> on|off|auto)"
+  # settings
+  settings:
+    bad-value: "<red><value> is not a valid value for <path>."
+    not-saved: "<red>Not changed, the value was not valid: <list>"
+    saved: "<green>Settings saved and applied."
+    set-usage: "<yellow>/cbosses settings set <path> <value>"
+    unknown: "<red>No setting <path>."

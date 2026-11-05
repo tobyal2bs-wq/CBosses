@@ -1262,7 +1262,7 @@ public final class BossService implements Listener {
         event.setCancelled(true);
         if (event.getHand() != EquipmentSlot.HAND) return;
         Player player = event.getPlayer();
-        if (!player.hasPermission("cbosses.admin")) return;
+        if (!com.cbosses.command.BossCommand.canControl(player)) return;
         Arena a = arena(id, true);
         if (event.getAction() == Action.LEFT_CLICK_BLOCK && event.getClickedBlock() != null) {
             var b = event.getClickedBlock();

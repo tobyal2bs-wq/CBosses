@@ -8,6 +8,9 @@
 enabled: true
 # Draw bosses with their block models (models.json). false uses plain mobs wearing their equipment.
 models: true
+# /cbosses settings: auto opens the game's own settings screen on 1.21.6+ servers and a chest menu on older
+# ones; dialog or chest forces one.
+settings-menu: auto
 
 # ----------------------------------------------------------------------------------- EFFECTS AND LAG
 # Everything that can cost frames or ticks is here. The defaults look great and stay light; turn

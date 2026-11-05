@@ -18,25 +18,31 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-/** /cbosses (aliases /cb, /bosses). Players see /cbosses next; everything else needs cbosses.admin. */
+/** /cbosses (aliases /cb, /bosses). Players see /cbosses next; controlling bosses needs op or the bosses.use permission. */
 public final class BossCommand implements CommandExecutor, TabCompleter {
-    private static final List<String> ADMIN = List.of("menu", "list", "spawn", "test", "stop", "selftest", "arena", "schedule", "chapter", "season", "finale", "reload", "info", "next", "help");
+    private static final List<String> ADMIN = List.of("menu", "list", "spawn", "test", "stop", "selftest", "arena", "schedule", "chapter", "season", "finale", "settings", "reload", "info", "next", "help");
     private final CBossesPlugin plugin;
     private final BossMenu menu;
+    private final SettingsMenu settings;
 
-    public BossCommand(CBossesPlugin plugin, BossMenu menu) { this.plugin = plugin; this.menu = menu; }
+    public BossCommand(CBossesPlugin plugin, BossMenu menu, SettingsMenu settings) { this.plugin = plugin; this.menu = menu; this.settings = settings; }
+
+    /** Controlling bosses is for operators, and for anyone given bosses.use (cbosses.admin still works). */
+    public static boolean canControl(CommandSender sender) {
+        return sender.isOp() || sender.hasPermission("bosses.use") || sender.hasPermission("cbosses.admin");
+    }
 
     private BossService s() { return plugin.service(); }
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String @NotNull [] args) {
-        String sub = args.length == 0 ? (sender.hasPermission("cbosses.admin") && sender instanceof Player ? "menu" : "next") : args[0].toLowerCase(Locale.ROOT);
+        String sub = args.length == 0 ? (canControl(sender) && sender instanceof Player ? "menu" : "next") : args[0].toLowerCase(Locale.ROOT);
         if (sub.equals("next") || sub.equals("info")) { s().info(sender); return true; }
         if (sub.equals("chapter") && args.length >= 2 && args[1].equalsIgnoreCase("retry") && sender instanceof Player p) {
             if (!plugin.chapters().retry(p)) plugin.send(p, T.t("command.no-chapter-boss-is-waiting", "<gray>No chapter boss is waiting for you."));
             return true;
         }
-        if (!sender.hasPermission("cbosses.admin")) { plugin.send(sender, T.t("command.you-can-t-use-that", "<red>You can't use that. <gray>Try /<label> next", "label", label)); return true; }
+        if (!canControl(sender)) { plugin.send(sender, T.t("command.you-can-t-use-that", "<red>You can't use that. <gray>Try /<label> next", "label", label)); return true; }
         Player player = sender instanceof Player p ? p : null;
         switch (sub) {
             case "menu", "gui" -> { if (player == null) plugin.send(sender, T.t("command.players-only", "<red>Players only.")); else menu.open(player, 0); }
@@ -93,6 +99,7 @@ public final class BossCommand implements CommandExecutor, TabCompleter {
                     default -> plugin.finale().info(sender);
                 }
             }
+            case "settings", "config" -> settings.command(sender, args);
             case "reload" -> { plugin.reloadAll(); plugin.send(sender, T.t("command.reloaded-bosses", "<green>Reloaded: <count> bosses.", "count", s().defs().size())); }
             default -> help(sender, label);
         }
@@ -136,6 +143,7 @@ public final class BossCommand implements CommandExecutor, TabCompleter {
                 {"season", "<cmd> season <id> on|off|auto"},
                 {"finale", "<cmd> finale [wake|reset] <gray>the boss after the three legends"},
                 {"selftest", "<cmd> selftest <gray>spawn every boss, run every attack and death"},
+                {"settings", "<cmd> settings [page] <gray>every option in a settings screen | settings set <path> <value>"},
                 {"reload", "<cmd> reload"}};
         for (String[] line : lines)
             to.sendMessage(Text.mm(T.t("command.help." + line[0], " <yellow>" + line[1], "cmd", l)));
@@ -143,7 +151,7 @@ public final class BossCommand implements CommandExecutor, TabCompleter {
 
     @Override
     public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String alias, String @NotNull [] args) {
-        if (!sender.hasPermission("cbosses.admin")) return args.length == 1 ? filter(List.of("next", "chapter"), args[0]) : List.of();
+        if (!canControl(sender)) return args.length == 1 ? filter(List.of("next", "chapter"), args[0]) : List.of();
         if (args.length == 1) return filter(ADMIN, args[0]);
         String sub = args[0].toLowerCase(Locale.ROOT);
         if (args.length == 2) return switch (sub) {
@@ -153,10 +161,16 @@ public final class BossCommand implements CommandExecutor, TabCompleter {
             case "arena" -> filter(List.of("setspawn", "wand", "show", "region", "radius", "clear", "delete", "list"), args[1]);
             case "schedule" -> filter(List.of("on", "off"), args[1]);
             case "finale" -> filter(List.of("info", "wake", "reset"), args[1]);
+            case "settings", "config" -> filter(List.of("effects", "schedule", "fight", "chapters", "seasons", "set"), args[1]);
             case "season", "seasons" -> filter(plugin.seasons().ids(), args[1]);
             case "chapter" -> { List<String> out = new ArrayList<>(List.of("reset", "retry")); for (Player p : Bukkit.getOnlinePlayers()) out.add(p.getName()); yield filter(out, args[1]); }
             default -> List.of();
         };
+        if (args.length == 3 && (sub.equals("settings") || sub.equals("config")) && args[1].equalsIgnoreCase("set")) {
+            List<String> paths = new ArrayList<>();
+            for (var pg : settings.pages()) for (var st : pg.settings()) paths.add(st.path());
+            return filter(paths, args[2]);
+        }
         if (args.length == 3) return switch (sub) {
             case "spawn", "arena" -> filter(s().arenaIds(), args[2]);
             case "season", "seasons" -> filter(List.of("on", "off", "auto"), args[2]);

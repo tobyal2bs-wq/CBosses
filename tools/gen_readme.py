@@ -141,7 +141,8 @@ the season CQuests has on.
 
 ## Commands
 
-All commands need `cbosses.admin` except `/cbosses next`. Aliases: `/cb`, `/bosses`.
+Controlling bosses is for operators, or anyone given the `bosses.use` permission (the old `cbosses.admin` still works).
+Everyone can use `/cbosses next` and `/cbosses chapter retry`. Aliases: `/cb`, `/bosses`.
 
 | Command | What it does |
 |---|---|
@@ -157,6 +158,8 @@ All commands need `cbosses.admin` except `/cbosses next`. Aliases: `/cb`, `/boss
 | `/cbosses season <id> <on\\|off\\|auto>` | Switch a season. |
 | `/cbosses finale [wake\\|reset]` | Finale progress, wake it now, or start over. |
 | `/cbosses next` | When the next boss wakes. |
+| `/cbosses settings [page]` | Every option of `config.yml` in a settings screen (the game's own dialog screen on 1.21.6+, a chest menu before). |
+| `/cbosses settings set <path> <value>` | Change one option from chat or the console. |
 | `/cbosses reload` | Reload every file. |
 
 ## Configuration
