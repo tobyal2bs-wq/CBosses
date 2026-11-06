@@ -311,7 +311,10 @@ for season, ids in SEASONAL.items():
     w(f"  # ------------------------------------------------------------ {season}")
     for id in ids: emit(id, entry(id, "seasonal", season=season))
 w("  # ------------------------------------------------------------ chapter bosses, one after every CQuests chapter")
-for n, id in enumerate(CHAPTERS, 1): emit(id, entry(id, "chapter", chapter=n))
+# chapter numbers are fixed per boss (player progress is stored by chapter), so a removed boss leaves a gap
+CHAPTER_NO = {id: n for n, id in enumerate(["brakka", "gate_shade", "oakheart", "gnome_brothers", "moss_spirit", "cyclops_ogre", "grubnose",
+                                            "orc_bruiser", "mudclub", "ugor"], 1)}
+for id in CHAPTERS: emit(id, entry(id, "chapter", chapter=CHAPTER_NO[id]))
 w("  # ------------------------------------------------------------ mini bosses: wake on the mini timer (/cbosses minis), 3000 health")
 for id in MINIS: emit(id, entry(id, "mini"))
 w("  # ------------------------------------------------------------ second bodies of two-body bosses (they appear beside their partner, never alone)")

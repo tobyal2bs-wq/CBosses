@@ -1500,9 +1500,9 @@ bosses:
   grubnose:
     name: "<gradient:#827717:#ffcc80><bold>Grubnose the Troll</bold></gradient>"
     title: "Under the Old Bridge"
-    chapter: 6
+    chapter: 7
     entity: ZOMBIE
-    health: 1600
+    health: 1800
     damage: 9
     armor: 8
     bar: YELLOW
@@ -1523,9 +1523,9 @@ bosses:
   mudclub:
     name: "<gradient:#3e2723:#9ccc65><bold>Mudclub</bold></gradient>"
     title: "Troll of the Dry Riverbed"
-    chapter: 7
+    chapter: 9
     entity: ZOMBIE
-    health: 1800
+    health: 2200
     damage: 9
     armor: 8
     bar: GREEN
@@ -1546,9 +1546,9 @@ bosses:
   ugor:
     name: "<gradient:#4e342e:#f8bbd0><bold>Ugor</bold></gradient>"
     title: "The Brute of the Last Chapter"
-    chapter: 8
+    chapter: 10
     entity: RAVAGER
-    health: 2000
+    health: 2500
     damage: 9
     armor: 8
     bar: RED
