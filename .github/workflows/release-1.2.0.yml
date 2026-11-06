@@ -27,7 +27,7 @@ jobs:
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
-          ref: 73be809ffdbf255fd2b34d096b8b40feb91c52dd
+          ref: ${{ github.sha }}
       - name: Verify checked commit and collect its tested JAR
         shell: bash
         run: |
