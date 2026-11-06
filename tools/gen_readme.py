@@ -105,7 +105,6 @@ delay and the arena under `finale:` in `config.yml`.
 
 {table(finale)}
 
-<p align="center"><img src="docs/images/unmaker_heart.jpg" width="32%"> <img src="docs/images/unmaker_arms.jpg" width="32%"> <img src="docs/images/unmaker_death.jpg" width="32%"></p>
 <p align="center"><sub>The void heart lights alone in the air, the four arms swing in, and the end: the arms torn away before it bursts.</sub></p>
 
 ## Legend bosses
@@ -125,7 +124,6 @@ the season CQuests has on.
 
 {table(season)}
 
-<p align="center"><img src="docs/images/clucksworth_egg.jpg" width="32%"> <img src="docs/images/clucksworth_hatch.jpg" width="32%"> <img src="docs/images/killer_claus_death.jpg" width="32%"></p>
 <p align="center"><sub>Clucksworth's egg, the hatch, and Killer Claus breaking apart.</sub></p>
 
 ## Install
