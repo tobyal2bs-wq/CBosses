@@ -163,7 +163,12 @@ public final class BossService implements Listener {
                 for (String k : sec.getKeys(true)) if (!sec.isConfigurationSection(k)) yaml.set(at + "." + k, sec.get(k));
                 added.add(id);
             }
-            if (added.isEmpty() && updated.isEmpty()) return;
+            List<String> removed = new ArrayList<>();
+            for (String id : bundled.getStringList("removed"))
+                if (yaml.contains("bosses." + id)) { yaml.set("bosses." + id, null); removed.add(id); }
+            yaml.set("removed", bundled.getStringList("removed"));
+            if (!removed.isEmpty()) plugin.getLogger().info("Removed retired bosses from bosses.yml: " + String.join(", ", removed));
+            if (added.isEmpty() && updated.isEmpty() && removed.isEmpty()) return;
             if (!updated.isEmpty()) plugin.getLogger().info("Updated redesigned bosses in bosses.yml (rewards kept, old file saved as bosses.yml.bak): " + String.join(", ", updated));
             com.cbosses.util.SafeFiles.write(file, yaml.saveToString());
             if (!added.isEmpty()) plugin.getLogger().info("Added new bosses to bosses.yml: " + String.join(", ", added));

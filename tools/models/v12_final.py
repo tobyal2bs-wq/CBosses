@@ -8,8 +8,13 @@ from models import model, biped, limb, horn
 from build import Model
 from texpaint import Sheet
 from v2_recipes import S, fx, gone
-from v11_new import tb, mottle, boss_recipe, legs2, arms2
+from v11_new import tb as _tb, mottle, boss_recipe, legs2, arms2
 import v9_minis
+
+
+def tb(*a, rate=0.22, **kw):
+    """Mostly clean colour: a light touch of a second tone, not a patchwork."""
+    return _tb(*a, rate=rate * 0.3, **kw)
 import anims
 from anims import K, Z
 
@@ -141,6 +146,8 @@ def mini(id, name, title, entity="ZOMBIE", theme="nature", bar="GREEN", extra=()
 def partner(main, id, name, title, entity="ZOMBIE", theme="nature", bar="GREEN", extra=(), recipe=None, movement=None, speed=None, tier="mini"):
     """The second body of a two-body boss: its own model, its own health bar and its own target."""
     def deco(fn):
+        REVISED.add(main)
+        return fn
         PARTNERS[main] = id
         PARTNER_INFO[id] = dict(name=name, title=title, entity=entity, theme=theme, bar=bar, extra=list(extra), tier=tier,
                                 **({"movement": movement} if movement else {}), **({"speed": speed} if speed else {}))
@@ -637,7 +644,8 @@ def gate_shade():
 
 
 # ---------------------------------------------------------------------------- minis grown into big bosses
-drop("frost_yeti"); drop("cinder_imp"); drop("bog_orc")
+drop("frost_yeti"); drop("cinder_imp"); drop("bog_orc"); drop("cluck_rider")
+REMOVED = ["cluck_rider"]
 
 
 @big("frost_yeti", "<gradient:#90caf9:#ffffff><bold>The Frost Yeti</bold></gradient>", "Keeper of the Ice Cave", "IRON_GOLEM", "frost", "WHITE",
@@ -765,11 +773,9 @@ def bog_orc():
 def remake(id, recipe=None, **change):
     """A new model for an existing mini; its name, attacks and opening stay unless changed here."""
     def deco(fn):
-        if recipe: v9_minis.SPAWN[id], v9_minis.DEATH[id] = recipe
-        if change:
-            v9_minis.INFO[id].update(change)
-            REVISED.add(id)
-        return model(fn)
+        # 1.3.1: the old minis came back (the redraws were too busy); the revision brings back their old names
+        REVISED.add(id)
+        return fn
     return deco
 
 
@@ -1207,9 +1213,7 @@ def gnome_brothers():
     return m
 
 
-model(gnome_brothers)
-SPAWN["gnome_brothers"], DEATH["gnome_brothers"] = _v11.SPAWN["gnome_brothers"], _v11.DEATH["gnome_brothers"]
-REVISED.add("gnome_brothers")
+REVISED.add("gnome_brothers")  # back to the v11 two-brother model
 
 
 @remake("king_oldbeard")

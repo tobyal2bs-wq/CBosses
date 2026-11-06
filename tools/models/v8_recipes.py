@@ -100,5 +100,5 @@ def _swap(steps, table):
 
 import v4_recipes as _v4
 # the v5 rebuilds of these bosses have different bone names than the recipes were written for
-for _id, _t in (("the_listener", {"heart": "lit"}), ("withered_tyrant", {"ring2": "tail", "ring3": "core"}), ("mayor_grumble", {"hat": "head"})):
+for _id, _t in (("the_listener", {"heart": "lit"}), ("withered_tyrant", {"ring2": "tail", "ring3": "core"})):
     SPAWN[_id], DEATH[_id] = _swap(_v4.SPAWN[_id], _t), _swap(_v4.DEATH[_id], _t)

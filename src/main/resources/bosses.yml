@@ -183,7 +183,7 @@ bosses:
       top-commands: []
     description: "A minotaur pit champion: dark brown bull head with frosted-white horns and a gold nose ring, snow-white fur over the shoulders, a leather harness, a blue loincloth and a double-headed axe."
   abyssal_eye:
-    revision: 2
+    revision: 3
     name: "<gradient:#0b3d91:#ffe066><bold>The Lantern Angler</bold></gradient>"
     title: "Light at the Bottom of the Sea"
     tier: big
@@ -283,7 +283,7 @@ bosses:
       top-commands: []
     description: "A volcanic tiki idol come to life: a huge carved mask for a head with a lit mouth, orange stone body cut with glyph bands, a feathered headdress and a jagged obsidian-edged war blade."
   hollow_king:
-    revision: 2
+    revision: 3
     name: "<gradient:#1b1b1b:#9ccc65><bold>The Antler King</bold></gradient>"
     title: "He Wears the Forest"
     tier: big
@@ -360,7 +360,7 @@ bosses:
       top-commands: []
     description: "A war rhino in riveted iron barding: a great nose horn and a second smaller one, plated neck, overlapping back plates, chain fringe, a war banner on its back and glowing furnace eyes."
   fenrir:
-    revision: 2
+    revision: 3
     name: "<gradient:#263238:#80d8ff><bold>Grimfang</bold></gradient>"
     title: "The Wolf the Chains Could Not Hold"
     tier: big
@@ -388,7 +388,7 @@ bosses:
       top-commands: []
     description: "A huge shaggy dire wolf in charcoal and grey fur with a pale belly and muzzle, a thick mane, ice blue glowing eyes, white fangs, and a broken iron collar with chain ends swinging under its neck."
   tide_tyrant:
-    revision: 2
+    revision: 3
     name: "<gradient:#bf360c:#ff8a65><bold>King Shellback</bold></gradient>"
     title: "The Crab Who Took the Reef"
     tier: big
@@ -442,7 +442,7 @@ bosses:
       top-commands: []
     description: "A towering ender lord: thin black limbs, a plated obsidian torso cracked with purple light, a flowing tattered cowl, purple eyes and a halo of floating end-stone shards."
   storm_herald:
-    revision: 2
+    revision: 3
     name: "<gradient:#37474f:#ffee58><bold>The Thunder Ram</bold></gradient>"
     title: "It Brings the Storm on Its Back"
     tier: big
@@ -526,7 +526,7 @@ bosses:
       top-commands: []
     description: "A giant headsman: a black hood with a single eye slit, a bare grey chest crossed with chains, a blood-red apron over leather, iron manacles on its wrists and a huge crescent axe."
   ember_queen:
-    revision: 2
+    revision: 3
     name: "<gradient:#4e342e:#ff6d00><bold>The Forge Mother</bold></gradient>"
     title: "Her Belly Is a Furnace"
     tier: big
@@ -553,7 +553,7 @@ bosses:
       top-commands: []
     description: "A broad smith giantess with soot-dark skin, two thick copper braids, a scorched leather apron over a furnace in her belly that glows through an iron grate, heavy gloves and a huge forge hammer."
   gravelord:
-    revision: 2
+    revision: 3
     name: "<gradient:#263238:#80cbc4><bold>The Bone Collector</bold></gradient>"
     title: "He Comes With an Empty Sack"
     tier: big
@@ -634,7 +634,7 @@ bosses:
       top-commands: []
     description: "A clockwork vault guardian: a brass and copper body riveted together, a round glass dome head with a glowing gear inside, a giant wind-up key turning in its back, piston arms and a lock-plate shield."
   bloodtusk:
-    revision: 2
+    revision: 3
     name: "<gradient:#4e342e:#ef5350><bold>Old Tusker</bold></gradient>"
     title: "The War Boar of the Red Banner"
     tier: big
@@ -933,7 +933,7 @@ bosses:
       top-commands: []
     description: "The mother of the shulkers, painted properly: a purpur shell with raised plates and dark seams, the lid lifted on her pale yellow head with black eyes, a crown of end rods along the lid, glowing purple runes along the seam, and four small shulkers with their own faces orbiting her."
   old_ironroot:
-    revision: 2
+    revision: 3
     name: "<gradient:#5d4037:#c5e1a5><bold>The Stump Warden</bold></gradient>"
     title: "The Oldest Tree Got Up"
     tier: big
@@ -959,7 +959,7 @@ bosses:
       top-commands: []
     description: "A walking tree stump with ring-cut wood on top, mushrooms and a sapling growing out of its moss, glowing amber knot-hole eyes over a mossy beard, and arms and legs of thick twisting roots."
   frost_yeti:
-    revision: 2
+    revision: 3
     name: "<gradient:#90caf9:#ffffff><bold>The Frost Yeti</bold></gradient>"
     title: "Keeper of the Ice Cave"
     tier: big
@@ -985,7 +985,7 @@ bosses:
       top-commands: []
     description: "A huge shaggy white yeti hunched forward on long arms, thick fur in white and pale grey, a blue-grey face with a heavy brow, a wide mouth with two fangs, short curled horns, icicles hanging off its shoulders and a fist frozen into a block of ice."
   cinder_imp:
-    revision: 2
+    revision: 3
     name: "<gradient:#8b0000:#ffab40><bold>The Cinder Devil</bold></gradient>"
     title: "Horned Trouble From Below"
     tier: big
@@ -1011,7 +1011,7 @@ bosses:
       top-commands: []
     description: "A big red devil with black curling horns, glowing yellow eyes under an angry brow, a toothy grin and a pointed beard, bat wings that flex behind it, goat legs ending in black hooves, a whipping tail with an arrow tip and a black pitchfork with glowing prongs."
   bog_orc:
-    revision: 2
+    revision: 3
     name: "<gradient:#2e7d32:#e0e0e0><bold>Horngut</bold></gradient>"
     title: "Bully of the Swamp"
     tier: big
@@ -1527,7 +1527,7 @@ bosses:
       top-commands: []
     description: "Chapter 1, The Wanderers' Camp: Brakka the bandit chief. A burly raider with a red bandana over his face, an eye patch, leather armour with a wolf-fur collar, a satchel of stolen loot, a crossbow slung on his back and a hatchet in each hand."
   gate_shade:
-    revision: 2
+    revision: 3
     name: "<gradient:#212121:#b0bec5><bold>The Gatekeeper</bold></gradient>"
     title: "Nothing Passes Without the Key"
     chapter: 2
@@ -1579,11 +1579,10 @@ bosses:
       top-commands: []
     description: "Chapter 3, The Elder's Charge: an old oak that woke up to protect the elder's grove. A trunk of bark with a hollow full of amber light for a face, mossy shoulders, branch arms that end in leafy fists, roots for feet, mushrooms on its side and a bird's nest in its crown of leaves."
   gnome_brothers:
-    revision: 2
+    revision: 3
     name: "<gradient:#2e7d32:#ffcdd2><bold>The Gnome Brothers</bold></gradient>"
     title: "Bramble and Thimble"
     chapter: 4
-    partner: gnome_little
     entity: ZOMBIE
     health: 1200
     damage: 9
@@ -1604,7 +1603,7 @@ bosses:
       top-items: []
       commands: []
       top-commands: []
-    description: "Bramble, the big Gnome Brother: a tall green bent hat that sways, a checked white beard, a peach nose and a red coat. His little brother Thimble fights beside him and goes after someone else."
+    description: "Picture 1: a big gnome in a tall green bent hat with a checked white beard, a peach nose and a red coat, and his little brother in a taller red hat standing at his hip. Both hats sway and the little one bobs on his own."
   moss_spirit:
     name: "<gradient:#455a64:#69f0ae><bold>The Moss Spirit</bold></gradient>"
     title: "Two Faces in the Stone"
@@ -1749,6 +1748,7 @@ bosses:
     description: "Picture 7: a huge brown-furred brute with a villager's build and a pig's snout, small dark eyes under a shaggy brow, tusks, a mane down its back, and fists like stumps. Breathes heavily."
   # ------------------------------------------------------------ mini bosses: wake on the mini timer (/cbosses minis), 3000 health
   bark_ape:
+    revision: 3
     name: "<gradient:#5d3a1a:#c8a27a><bold>Bark Ape</bold></gradient>"
     title: "The Jungle Thief"
     kind: mini
@@ -1762,7 +1762,7 @@ bosses:
     movement: walk
     phases: [0.5]
     ability-seconds: 6
-    abilities: [leap, volley]
+    abilities: [leap, volley, slam]
     health-per-player: 0.15
     rewards:
       money: 15000
@@ -1771,8 +1771,9 @@ bosses:
       top-items: ["GOLDEN_APPLE 2"]
       commands: []
       top-commands: []
-    description: "A cheeky jungle ape in dark brown fur with plates of bark grown over its shoulders and back, a pale tan face with a wide nose and a toothy grin, long knuckle-dragging arms and a curled tail."
+    description: "A cheeky brown ape with a pale face and big ears, long arms that drag its knuckles, and a curled tail."
   old_blindman:
+    revision: 3
     name: "<gradient:#6d4c41:#e0e0e0><bold>Old Hoodlum</bold></gradient>"
     title: "He Hears Every Step"
     kind: mini
@@ -1786,7 +1787,7 @@ bosses:
     movement: walk
     phases: [0.5]
     ability-seconds: 6
-    abilities: [darkness, pull]
+    abilities: [pull, darkness, slam]
     health-per-player: 0.15
     rewards:
       money: 15000
@@ -1795,8 +1796,9 @@ bosses:
       top-items: ["GOLDEN_APPLE 2"]
       commands: []
       top-commands: []
-    description: "Old Hoodlum, a stooped old man in a patched brown hood and cloak: a long grey beard to his belt, a big nose, a grey cloth tied over his eyes, a rope belt with a pouch and a crooked walking stick with a lantern hanging from the top."
+    description: "Picture 12: a tall hermit under a deep brown hood that hides his eyes, a long ragged grey beard down to his knees, a big nose poking out, a patched brown cloak, and a dark staff with a gold band."
   king_oldbeard:
+    revision: 3
     name: "<gradient:#b71c1c:#ffd54f><bold>King Oldbeard</bold></gradient>"
     title: "Ruler of One Village"
     kind: mini
@@ -1821,8 +1823,9 @@ bosses:
       top-items: ["GOLDEN_APPLE 2"]
       commands: []
       top-commands: []
-    description: "King Oldbeard, a stout dwarf king: a gold crown with red gems, a huge braided ginger beard tied with gold rings, a red royal cape that sways, a fur collar, iron boots and a double-headed axe."
+    description: "An old villager king: the big villager nose, bushy white brows and a long white beard, a gold crown with red gems, a red robe trimmed with white fur and gold, and a gold sceptre topped with a sun."
   straw_farmer:
+    revision: 3
     name: "<gradient:#6d4c41:#ffe082><bold>Farmer Grimbly</bold></gradient>"
     title: "Illager of the Wheat Field"
     kind: mini
@@ -1838,7 +1841,7 @@ bosses:
     minion: VINDICATOR
     minions: 2
     ability-seconds: 6
-    abilities: [minions, volley]
+    abilities: [minions, volley, charge]
     health-per-player: 0.15
     rewards:
       money: 15000
@@ -1847,8 +1850,9 @@ bosses:
       top-items: ["GOLDEN_APPLE 2"]
       commands: []
       top-commands: []
-    description: "Farmer Grimbly, an illager farmer: grey-green skin, a long nose and one thick brow, a wide frayed straw hat, a checked shirt under blue overalls, muddy boots and a scythe over his shoulder."
+    description: "A grumpy illager farmer: grey skin, the long illager nose and a heavy unibrow, a wide straw hat, brown dungarees over a pale shirt, and a pitchfork."
   gilded_mimic:
+    revision: 3
     name: "<gradient:#ff8f00:#fff176><bold>Gilded Mimic</bold></gradient>"
     title: "Too Shiny to Trust"
     kind: mini
@@ -1871,8 +1875,9 @@ bosses:
       top-items: ["GOLDEN_APPLE 2"]
       commands: []
       top-commands: []
-    description: "A treasure chest that bites: dark wood planks banded with gold, a gold lock plate with a red jewel, a lid that lifts to show rows of white teeth, a long red tongue lolling out and little gold coins spilling round its feet."
+    description: "A golden treasure chest on stubby legs: a crown of gold studs on the lid, purple gems, a grin full of white teeth inside, and a long red tongue lolling out."
   mossling:
+    revision: 3
     name: "<gradient:#33691e:#ffcc80><bold>Mossling</bold></gradient>"
     title: "It Hatched From a Bush"
     kind: mini
@@ -1886,7 +1891,7 @@ bosses:
     movement: walk
     phases: [0.5]
     ability-seconds: 6
-    abilities: [leap, shockwave]
+    abilities: [leap, shockwave, slam]
     health-per-player: 0.15
     rewards:
       money: 15000
@@ -1895,8 +1900,9 @@ bosses:
       top-items: ["GOLDEN_APPLE 2"]
       commands: []
       top-commands: []
-    description: "A round moss bush that hatched legs: a fat leafy ball with two big shiny black eyes, a little open mouth, a pink flower and a white flower on top, stubby brown legs and leafy arms that wave."
+    description: "Picture 11: a round green bird made of moss: a big mottled body that is mostly head, one beady black eye on each side, a brown band and a pale buckle across its belly, stubby wings, and long peach legs ending in wide flat duck feet."
   apple_crab:
+    revision: 3
     name: "<gradient:#c62828:#aed581><bold>Applecrab</bold></gradient>"
     title: "Orchard Pincher"
     kind: mini
@@ -1919,8 +1925,9 @@ bosses:
       top-items: ["GOLDEN_APPLE 2"]
       commands: []
       top-commands: []
-    description: "A crab wearing a big red apple as its shell, a green leaf and stalk on top, beady eyes on stalks, orange pincers that click and six little legs that tap."
+    description: "A crab whose shell is a shiny red apple with a stalk and a green leaf, pale pink claws and legs, and two black stalk eyes peeking over the rim."
   pink_burrower:
+    revision: 3
     name: "<gradient:#f48fb1:#fce4ec><bold>The Pink Burrower</bold></gradient>"
     title: "It Came Up Through the Lawn"
     kind: mini
@@ -1936,7 +1943,7 @@ bosses:
     minion: SILVERFISH
     minions: 2
     ability-seconds: 6
-    abilities: [minions, quake]
+    abilities: [minions, quake, charge]
     health-per-player: 0.15
     rewards:
       money: 15000
@@ -1945,8 +1952,9 @@ bosses:
       top-items: ["GOLDEN_APPLE 2"]
       commands: []
       top-commands: []
-    description: "A plump pink naked mole the size of a pig: wrinkled pink hide, tiny squinting eyes, two long yellow buck teeth, a twitching snout, big shovel claws for digging and clumps of dirt on its back."
+    description: "A long pink grub-worm with a blunt face, tiny black eyes, a little smile, soft ridges down its back and four stubby feet; it rears its head up when angry."
   moss_imp:
+    revision: 3
     name: "<gradient:#558b2f:#d7ccc8><bold>Moss Imp</bold></gradient>"
     title: "Small and Very Old"
     kind: mini
@@ -1969,8 +1977,9 @@ bosses:
       top-items: ["GOLDEN_APPLE 2"]
       commands: []
       top-commands: []
-    description: "A little old imp grown over with moss: a round green body, leaf ears that flick, two twig horns, a red cap mushroom sprouting from its head, big glowing amber eyes over a toothy grin and a bark loincloth."
+    description: "A tiny wrinkled green creature with enormous pointed ears, big dark eyes with a shine, a few white wisps of hair and a baggy tan robe with a rope belt. It lifts you with its mind."
   garden_gnome:
+    revision: 3
     name: "<gradient:#c62828:#69f0ae><bold>Mister Pebbles</bold></gradient>"
     title: "The Gnome Who Bit Back"
     kind: mini
@@ -1984,7 +1993,7 @@ bosses:
     movement: walk
     phases: [0.5]
     ability-seconds: 6
-    abilities: [spikes, heal, leap, volley]
+    abilities: [leap, volley, slam]
     health-per-player: 0.15
     rewards:
       money: 15000
@@ -1993,7 +2002,7 @@ bosses:
       top-items: ["GOLDEN_APPLE 2"]
       commands: []
       top-commands: []
-    description: "Mister Pebbles, a garden gnome come to life: a tall red pointed hat that flops as he walks, a big white beard, a round pink nose and rosy cheeks, a blue coat with a black belt, brown boots and a tiny shovel."
+    description: "Picture 13: a villager gnome with a lumpy red hat, a long nose, bright green eyes, a white beard, a teal shirt and a glowing emerald buckle on his belt."
   angry_goose:
     name: "<gradient:#eceff1:#ff9800><bold>Honkus</bold></gradient>"
     title: "The Goose Who Owns This Bench"
@@ -2019,6 +2028,7 @@ bosses:
       top-commands: []
     description: "A big white goose with a long neck in four bending pieces that weave and dip as it hisses, a grey back, an orange beak with a black knob, angry eyes and wide orange feet."
   pack_goblin:
+    revision: 3
     name: "<gradient:#558b2f:#ce93d8><bold>Snik</bold></gradient>"
     title: "Goblin Cutpurse"
     kind: mini
@@ -2032,7 +2042,7 @@ bosses:
     movement: walk
     phases: [0.5]
     ability-seconds: 6
-    abilities: [volley, blink, leap]
+    abilities: [leap, volley, slam]
     health-per-player: 0.15
     rewards:
       money: 15000
@@ -2041,7 +2051,7 @@ bosses:
       top-items: ["GOLDEN_APPLE 2"]
       commands: []
       top-commands: []
-    description: "Snik the cutpurse goblin: green skin, huge pointed ears that twitch, a long nose, sly yellow eyes and a crooked grin, a brown hooded cloak, a bulging loot sack on his back and a little curved dagger."
+    description: "Picture 8: a lanky green goblin with long ears, a brown hat, a red vest, purple trousers and a grin full of crooked teeth."
   goblin_king:
     name: "<gradient:#1b5e20:#ffd54f><bold>King Grizzlegrin</bold></gradient>"
     title: "Crown Too Big"
@@ -2069,6 +2079,7 @@ bosses:
       top-commands: []
     description: "Picture 8 again: the goblins' king, fatter, a gold crown slipping over one ear, a purple cape with a white fur collar, a gold belt and a crooked sceptre."
   snapjaw:
+    revision: 3
     name: "<gradient:#1b5e20:#ce93d8><bold>Snapjaw</bold></gradient>"
     title: "Hungry Flower"
     kind: mini
@@ -2091,14 +2102,13 @@ bosses:
       top-items: ["GOLDEN_APPLE 2"]
       commands: []
       top-commands: []
-    description: "A hungry flower rooted in a mossy clump: a thick bending stem in three parts, wide leaves that flap, and a purple-spotted head that splits into a jaw full of white teeth and snaps at anything near."
+    description: "Picture 9: a man-eating plant: a green stalk with spiky leaves, a purple flower head that opens on a red mouth full of white teeth, and it sways and snaps without ever moving its roots."
   cap_brothers:
-    revision: 2
+    revision: 3
     name: "<gradient:#b71c1c:#ffccbc><bold>Toadstool</bold></gradient>"
     title: "The Grumpier Mushroom"
     kind: mini
     tier: mini
-    partner: cap_little
     entity: ZOMBIE
     health: 3000
     damage: 8
@@ -2119,8 +2129,9 @@ bosses:
       top-items: ["GOLDEN_APPLE 2"]
       commands: []
       top-commands: []
-    description: "Toadstool, the big brother: a stout walking mushroom with a wide red cap spotted white, a pale stalk body with a cross little face, stubby legs and a puff of spores when it stomps. His brother Puffball fights beside him."
+    description: "A stout walking mushroom with a wide red cap spotted white, a pale stalk body with a cross little face, stubby legs, and a smaller brown-capped brother clinging to its back."
   puffneck:
+    revision: 3
     name: "<gradient:#7cb342:#f5f5f5><bold>Puffneck</bold></gradient>"
     title: "Blows Away in the Wind"
     kind: mini
@@ -2143,8 +2154,9 @@ bosses:
       top-items: ["GOLDEN_APPLE 2"]
       commands: []
       top-commands: []
-    description: "A puffed-up pigeon with a huge round chest of grey and violet-green sheen, a little head bobbing on its neck, orange eyes, a white cere over a dark beak, pink feet and wings that flick."
+    description: "A tall stalk creature: a long green neck with leaves, a little yellow face with sleepy eyes and a round white dandelion clock for a head that sheds seeds when it is hit."
   mallard:
+    revision: 3
     name: "<gradient:#1b5e20:#ffeb3b><bold>Sir Mallard</bold></gradient>"
     title: "Crosses Any Road"
     kind: mini
@@ -2169,8 +2181,9 @@ bosses:
       top-items: ["GOLDEN_APPLE 2"]
       commands: []
       top-commands: []
-    description: "Sir Mallard, a proud drake: a glossy green head with a white neck ring, a yellow bill, a chestnut breast, grey body with a blue wing patch, a curled black tail feather and orange webbed feet."
+    description: "A chunky mallard drake: a glossy green head, a broad yellow bill, a white collar ring, a chestnut breast, a grey body, a curl of black tail and orange feet."
   piggy_farmer:
+    revision: 3
     name: "<gradient:#f48fb1:#ffe082><bold>Farmer Trotter</bold></gradient>"
     title: "Owns the Mud Patch"
     kind: mini
@@ -2186,7 +2199,7 @@ bosses:
     minion: PIG
     minions: 2
     ability-seconds: 6
-    abilities: [minions, charge]
+    abilities: [minions, charge, slam]
     health-per-player: 0.15
     rewards:
       money: 15000
@@ -2195,7 +2208,7 @@ bosses:
       top-items: ["GOLDEN_APPLE 2"]
       commands: []
       top-commands: []
-    description: "Farmer Trotter, a pig standing on his hind legs: pink snout with nostrils, floppy ears, a straw hat, blue dungarees over a white shirt, muddy trotters and a pitchfork."
+    description: "A pink pig standing up in blue dungarees and a check shirt, a straw hat pushed back, a big snout, small black eyes and floppy ears, and a muddy shovel."
   ring_frog:
     name: "<gradient:#1b5e20:#c5e1a5><bold>Sir Croaksworth</bold></gradient>"
     title: "He Stands Up Straight"
@@ -2221,6 +2234,7 @@ bosses:
       top-commands: []
     description: "Picture 14: a tall frog standing upright, mottled green all over, bulging eyes on top of a wide head, a pale wide mouth line, a pale belly, and long arms with webbed fingers."
   ghost_jelly:
+    revision: 3
     name: "<gradient:#7e57c2:#e1f5fe><bold>Jellyboo</bold></gradient>"
     title: "The Floating Fright"
     kind: mini
@@ -2243,8 +2257,9 @@ bosses:
       top-items: ["GOLDEN_APPLE 2"]
       commands: []
       top-commands: []
-    description: "Jellyboo, a floating ghost jellyfish: a see-through violet bell with pale glowing spots and two sleepy eyes, a frilled rim, and long ribbon tentacles that ripple in waves under it."
+    description: "A floating jelly ghost: a soft lilac-to-white dome with two big round eyes and a little open mouth, long wavy ribbon tentacles trailing under it, glowing faintly."
   hay_golem:
+    revision: 3
     name: "<gradient:#f9a825:#8d6e63><bold>Hay Golem</bold></gradient>"
     title: "The Scarecrow Walks"
     kind: mini
@@ -2258,7 +2273,7 @@ bosses:
     movement: walk
     phases: [0.5]
     ability-seconds: 6
-    abilities: [fire_ring, slam]
+    abilities: [slam, fire_ring]
     health-per-player: 0.15
     rewards:
       money: 15000
@@ -2267,34 +2282,9 @@ bosses:
       top-items: ["GOLDEN_APPLE 2"]
       commands: []
       top-commands: []
-    description: "A scarecrow golem of tied hay bales with straw sticking out at the joints, a burlap sack head with stitched button eyes and a sewn grin, a crooked straw hat, a rope belt and a pitchfork."
-  cluck_rider:
-    name: "<gradient:#ffffff:#ffb300><bold>Sir Clucks-a-Lot</bold></gradient>"
-    title: "Brave in a Chicken Hat"
-    kind: mini
-    tier: mini
-    entity: ZOMBIE
-    health: 3000
-    damage: 8
-    armor: 4
-    bar: WHITE
-    theme: earth
-    movement: walk
-    phases: [0.5]
-    minion: CHICKEN
-    minions: 2
-    ability-seconds: 6
-    abilities: [minions, leap, slam]
-    health-per-player: 0.15
-    rewards:
-      money: 15000
-      top-money: 45000
-      items: ["DIAMOND 1", "GOLD_INGOT 8", "EXPERIENCE_BOTTLE 8"]
-      top-items: ["GOLDEN_APPLE 2"]
-      commands: []
-      top-commands: []
-    description: "Picture 15: a zombie in a teal shirt wearing a chicken-head mask, white feathers, an orange beak and a red wattle, with a stuffed chicken body strapped to its belly as if riding it."
+    description: "A golem of bound hay bales: a straw head with a stitched burlap face and button eyes, red twine bands round the chest and limbs, straw poking out everywhere and a crown of wheat."
   baby_minotaur:
+    revision: 3
     name: "<gradient:#4e342e:#ffccbc><bold>Little Moo</bold></gradient>"
     title: "Baby of the Labyrinth"
     kind: mini
@@ -2308,7 +2298,7 @@ bosses:
     movement: walk
     phases: [0.5]
     ability-seconds: 6
-    abilities: [charge, shockwave]
+    abilities: [charge, quake, shockwave]
     health-per-player: 0.15
     rewards:
       money: 15000
@@ -2317,14 +2307,13 @@ bosses:
       top-items: ["GOLDEN_APPLE 2"]
       commands: []
       top-commands: []
-    description: "Little Moo, a baby minotaur: a brown furry bull head too big for his body with stubby cream horns, a pink muzzle with a gold nose ring, big shiny eyes, a fur kilt, hooves and a wooden toy club."
+    description: "A chubby little minotaur: a big brown bull head with white curved horns, a pink muzzle with a gold nose ring, a shaggy fringe, and a tiny body in a leather kilt; small but it charges hard."
   boo_twins:
-    revision: 2
-    name: "<gradient:#bdbdbd:#ffffff><bold>Boo</bold></gradient>"
-    title: "The Older Twin"
+    revision: 3
+    name: "<gradient:#bdbdbd:#ffffff><bold>The Boo Twins</bold></gradient>"
+    title: "Nobody Home"
     kind: mini
     tier: mini
-    partner: boo_twin_b
     entity: VEX
     health: 3000
     damage: 8
@@ -2343,8 +2332,9 @@ bosses:
       top-items: ["GOLDEN_APPLE 2"]
       commands: []
       top-commands: []
-    description: "Boo, the older of the Boo Twins: a pale ghost kid with a wide flat head, round hollow eyes with a blue glint, a ragged sheet body and dangling legs. It bobs and drifts; its twin hunts someone else."
+    description: "Picture 10: two pale ghost kids with wide flat heads, hollow black eyes and a dark mouth, ragged grey bodies and dangling legs. They bob up and down out of step and lean toward each other."
   mandrake:
+    revision: 3
     name: "<gradient:#a1887f:#c5e1a5><bold>Mandrake</bold></gradient>"
     title: "Do Not Pull It Up"
     kind: mini
@@ -2367,8 +2357,9 @@ bosses:
       top-items: ["GOLDEN_APPLE 2"]
       commands: []
       top-commands: []
-    description: "A mandrake root pulled from the ground screaming: a knobbly tan root body with root arms and legs, a wide-open screaming mouth and squeezed-shut eyes, and a big tuft of leaves for hair that shakes."
+    description: "A pale knobbly root with a scrunched little face, stubby root arms and legs and a big tuft of leaves on its head. Its scream hurts."
   mossy_turtle:
+    revision: 3
     name: "<gradient:#2e7d32:#8d6e63><bold>Old Shellby</bold></gradient>"
     title: "Slow, Stubborn, Armoured"
     kind: mini
@@ -2382,7 +2373,7 @@ bosses:
     movement: walk
     phases: [0.5]
     ability-seconds: 6
-    abilities: [shockwave, heal]
+    abilities: [shockwave, heal, charge]
     health-per-player: 0.15
     rewards:
       money: 15000
@@ -2391,8 +2382,9 @@ bosses:
       top-items: ["GOLDEN_APPLE 2"]
       commands: []
       top-commands: []
-    description: "Old Shellby, an old turtle with a high domed shell of brown plates overgrown with moss and a red flower, a wrinkly green head with sleepy eyes that pokes out and looks around, and thick scaly legs."
+    description: "A stocky turtle with a tall brown shell ringed in plates, moss and a little flower on top, a bright green head with sleepy eyes and a beak, and chunky green legs."
   stumpy:
+    revision: 3
     name: "<gradient:#5d4037:#aed581><bold>Stumpy</bold></gradient>"
     title: "What's Left of the Old Oak"
     kind: mini
@@ -2415,80 +2407,8 @@ bosses:
       top-items: ["GOLDEN_APPLE 2"]
       commands: []
       top-commands: []
-    description: "Stumpy, what is left of the old oak: a short cut stump with tree rings on top, a cross face carved in the bark with glowing green eyes, a shelf mushroom on its side, little root feet and twig arms."
+    description: "A walking tree stump: rough bark with deep grooves, two big white eyes with dark pupils carved into the trunk, a sapling growing out of its flat top, stubby root feet and twiggy arms."
   # ------------------------------------------------------------ second bodies of two-body bosses (they appear beside their partner, never alone)
-  boo_twin_b:
-    revision: 2
-    name: "<gradient:#e0e0e0:#b3e5fc><bold>Hoo</bold></gradient>"
-    title: "The Younger Twin"
-    kind: partner
-    entity: VEX
-    health: 3000
-    damage: 8
-    speed: 0.34
-    armor: 4
-    bar: WHITE
-    theme: soul
-    movement: hover
-    phases: [0.5]
-    ability-seconds: 6
-    abilities: [darkness, blink, dive]
-    health-per-player: 0.15
-    rewards:
-      money: 0
-      top-money: 0
-      items: []
-      top-items: []
-      commands: []
-      top-commands: []
-    description: "Hoo, the younger Boo Twin: smaller and whiter, with tall oval eyes and a wobbly open mouth, arms raised to scare. Quicker than Boo, it darts around and goes after a different player."
-  cap_little:
-    revision: 2
-    name: "<gradient:#6d4c41:#ffe0b2><bold>Puffball</bold></gradient>"
-    title: "The Little Mushroom"
-    kind: partner
-    entity: ZOMBIE
-    health: 3000
-    damage: 8
-    speed: 0.33
-    armor: 4
-    bar: YELLOW
-    theme: toxic
-    movement: walk
-    phases: [0.5]
-    ability-seconds: 6
-    abilities: [poison, leap]
-    health-per-player: 0.15
-    rewards:
-      money: 0
-      top-money: 0
-      items: []
-      top-items: []
-      commands: []
-      top-commands: []
-    description: "Puffball, the little brother: a short mushroom with a round brown cap, a happy face and quick feet. He hops around and chases a different player from his brother."
-  gnome_little:
-    revision: 2
-    name: "<gradient:#c62828:#ffcdd2><bold>Thimble</bold></gradient>"
-    title: "The Little Brother"
-    kind: partner
-    entity: ZOMBIE
-    health: 1000
-    damage: 8
-    speed: 0.32
-    armor: 4
-    bar: GREEN
-    theme: nature
-    movement: walk
-    phases: [0.5]
-    ability-seconds: 6
-    abilities: [leap, volley]
-    health-per-player: 0.15
-    rewards:
-      money: 0
-      top-money: 0
-      items: []
-      top-items: []
-      commands: []
-      top-commands: []
-    description: "Thimble, the little Gnome Brother: a tall red hat that flops, a checked white beard, a green coat and a peach face with a round nose. He darts about on his own while Bramble fights."
+
+# bosses taken out of the plugin; a server that still has them drops them on start
+removed: ["cluck_rider"]

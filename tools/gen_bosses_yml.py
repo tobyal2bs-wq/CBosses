@@ -162,7 +162,7 @@ PARTNERS = v12_final.PARTNERS
 REVISED = v12_final.REVISED
 # a boss whose entry changed shape (new design, new name, mini grown into a big boss) carries a revision; a server
 # with an older revision gets the new entry while its rewards and enabled setting are kept
-REVISION = 2
+REVISION = 3
 
 # bosses that used to close a chapter and now join the weekly rotation get general boss health
 PROMOTED = {"keywarden": 1800, "hollow_king": 2200, "captain_brine": 1900, "ember_queen": 2000}
@@ -319,5 +319,8 @@ for id in v12_final.PARTNER_INFO: emit(id, entry(id, "partner"))
 
 all_ids = GENERAL + LEGENDS + sum(SEASONAL.values(), []) + CHAPTERS + MINIS + list(v12_final.PARTNER_INFO)
 assert len(set(all_ids)) == len(all_ids) and set(all_ids) | set(roster.DECOR) == set(MODELS), set(MODELS) ^ set(all_ids)
+w("")
+w("# bosses taken out of the plugin; a server that still has them drops them on start")
+w("removed: " + lst(getattr(v12_final, "REMOVED", [])))
 open(YML, "w").write("\n".join(out) + "\n")
 print("wrote", YML, len(all_ids), "bosses")

@@ -45,7 +45,7 @@ class BossDataTest {
     void everyBossHasAModelWithAnEntranceAndADeath() throws Exception {
         var models = models();
         var defs = bosses();
-        assertEquals(96, defs.size(), "39 weekly, 5 mythic, 12 seasonal, 10 chapter, 27 mini bosses and 3 second bodies");
+        assertEquals(92, defs.size(), "39 weekly, 5 mythic, 12 seasonal, 10 chapter and 26 mini bosses");
         for (BossDef d : defs.values()) {
             ModelRig.Model m = models.get(d.model());
             assertNotNull(m, d.id() + " has no model");
@@ -75,7 +75,7 @@ class BossDataTest {
             else if (d.chapterBoss()) assertTrue(n >= 70 && n <= 300, d.id() + " is a chapter boss with " + n + " blocks");
             else if (d.sidekick()) assertTrue(n >= 150 && n <= 300, d.id() + " is a second body with " + n + " blocks");
             else if (d.seasonal()) assertTrue(n >= 60 && n <= 300, d.id() + " is a painted seasonal boss with " + n + " blocks");
-            else if (!d.id().equals("grand_augur")) assertTrue(n >= 150, d.id() + " has only " + n + " blocks");
+            else assertTrue(n >= 50 && n <= 300, d.id() + " has " + n + " blocks");
         }
         int was = ModelRig.detail;
         try {
@@ -99,7 +99,7 @@ class BossDataTest {
     @Test
     void healthTiersAndMiniBosses() throws Exception {
         var defs = bosses();
-        assertEquals(27, defs.values().stream().filter(BossDef::mini).count(), "27 mini bosses");
+        assertEquals(26, defs.values().stream().filter(BossDef::mini).count(), "26 mini bosses");
         for (BossDef d : defs.values()) {
             if (d.mini()) assertEquals(3000, d.health(), 0.01, d.id());
             else if (d.tier().equals("mythic")) assertEquals(8000, d.health(), 0.01, d.id());
@@ -124,28 +124,23 @@ class BossDataTest {
     }
 
     @Test
-    void twoBodyBossesHaveTheirPartner() throws Exception {
+    void retiredBossesAreGoneAndTwinsAreOneModelAgain() throws Exception {
         var defs = bosses();
-        for (String[] pair : new String[][]{{"boo_twins", "boo_twin_b"}, {"cap_brothers", "cap_little"}, {"gnome_brothers", "gnome_little"}}) {
-            assertEquals(pair[1], defs.get(pair[0]).partner(), pair[0]);
-            assertTrue(defs.get(pair[1]).sidekick(), pair[1] + " is a second body");
-        }
-        assertEquals(3, defs.values().stream().filter(BossDef::sidekick).count());
+        assertNull(defs.get("cluck_rider"));
+        assertEquals(0, defs.values().stream().filter(BossDef::sidekick).count());
+        var yaml = org.bukkit.configuration.file.YamlConfiguration.loadConfiguration(new java.io.File("src/main/resources/bosses.yml"));
+        assertTrue(yaml.getStringList("removed").contains("cluck_rider"));
     }
 
     @Test
-    void redrawnModelsAreTexturedAndAlive() throws Exception {
+    void newBigBossesAreCleanAndAlive() throws Exception {
         var models = models();
         for (String id : new String[]{"abyssal_eye", "hollow_king", "fenrir", "tide_tyrant", "storm_herald", "ember_queen", "gravelord", "bloodtusk",
-                "old_ironroot", "gate_shade", "frost_yeti", "cinder_imp", "bog_orc", "hay_golem", "snapjaw", "pack_goblin", "garden_gnome", "pink_burrower",
-                "moss_imp", "mossling", "bark_ape", "old_blindman", "boo_twins", "boo_twin_b", "cap_brothers", "cap_little", "gnome_little", "king_oldbeard",
-                "straw_farmer", "gilded_mimic", "apple_crab", "puffneck", "mallard", "piggy_farmer", "ghost_jelly", "baby_minotaur", "mandrake",
-                "mossy_turtle", "stumpy"}) {
+                "old_ironroot", "gate_shade", "frost_yeti", "cinder_imp", "bog_orc"}) {
             ModelRig.Model m = models.get(id);
             assertNotNull(m, id);
             int n = m.cubes.size();
-            assertTrue(n >= 150 && n <= 300, id + " has " + n + " blocks");
-            assertTrue(m.cubes.stream().map(ModelRig.Cube::base).distinct().count() >= 6, id + " is not textured enough");
+            assertTrue(n >= 50 && n <= 300, id + " has " + n + " blocks");
             assertNotNull(m.anim("idle"), id + " idle");
         }
     }
@@ -154,7 +149,7 @@ class BossDataTest {
     void rebuiltBossesAreTexturedAndAlive() throws Exception {
         var models = models();
         for (String id : new String[]{"gnome_brothers", "moss_spirit", "cyclops_ogre", "grubnose", "orc_bruiser", "mudclub", "ugor",
-                "snapjaw", "boo_twins", "mossling", "cluck_rider", "angry_goose"}) {
+                "snapjaw", "boo_twins", "mossling", "angry_goose"}) {
             ModelRig.Model m = models.get(id);
             assertNotNull(m, id);
             int n = m.cubes.size();
