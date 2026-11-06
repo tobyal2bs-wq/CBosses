@@ -66,7 +66,7 @@ public final class ChapterBosses implements Listener {
         String text = yaml.saveToString();
         Sched.async(() -> {
             synchronized (file) {
-                try { java.nio.file.Files.writeString(file.toPath(), text); }
+                try { com.cbosses.util.SafeFiles.write(file, text); }
                 catch (IOException e) { plugin.getLogger().warning("Could not save chapters.yml: " + e.getMessage()); }
             }
         });

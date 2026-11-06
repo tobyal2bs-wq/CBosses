@@ -134,4 +134,11 @@ public final class CBossesPlugin extends JavaPlugin {
     public com.cbosses.mini.MiniBosses minis() { return minis; }
     public com.cbosses.decor.Decor decor() { return decor; }
     public CBossesAPI api() { return api; }
+
+    /** config.yml is written through a temporary file with a .bak copy, so a crash mid-save never loses settings. */
+    @Override
+    public void saveConfig() {
+        try { com.cbosses.util.SafeFiles.write(new java.io.File(getDataFolder(), "config.yml"), getConfig().saveToString()); }
+        catch (java.io.IOException e) { getLogger().warning("Could not save config.yml: " + e.getMessage()); }
+    }
 }

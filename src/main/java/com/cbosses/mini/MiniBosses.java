@@ -296,7 +296,7 @@ public final class MiniBosses implements Listener {
         String text = y.saveToString();
         File f = file;
         Sched.async(() -> {
-            try { java.nio.file.Files.writeString(f.toPath(), text); }
+            try { com.cbosses.util.SafeFiles.write(f, text); }
             catch (Exception e) { plugin.getLogger().warning("Could not save minis.yml: " + e.getMessage()); }
         });
     }

@@ -118,7 +118,7 @@ public final class Finale implements Listener {
     private void save() {
         YamlConfiguration y = new YamlConfiguration();
         y.set("beaten", new ArrayList<>(beaten));
-        try { y.save(file); } catch (IOException e) { plugin.getLogger().warning("Could not save finale.yml: " + e.getMessage()); }
+        try { com.cbosses.util.SafeFiles.write(file, y.saveToString()); } catch (IOException e) { plugin.getLogger().warning("Could not save finale.yml: " + e.getMessage()); }
     }
 
     private void broadcast(String mm) { Sched.global(() -> Bukkit.broadcast(Text.mm(mm))); }

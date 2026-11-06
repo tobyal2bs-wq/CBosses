@@ -56,12 +56,22 @@ public final class Fight {
     String chunkWorld;
     /** The block model drawn over the invisible mob, or null for a plain mob boss. */
     public volatile BossModel model;
+    /** The other body of a two-body boss (both fight on their own and are beaten together), or null. */
+    public volatile Fight partner;
+    /** Whose rewards and chapter this fight pays when it is the last body standing. */
+    public volatile BossDef payDef;
+    /** How many times it has evolved, whether it will, and when it next does. power multiplies all its damage. */
+    public volatile int stage;
+    boolean evolves;
+    long nextEvolve;
+    public volatile double power = 1;
 
     Fight(String key, BossDef def, Arena arena, boolean test, UUID tester, UUID owner, Mob boss, double max, BossBar bar, double health) {
         this.key = key; this.def = def; this.arena = arena; this.test = test; this.tester = tester; this.owner = owner;
         this.boss = boss; this.max = max; this.bar = bar;
         this.theme = Theme.of(def.theme());
         this.ratio = Math.max(1, health / Math.max(1, max));
+        this.payDef = def;
     }
 
     public double speedFactor() {

@@ -39,6 +39,7 @@ public final class BossMenu implements Listener {
 
     public void open(Player player, int page) {
         List<BossDef> all = new ArrayList<>(plugin.service().defs().values());
+        all.removeIf(BossDef::sidekick);
         int pages = Math.max(1, (all.size() + 44) / 45);
         page = Math.max(0, Math.min(pages - 1, page));
         Holder h = new Holder(page);

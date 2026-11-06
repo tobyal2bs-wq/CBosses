@@ -20,7 +20,7 @@ import java.util.Locale;
 
 /** /cbosses (aliases /cb, /bosses). Players see /cbosses next; controlling bosses needs op or the bosses.use permission. */
 public final class BossCommand implements CommandExecutor, TabCompleter {
-    private static final List<String> ADMIN = List.of("menu", "list", "spawn", "test", "stop", "selftest", "arena", "schedule", "chapter", "season", "finale", "settings", "reload", "info", "next", "help", "minis", "decor");
+    private static final List<String> ADMIN = List.of("menu", "list", "spawn", "test", "stop", "selftest", "arena", "schedule", "chapter", "season", "finale", "settings", "reload", "info", "next", "help", "minis", "decor", "edit", "enable", "disable", "mythic");
     private final CBossesPlugin plugin;
     private final BossMenu menu;
     private final SettingsMenu settings;
@@ -36,6 +36,8 @@ public final class BossCommand implements CommandExecutor, TabCompleter {
     }
 
     private BossService s() { return plugin.service(); }
+    private com.cbosses.fight.BossEditor editor() { return editor == null ? (editor = new com.cbosses.fight.BossEditor(plugin)) : editor; }
+    private com.cbosses.fight.BossEditor editor;
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String @NotNull [] args) {
@@ -118,6 +120,25 @@ public final class BossCommand implements CommandExecutor, TabCompleter {
             }
             case "season", "seasons" -> plugin.seasons().command(sender, args);
             case "minis", "mini" -> minis(sender, player, label, args);
+            case "edit" -> {
+                if (args.length < 2) { plugin.send(sender, T.t("command.edit-usage", "<yellow>/<label> edit <boss> [<field> <value>] <gray>fields: <list>", "label", label, "list", String.join(", ", com.cbosses.fight.BossEditor.FIELDS))); return true; }
+                if (args.length < 4) { editor().show(sender, args[1].toLowerCase(Locale.ROOT)); return true; }
+                editor().set(sender, args[1], args[2], String.join(" ", java.util.Arrays.copyOfRange(args, 3, args.length)));
+            }
+            case "enable", "disable" -> {
+                if (args.length < 2) {
+                    List<String> off = editor().disabled();
+                    plugin.send(sender, T.t("command.disabled-list", "<gray>Turned off: <white><list>", "list", off.isEmpty() ? "none" : String.join(", ", off)));
+                    return true;
+                }
+                editor().set(sender, args[1], "enabled", sub.equals("enable") ? "true" : "false");
+            }
+            case "mythic" -> {
+                String what = args.length > 1 ? args[1].toLowerCase(Locale.ROOT) : "list";
+                if ((what.equals("add") || what.equals("remove")) && args.length > 2) editor().set(sender, args[2], "tier", what.equals("add") ? "mythic" : "big");
+                else plugin.send(sender, T.t("command.mythic-list", "<light_purple>Mythic bosses: <white><list> <gray>(/<label> mythic add|remove <boss>; their extra damage, health and evolving are under mythic: in config.yml)",
+                        "list", String.join(", ", editor().mythics()), "label", label));
+            }
             case "decor", "decoration" -> plugin.decor().command(sender, player, label, args);
             case "finale" -> {
                 String what = args.length > 1 ? args[1].toLowerCase(Locale.ROOT) : "info";
@@ -214,6 +235,9 @@ public final class BossCommand implements CommandExecutor, TabCompleter {
                 {"finale", "<cmd> finale [wake|reset] <gray>the boss after the three legends"},
                 {"selftest", "<cmd> selftest <gray>spawn every boss, run every attack and death"},
                 {"settings", "<cmd> settings [page] <gray>every option in a settings screen | settings set <path> <value>"},
+                {"edit", "<cmd> edit <boss> [field value] <gray>change name, color #hex [#hex], health, damage, bar, tier, evolve..."},
+                {"disable", "<cmd> enable|disable <boss> <gray>turn a boss on or off (no name: list the ones that are off)"},
+                {"mythic", "<cmd> mythic [add|remove <boss>] <gray>choose which bosses are mythic"},
                 {"reload", "<cmd> reload"}};
         for (String[] line : lines)
             to.sendMessage(Text.mm(T.t("command.help." + line[0], " <yellow>" + line[1], "cmd", l)));
@@ -235,6 +259,10 @@ public final class BossCommand implements CommandExecutor, TabCompleter {
             case "minis", "mini" -> filter(List.of("menu", "info", "add", "remove", "show", "mode", "every", "next", "now", "on", "off"), args[1]);
             case "settings", "config" -> filter(List.of("effects", "schedule", "fight", "chapters", "seasons", "set"), args[1]);
             case "season", "seasons" -> filter(plugin.seasons().ids(), args[1]);
+            case "edit" -> filter(editor().ids(), args[1]);
+            case "enable" -> filter(editor().disabled(), args[1]);
+            case "disable" -> filter(s().ids(), args[1]);
+            case "mythic" -> filter(List.of("list", "add", "remove"), args[1]);
             case "chapter" -> { List<String> out = new ArrayList<>(List.of("reset", "retry", "bosses", "set", "swap")); for (Player p : Bukkit.getOnlinePlayers()) out.add(p.getName()); yield filter(out, args[1]); }
             default -> List.of();
         };
@@ -252,7 +280,19 @@ public final class BossCommand implements CommandExecutor, TabCompleter {
                     : args[1].equalsIgnoreCase("now") ? filter(plugin.minis().minis().stream().map(com.cbosses.fight.BossDef::id).toList(), args[2])
                     : args[1].equalsIgnoreCase("remove") ? filter(plugin.minis().spots().stream().map(x -> x.id).toList(), args[2]) : List.of();
             case "season", "seasons" -> filter(List.of("on", "off", "auto"), args[2]);
+            case "edit" -> filter(com.cbosses.fight.BossEditor.FIELDS, args[2]);
+            case "mythic" -> args[1].equalsIgnoreCase("remove") ? filter(editor().mythics(), args[2]) : filter(s().ids(), args[2]);
             case "chapter" -> filter(List.of("1", "2", "3", "4", "5", "6", "7", "8", "9", "10"), args[2]);
+            default -> List.of();
+        };
+        if (args.length == 4 && sub.equals("edit")) return switch (args[2].toLowerCase(Locale.ROOT)) {
+            case "bar" -> filter(com.cbosses.fight.BossEditor.BARS, args[3]);
+            case "tier" -> filter(List.of("mini", "big", "mythic"), args[3]);
+            case "enabled" -> filter(List.of("true", "false"), args[3]);
+            case "evolve" -> filter(List.of("true", "false", "0.5", "default"), args[3]);
+            case "theme" -> filter(new ArrayList<>(com.cbosses.fight.Theme.ALL.keySet()), args[3]);
+            case "partner" -> { List<String> out = new ArrayList<>(editor().ids()); out.add("none"); yield filter(out, args[3]); }
+            case "color" -> filter(List.of("#ff5555", "#ffaa00"), args[3]);
             default -> List.of();
         };
         return List.of();

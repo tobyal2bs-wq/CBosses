@@ -125,6 +125,18 @@ the season CQuests has on.
 <p align="center"><img src="docs/images/clucksworth_egg.jpg" width="32%"> <img src="docs/images/clucksworth_hatch.jpg" width="32%"> <img src="docs/images/killer_claus_death.jpg" width="32%"></p>
 <p align="center"><sub>Clucksworth's egg, the hatch, and Killer Claus breaking apart.</sub></p>
 
+## Evolving bosses and two-body bosses
+
+After `evolve.after-seconds` in a fight, a boss may evolve (`evolve.chance`, or `evolve:` per boss): it hits
+harder, moves faster and heals a little, up to `evolve.max-stages` times. Mythic bosses always evolve and hit
+`mythic.damage-multiplier` harder. The Boo Twins, the Toadstool brothers and the Gnome Brothers are two separate
+bosses that fight side by side: each has its own health bar, they go after different players, and when one
+falls the other is enraged. Rewards are paid when both are down. Any boss can get a partner with `partner:`.
+
+Every change to bosses.yml, config.yml, arenas, minis and chapter progress is written through a temporary file
+with a `.bak` copy, so a crash mid-save never loses data. A new version that redesigns a boss updates its entry
+and keeps the server's rewards.
+
 ## Install
 
 1. Put `CBosses-x.y.z.jar` in `plugins/` (Paper or Folia 1.21.4 and newer, Java 21).
@@ -157,6 +169,10 @@ Everyone can use `/cbosses next` and `/cbosses chapter retry`. Aliases: `/cb`, `
 | `/cbosses next` | When the next boss wakes. |
 | `/cbosses settings [page]` | Every option of `config.yml` in a settings screen (the game's own dialog screen on 1.21.6+, a chest menu before). |
 | `/cbosses settings set <path> <value>` | Change one option from chat or the console. |
+| `/cbosses chapter list` / `set <n> <boss\|default>` / `swap <a> <b>` | See, change or swap which boss guards each chapter. Progress is kept. |
+| `/cbosses edit <boss> [field value]` | Change a boss in game: `name`, `color #hex [#hex]`, `title`, `health`, `damage`, `speed`, `armor`, `bar`, `theme`, `tier`, `evolve`, `partner`, `enabled`. |
+| `/cbosses enable\|disable <boss>` | Turn a boss on or off (no name lists the ones that are off). |
+| `/cbosses mythic [add\|remove <boss>]` | Choose which bosses are mythic. Their extra damage, health and evolving are under `mythic:` in config.yml. |
 | `/cbosses reload` | Reload every file. |
 
 ## Configuration

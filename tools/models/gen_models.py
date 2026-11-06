@@ -81,6 +81,46 @@ def texturize(m):
         if not c.get("l"): c["k"] = powder(c["k"])
 
 
+# how tall each kind of boss stands in game, in blocks: [smallest, biggest]; a model keeps its own place inside the range
+SIZE = {"mini": (1.5, 2.0), "big": (3.0, 3.5), "mythic": (4.0, 5.0), "decor": (1.0, 1.6)}
+HITBOX = 0.9
+
+
+def size_class(id):
+    if id.startswith("decor_"): return "decor"
+    if id in roster.MYTHIC: return "mythic"
+    if id in roster.minis() or id in roster.partners(): return "mini"
+    return "big"
+
+
+def normalize(id, j):
+    """Stands every model on the ground with its weight over the mob: the volume centre of its blocks goes to
+    x = z = 0 and its lowest block to y = 0, then it is scaled to its class height and its hitbox fits it."""
+    cubes = [c for c in j["cubes"] if not str(c.get("g", "")).startswith("face:") or c.get("g") == "face:idle"]
+    vol = lambda c: max(0.01, (c["t"][0] - c["f"][0]) * (c["t"][1] - c["f"][1]) * (c["t"][2] - c["f"][2]))
+    tv = sum(vol(c) for c in cubes)
+    cx = sum(vol(c) * (c["f"][0] + c["t"][0]) / 2 for c in cubes) / tv
+    cz = sum(vol(c) * (c["f"][2] + c["t"][2]) / 2 for c in cubes) / tv
+    y0 = min(min(c["f"][1], c["t"][1]) for c in j["cubes"])
+    d = (round(cx, 2), round(y0, 2), round(cz, 2))
+    sh = lambda v: [round(v[0] - d[0], 3), round(v[1] - d[1], 3), round(v[2] - d[2], 3)]
+    for c in j["cubes"]:
+        c["f"], c["t"] = sh(c["f"]), sh(c["t"])
+        if "o" in c: c["o"] = sh(c["o"])
+    for b in j["bones"]: b["pivot"] = sh(b["pivot"])
+    for z in j.get("zones", []): z["c"] = sh(z["c"])
+    top = max(max(c["f"][1], c["t"][1]) for c in j["cubes"])
+    wide = max(max(abs(c["f"][i]), abs(c["t"][i])) for c in cubes for i in (0, 2)) * 2
+    j["height"] = round(top, 2)
+    # wide, low models (crabs, turtles, wolves) are sized by their length too, so they don't become giants
+    span = max(top, 0.7 * wide)
+    lo, hi = SIZE[size_class(id)]
+    now = span * j["scale"] / 16
+    want = min(hi, max(lo, lo + (hi - lo) * min(1, max(0, (now - lo) / (hi * 2 - lo)))))
+    j["scale"] = round(want * 16 / span, 4)
+    j["hitbox"] = HITBOX if top >= span * 0.8 else round(max(0.45, top / span), 3)
+
+
 def base(k):
     return k.split("[")[0]
 
@@ -127,6 +167,7 @@ for id, fn in roster.builders().items():
     for a in set(m.attacks.values()) | ({m.melee} if m.melee else set()):
         if a not in anims.RIGS[m.rig] and a not in (getattr(m, "anims", None) or {}):
             problems.append(f"{m.id}: attack anim {a} not in {m.rig}")
+    normalize(m.id, j)
     out["models"][m.id] = j
     used |= {base(c["k"]) for c in m.cubes}
 

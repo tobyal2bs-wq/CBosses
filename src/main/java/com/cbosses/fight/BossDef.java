@@ -23,13 +23,14 @@ public record BossDef(String id, String name, String title, String kind, int cha
                       double damage, double speed, double armor, String bar, String theme, String movement, double flyHeight,
                       List<Double> phases, Map<String, String> equipment, EntityType minion, int minions, List<String> abilities,
                       int abilitySeconds, String season, Rewards rewards, int size, String model, double healthPerPlayer,
-                      String spawnText, String deathText, String description, String tier) {
+                      String spawnText, String deathText, String description, String tier,
+                      String partner, double evolve) {
 
     public record Rewards(long money, long topMoney, List<String> items, List<String> topItems, List<String> commands, List<String> topCommands) {
         static final Rewards NONE = new Rewards(0, 0, List.of(), List.of(), List.of(), List.of());
     }
 
-    public static final Set<String> KINDS = Set.of("world", "seasonal", "chapter", "mini");
+    public static final Set<String> KINDS = Set.of("world", "seasonal", "chapter", "mini", "partner");
     /** Health tiers: mini (hourly), big (weekly and chapter) and mythic (legends and the finale). */
     public static final Set<String> TIERS = Set.of("mini", "big", "mythic");
     public static final Set<String> MOVEMENTS = Set.of("walk", "fly", "hover", "still");
@@ -38,6 +39,8 @@ public record BossDef(String id, String name, String title, String kind, int cha
     public boolean seasonal() { return kind.equals("seasonal"); }
     public boolean chapterBoss() { return kind.equals("chapter"); }
     public boolean mini() { return kind.equals("mini"); }
+    /** The second body of a two-body boss: it only appears beside the boss that names it as partner. */
+    public boolean sidekick() { return kind.equals("partner"); }
     public boolean flies() { return movement.equals("fly") || movement.equals("hover"); }
 
     /** Reads every boss; a broken entry is skipped with a warning that names it. */
@@ -95,7 +98,7 @@ public record BossDef(String id, String name, String title, String kind, int cha
         String season = s.getString("season", "").toLowerCase(Locale.ROOT);
         int chapter = Math.max(0, s.getInt("chapter", 0));
         String kind = s.getString("kind", chapter > 0 ? "chapter" : season.isEmpty() ? "world" : "seasonal").toLowerCase(Locale.ROOT);
-        if (!KINDS.contains(kind)) throw new IllegalArgumentException("kind must be world, seasonal, chapter or mini");
+        if (!KINDS.contains(kind)) throw new IllegalArgumentException("kind must be world, seasonal, chapter, mini or partner");
         String tier = s.getString("tier", kind.equals("mini") ? "mini" : "big").toLowerCase(Locale.ROOT);
         if (!TIERS.contains(tier)) throw new IllegalArgumentException("tier must be mini, big or mythic");
         if (kind.equals("seasonal") && season.isEmpty()) throw new IllegalArgumentException("a seasonal boss needs a season");
@@ -120,6 +123,13 @@ public record BossDef(String id, String name, String title, String kind, int cha
                 Math.max(3, s.getInt("ability-seconds", 7)), season, rewards,
                 Math.max(1, Math.min(16, s.getInt("size", 1))), s.getString("model", id).toLowerCase(Locale.ROOT),
                 Math.max(0, Math.min(2, s.getDouble("health-per-player", 0.25))),
-                s.getString("spawn-text", ""), s.getString("death-text", ""), s.getString("description", ""), tier);
+                s.getString("spawn-text", ""), s.getString("death-text", ""), s.getString("description", ""), tier,
+                s.getString("partner", "").toLowerCase(Locale.ROOT).trim(), s.contains("evolve") ? Math.max(0, Math.min(1, evolveChance(s.get("evolve")))) : -1);
+    }
+
+    /** evolve: true, false or a chance from 0 to 1 that this boss evolves during a fight. */
+    static double evolveChance(Object o) {
+        if (o instanceof Boolean b) return b ? 1 : 0;
+        try { return Double.parseDouble(String.valueOf(o)); } catch (NumberFormatException e) { return -1; }
     }
 }

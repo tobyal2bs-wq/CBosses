@@ -16,6 +16,7 @@ for mod in roster.MODULES:
     importlib.import_module(mod)
 import v9_minis
 import v11_new
+import v12_final
 DOCS = {f.__name__: " ".join((f.__doc__ or "").split()) for f in _m.MODELS}
 MODELS = json.load(open(os.path.join(ROOT, "src/main/resources/models.json")))["models"]
 YML = os.path.join(ROOT, "src/main/resources/bosses.yml")
@@ -149,6 +150,20 @@ for _id, _i in v11_new.CHAPTER_INFO.items():
     EXTRA[_id] = _i["extra"]
 
 
+for _id, _i in v12_final.BIG_INFO.items():
+    NEW[_id] = dict(_i, health=5000)
+    EXTRA[_id] = _i["extra"]
+for _id, _i in v12_final.PARTNER_INFO.items():
+    NEW[_id] = dict(name=_i["name"], title=_i["title"], entity=_i["entity"], health=3000 if _i["tier"] == "mini" else 1000, damage=8, armor=4,
+                    bar=_i["bar"], theme=_i["theme"], movement=_i.get("movement", "walk"), speed=_i.get("speed"), minion=None, minions=0,
+                    ability_seconds=6, phases=[0.5], hpp=0.15, money=0, top_money=0, items=[], top_items=[])
+    EXTRA[_id] = _i["extra"]
+PARTNERS = v12_final.PARTNERS
+REVISED = v12_final.REVISED
+# a boss whose entry changed shape (new design, new name, mini grown into a big boss) carries a revision; a server
+# with an older revision gets the new entry while its rewards and enabled setting are kept
+REVISION = 2
+
 # bosses that used to close a chapter and now join the weekly rotation get general boss health
 PROMOTED = {"keywarden": 1800, "hollow_king": 2200, "captain_brine": 1900, "ember_queen": 2000}
 # minions for bosses whose model has a summon move
@@ -185,7 +200,12 @@ def entry(id, kind, season=None, chapter=None):
         d["health"] = TIER_HEALTH[d["tier"]]
     if id in MINIS:
         d["kind"] = "mini"
-    if not chapter and not d.get("top_money"):
+    if id in v12_final.PARTNER_INFO:
+        d["kind"], d["tier"] = "partner", None
+        d["health"] = NEW[id]["health"]
+        d["top_money"] = 0
+        d["money"] = 0
+    if not chapter and not d.get("top_money") and d.get("kind") != "partner":
         d["top_money"] = d.get("money", 0) * 3
     if id == "gale_sovereign":
         d["theme"] = "wind"
@@ -233,6 +253,11 @@ w("""# CBosses bosses. Every boss is a block model (models.json) drawn over an i
 #             the top 3 get top-money (split 1, 1/2, 1/3) and top-items, the best gets top-commands too.
 #             %player% and %place% work in commands. Chapter bosses pay the player who beat it.
 # model:      the model in models.json (defaults to the id), or none for the plain mob with its equipment.
+# partner:    a second boss that appears beside this one (kind: partner). Both fight on their own and chase different
+#             players; when one falls the other is enraged, and the rewards are paid when both are down.
+# evolve:     true, false or a chance (0 to 1) that this boss grows stronger during a fight (see evolve: in config.yml).
+# revision:   set by the plugin's authors; when a new version redesigns a boss, its entry is updated (rewards kept).
+# Change any of this in game with /cbosses edit <boss> <field> <value>.
 # description: shown in /cbosses menu and the README.
 bosses:
 """)
@@ -240,12 +265,14 @@ bosses:
 
 def emit(id, d):
     w(f"  {id}:")
+    if id in REVISED: w(f"    revision: {REVISION}")
     for k in ("name", "title"):
         w(f"    {k}: {q(d[k])}")
     if d.get("chapter"): w(f"    chapter: {d['chapter']}")
     if d.get("season"): w(f"    season: {d['season']}")
     if d.get("kind"): w(f"    kind: {d['kind']}")
     if d.get("tier"): w(f"    tier: {d['tier']}")
+    if id in PARTNERS: w(f"    partner: {PARTNERS[id]}")
     w(f"    entity: {d['entity']}")
     w(f"    health: {d['health']}")
     if d.get("scale"): w(f"    scale: {d['scale']}")
@@ -287,8 +314,10 @@ w("  # ------------------------------------------------------------ chapter boss
 for n, id in enumerate(CHAPTERS, 1): emit(id, entry(id, "chapter", chapter=n))
 w("  # ------------------------------------------------------------ mini bosses: wake on the mini timer (/cbosses minis), 3000 health")
 for id in MINIS: emit(id, entry(id, "mini"))
+w("  # ------------------------------------------------------------ second bodies of two-body bosses (they appear beside their partner, never alone)")
+for id in v12_final.PARTNER_INFO: emit(id, entry(id, "partner"))
 
-all_ids = GENERAL + LEGENDS + sum(SEASONAL.values(), []) + CHAPTERS + MINIS
+all_ids = GENERAL + LEGENDS + sum(SEASONAL.values(), []) + CHAPTERS + MINIS + list(v12_final.PARTNER_INFO)
 assert len(set(all_ids)) == len(all_ids) and set(all_ids) | set(roster.DECOR) == set(MODELS), set(MODELS) ^ set(all_ids)
 open(YML, "w").write("\n".join(out) + "\n")
 print("wrote", YML, len(all_ids), "bosses")

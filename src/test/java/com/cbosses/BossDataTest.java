@@ -45,7 +45,7 @@ class BossDataTest {
     void everyBossHasAModelWithAnEntranceAndADeath() throws Exception {
         var models = models();
         var defs = bosses();
-        assertEquals(93, defs.size(), "36 weekly, 5 mythic, 12 seasonal, 10 chapter and 30 mini bosses");
+        assertEquals(96, defs.size(), "39 weekly, 5 mythic, 12 seasonal, 10 chapter, 27 mini bosses and 3 second bodies");
         for (BossDef d : defs.values()) {
             ModelRig.Model m = models.get(d.model());
             assertNotNull(m, d.id() + " has no model");
@@ -72,7 +72,8 @@ class BossDataTest {
             if (fm.faceOf != null) for (String f : fm.faceOf) if (f != null && !f.equals("idle")) n--;
             if (d.mini()) assertTrue(n >= 25 && n <= 300, d.id() + " is a mini boss with " + n + " blocks");
             else if (d.chapterBoss() && d.chapter() >= 4) assertTrue(n >= 150 && n <= 300, d.id() + " is a rebuilt chapter boss with " + n + " blocks");
-            else if (d.chapterBoss()) assertTrue(n >= 70 && n <= 150, d.id() + " is a chapter boss with " + n + " blocks");
+            else if (d.chapterBoss()) assertTrue(n >= 70 && n <= 300, d.id() + " is a chapter boss with " + n + " blocks");
+            else if (d.sidekick()) assertTrue(n >= 150 && n <= 300, d.id() + " is a second body with " + n + " blocks");
             else if (d.seasonal()) assertTrue(n >= 60 && n <= 300, d.id() + " is a painted seasonal boss with " + n + " blocks");
             else if (!d.id().equals("grand_augur")) assertTrue(n >= 150, d.id() + " has only " + n + " blocks");
         }
@@ -92,19 +93,61 @@ class BossDataTest {
         var defs = bosses();
         for (String season : new String[]{"winter", "summer", "spring", "halloween"})
             assertEquals(3, defs.values().stream().filter(d -> d.seasonal() && season.equals(d.season())).count(), season);
-        assertEquals(41, defs.values().stream().filter(d -> !d.seasonal() && !d.chapterBoss() && !d.mini()).count(), "36 weekly bosses and 5 mythic");
+        assertEquals(44, defs.values().stream().filter(d -> !d.seasonal() && !d.chapterBoss() && !d.mini() && !d.sidekick()).count(), "39 weekly bosses and 5 mythic");
     }
 
     @Test
     void healthTiersAndMiniBosses() throws Exception {
         var defs = bosses();
-        assertEquals(30, defs.values().stream().filter(BossDef::mini).count(), "30 mini bosses");
+        assertEquals(27, defs.values().stream().filter(BossDef::mini).count(), "27 mini bosses");
         for (BossDef d : defs.values()) {
             if (d.mini()) assertEquals(3000, d.health(), 0.01, d.id());
             else if (d.tier().equals("mythic")) assertEquals(8000, d.health(), 0.01, d.id());
-            else if (!d.chapterBoss()) assertEquals(5000, d.health(), 0.01, d.id());
+            else if (!d.chapterBoss() && !d.sidekick()) assertEquals(5000, d.health(), 0.01, d.id());
         }
         for (String id : new String[]{"the_unmaker", "withered_tyrant", "ender_wyrm", "gale_sovereign", "the_listener"}) assertEquals("mythic", defs.get(id).tier(), id);
+    }
+
+    @Test
+    void everyModelIsItsClassSize() throws Exception {
+        var models = models();
+        var defs = bosses();
+        for (BossDef d : defs.values()) {
+            ModelRig.Model m = models.get(d.model());
+            float blocks = m.blocks();
+            // long, low models (wolves, crabs, turtles) are sized by their length, so they stand lower
+            if (d.mini() || d.sidekick()) assertTrue(blocks >= 0.9 && blocks <= 2.05, d.id() + " is a mini " + blocks + " blocks tall");
+            else if (d.tier().equals("mythic")) assertTrue(blocks >= 1.8 && blocks <= 5.1, d.id() + " is mythic and " + blocks + " blocks tall");
+            else assertTrue(blocks >= 1.8 && blocks <= 3.6, d.id() + " is a big boss " + blocks + " blocks tall");
+            assertTrue(m.hitbox >= 0.45f, d.id() + " hitbox " + m.hitbox);
+        }
+    }
+
+    @Test
+    void twoBodyBossesHaveTheirPartner() throws Exception {
+        var defs = bosses();
+        for (String[] pair : new String[][]{{"boo_twins", "boo_twin_b"}, {"cap_brothers", "cap_little"}, {"gnome_brothers", "gnome_little"}}) {
+            assertEquals(pair[1], defs.get(pair[0]).partner(), pair[0]);
+            assertTrue(defs.get(pair[1]).sidekick(), pair[1] + " is a second body");
+        }
+        assertEquals(3, defs.values().stream().filter(BossDef::sidekick).count());
+    }
+
+    @Test
+    void redrawnModelsAreTexturedAndAlive() throws Exception {
+        var models = models();
+        for (String id : new String[]{"abyssal_eye", "hollow_king", "fenrir", "tide_tyrant", "storm_herald", "ember_queen", "gravelord", "bloodtusk",
+                "old_ironroot", "gate_shade", "frost_yeti", "cinder_imp", "bog_orc", "hay_golem", "snapjaw", "pack_goblin", "garden_gnome", "pink_burrower",
+                "moss_imp", "mossling", "bark_ape", "old_blindman", "boo_twins", "boo_twin_b", "cap_brothers", "cap_little", "gnome_little", "king_oldbeard",
+                "straw_farmer", "gilded_mimic", "apple_crab", "puffneck", "mallard", "piggy_farmer", "ghost_jelly", "baby_minotaur", "mandrake",
+                "mossy_turtle", "stumpy"}) {
+            ModelRig.Model m = models.get(id);
+            assertNotNull(m, id);
+            int n = m.cubes.size();
+            assertTrue(n >= 150 && n <= 300, id + " has " + n + " blocks");
+            assertTrue(m.cubes.stream().map(ModelRig.Cube::base).distinct().count() >= 6, id + " is not textured enough");
+            assertNotNull(m.anim("idle"), id + " idle");
+        }
     }
 
     @Test

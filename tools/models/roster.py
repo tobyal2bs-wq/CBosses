@@ -4,14 +4,14 @@ import importlib
 import models
 
 MODULES = ["v2_general", "v2_seasonal", "v2_chapters", "v2_legends", "v3_general", "v3_mythic", "v3_seasonal",
-           "v4_normal", "v4_chapters", "v4_seasonal", "v5_normal", "v5_mythic", "v6_originals", "v7_bigs", "v8_pumpkins", "v9_minis", "v10_fixes", "v11_new"]
+           "v4_normal", "v4_chapters", "v4_seasonal", "v5_normal", "v5_mythic", "v6_originals", "v7_bigs", "v8_pumpkins", "v9_minis", "v10_fixes", "v11_new", "v12_final"]
 
 # the weekly rotation: the first 25 bosses, then the new ones drawn from the user's pictures
 GENERAL = ["slagheart", "warlord_gruk", "grand_augur", "crimson_ronin", "thunderback", "gorehorn", "abyssal_eye", "overgrowth",
            "prism_sentinel", "tiki_warden", "hollow_king", "broodmother", "ironhide_behemoth", "fenrir", "tide_tyrant", "void_walker",
            "storm_herald", "pharaoh", "executioner", "ember_queen", "gravelord", "captain_brine", "keywarden", "bloodtusk", "king_gloop",
            "clockwork_colossus", "mossback", "old_wizard", "hollow_mage", "horned_brute", "rotting_giant", "dusk_scorpion",
-           "grave_marshal", "mayor_grumble", "shulker_matriarch", "old_ironroot"]
+           "grave_marshal", "mayor_grumble", "shulker_matriarch", "old_ironroot", "frost_yeti", "cinder_imp", "bog_orc"]
 MYTHIC = ["the_listener", "withered_tyrant", "ender_wyrm", "gale_sovereign", "the_unmaker"]
 SEASONAL = {"winter": ["killer_claus", "frostbottom", "old_man_winter"], "summer": ["sunscorch", "admiral_pinchworth", "brain_freeze"],
             "spring": ["clucksworth", "killer_bunny", "cocoa_colossus"], "halloween": ["gourd_king", "headless_horseman", "hexmother"]}
@@ -20,8 +20,13 @@ DECOR = ["decor_pumpkin_tall", "decor_pumpkin_flat", "decor_pumpkin_cube"]
 
 
 def minis():
-    import v9_minis
+    import v9_minis, v12_final
     return list(v9_minis.MINIS)
+
+
+def partners():
+    import v12_final
+    return list(v12_final.PARTNERS.values())
 
 
 ALL = GENERAL + MYTHIC + [b for s in SEASONAL.values() for b in s] + CHAPTERS + DECOR
@@ -32,9 +37,11 @@ def builders():
     for mod in MODULES:
         importlib.import_module(mod)
     by_id = {}
-    for fn in models.MODELS:
+    # a later module wins, whatever order the modules happened to be imported in
+    rank = {m: i for i, m in enumerate(MODULES)}
+    for fn in sorted(models.MODELS, key=lambda f: rank.get(f.__module__, -1)):
         by_id[fn.__name__] = fn
-    ids = ALL + minis()
+    ids = ALL + minis() + partners()
     missing = [i for i in ids if i not in by_id]
     if missing:
         raise SystemExit("no model for " + ", ".join(missing))
@@ -42,9 +49,9 @@ def builders():
 
 
 def recipes():
-    import v2_recipes, v4_recipes, v8_recipes, v9_minis, v11_new
+    import v2_recipes, v4_recipes, v8_recipes, v9_minis, v11_new, v12_final
     spawn, death = dict(v2_recipes.SPAWN), dict(v2_recipes.DEATH)
-    for r in (v4_recipes, v8_recipes, v9_minis, v11_new):
+    for r in (v4_recipes, v8_recipes, v9_minis, v11_new, v12_final):
         spawn.update(r.SPAWN)
         death.update(r.DEATH)
     return spawn, death

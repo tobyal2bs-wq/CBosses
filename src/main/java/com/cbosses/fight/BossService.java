@@ -142,17 +142,31 @@ public final class BossService implements Listener {
             YamlConfiguration bundled = YamlConfiguration.loadConfiguration(new InputStreamReader(in, StandardCharsets.UTF_8));
             var from = bundled.getConfigurationSection("bosses");
             if (from == null) return;
-            List<String> added = new ArrayList<>();
+            List<String> added = new ArrayList<>(), updated = new ArrayList<>();
             for (String id : from.getKeys(false)) {
-                if (yaml.contains("bosses." + id)) continue;
                 var sec = from.getConfigurationSection(id);
                 if (sec == null) continue;
-                for (String k : sec.getKeys(true)) if (!sec.isConfigurationSection(k)) yaml.set("bosses." + id + "." + k, sec.get(k));
+                String at = "bosses." + id;
+                if (yaml.contains(at)) {
+                    // a redesigned boss: take the new entry, keep the server's rewards and on/off switch
+                    if (sec.getInt("revision", 0) <= yaml.getInt(at + ".revision", 0)) continue;
+                    Object rewards = yaml.get(at + ".rewards");
+                    boolean enabled = yaml.getBoolean(at + ".enabled", true);
+                    yaml.set(at, null);
+                    for (String k : sec.getKeys(true)) if (!sec.isConfigurationSection(k)) yaml.set(at + "." + k, sec.get(k));
+                    if (rewards instanceof org.bukkit.configuration.ConfigurationSection r)
+                        for (String k : r.getKeys(true)) if (!r.isConfigurationSection(k)) yaml.set(at + ".rewards." + k, r.get(k));
+                    if (!enabled) yaml.set(at + ".enabled", false);
+                    updated.add(id);
+                    continue;
+                }
+                for (String k : sec.getKeys(true)) if (!sec.isConfigurationSection(k)) yaml.set(at + "." + k, sec.get(k));
                 added.add(id);
             }
-            if (added.isEmpty()) return;
-            yaml.save(file);
-            plugin.getLogger().info("Added new bosses to bosses.yml: " + String.join(", ", added));
+            if (added.isEmpty() && updated.isEmpty()) return;
+            if (!updated.isEmpty()) plugin.getLogger().info("Updated redesigned bosses in bosses.yml (rewards kept, old file saved as bosses.yml.bak): " + String.join(", ", updated));
+            com.cbosses.util.SafeFiles.write(file, yaml.saveToString());
+            if (!added.isEmpty()) plugin.getLogger().info("Added new bosses to bosses.yml: " + String.join(", ", added));
         } catch (Exception e) {
             plugin.getLogger().warning("Could not add new bosses to bosses.yml: " + e.getMessage());
         }
@@ -312,7 +326,7 @@ public final class BossService implements Listener {
         String text = yaml.saveToString();
         Sched.async(() -> {
             synchronized (arenasFile) {
-                try { java.nio.file.Files.writeString(arenasFile.toPath(), text); }
+                try { com.cbosses.util.SafeFiles.write(arenasFile, text); }
                 catch (IOException e) { plugin.getLogger().warning("Could not save arenas.yml: " + e.getMessage()); }
             }
         });
@@ -396,7 +410,7 @@ public final class BossService implements Listener {
 
     public void listBosses(org.bukkit.command.CommandSender to) {
         plugin.send(to, T.t("fight.bosses", "<gold>Bosses</gold> <gray>(<count>)", "count", defs.size()));
-        for (BossDef d : defs.values())
+        for (BossDef d : defs.values()) if (!d.sidekick())
             to.sendMessage(Text.mm(" <dark_gray>-</dark_gray> <white>" + d.id() + "</white> " + d.name() + " <gray>" + Text.escape(d.title())
                     + (d.seasonal() ? " <light_purple>(" + d.season() + ")" : d.chapterBoss() ? " <aqua>(chapter " + d.chapter() + ")" : "")));
     }
@@ -463,7 +477,7 @@ public final class BossService implements Listener {
         Set<String> skip = new HashSet<>(plugin.getConfig().getStringList("schedule.exclude"));
         boolean chapterInRotation = plugin.getConfig().getBoolean("schedule.include-chapter-bosses", false);
         for (BossDef d : defs.values()) {
-            if (skip.contains(d.id()) || d.mini()) continue;
+            if (skip.contains(d.id()) || d.mini() || d.sidekick()) continue;
             if (d.seasonal()) { if (plugin.seasons().active(d.season())) seasonal.add(d); }
             else if (!d.chapterBoss() || chapterInRotation) normal.add(d);
         }
@@ -605,6 +619,7 @@ public final class BossService implements Listener {
         var world = Bukkit.getWorlds().get(0);
         Location base = world.getSpawnLocation();
         List<BossDef> list = new ArrayList<>(defs.values());
+        list.removeIf(BossDef::sidekick);
         AtomicInteger appeared = new AtomicInteger(), attacks = new AtomicInteger(), done = new AtomicInteger(), drawn = new AtomicInteger(),
                 blocks = new AtomicInteger(), hitZones = new AtomicInteger(), animations = new AtomicInteger(), deaths = new AtomicInteger();
         List<String> broken = new CopyOnWriteArrayList<>();
@@ -702,6 +717,13 @@ public final class BossService implements Listener {
     }
 
     private Fight spawnFight(BossDef def, Arena arena, String key, Location at, Player tester, boolean test, UUID owner) {
+        return spawnFight(def, arena, key, at, tester, test, owner, false);
+    }
+
+    private boolean mythic(BossDef def) { return def.tier().equals("mythic"); }
+
+    /** quiet: the second body of a two-body boss, which appears without its own announcement. */
+    private Fight spawnFight(BossDef def, Arena arena, String key, Location at, Player tester, boolean test, UUID owner, boolean quiet) {
         Mob mob;
         ModelRig.Model look = modelFor(def);
         // more health for every extra player near when it wakes (fight.health-per-player)
@@ -709,6 +731,7 @@ public final class BossService implements Listener {
         for (Player p : at.getNearbyPlayers(Math.max(24, arena.radius + 8))) if (fighter(p)) crowd++;
         double health = def.health() * (1 + def.healthPerPlayer() * Math.max(0, crowd - 1)) * Math.max(0.05, plugin.getConfig().getDouble("fight.health-multiplier", 1));
         if (owner != null) health *= Math.max(0.05, plugin.getConfig().getDouble("chapter-bosses.health-multiplier", 1));
+        if (mythic(def)) health *= Math.max(0.05, plugin.getConfig().getDouble("mythic.health-multiplier", 1));
         final double hp = health;
         try {
             mob = (Mob) at.getWorld().spawn(at, def.entity().getEntityClass(), e -> { Privacy.claim(e); dress((Mob) e, def, key, look, hp); });
@@ -729,6 +752,12 @@ public final class BossService implements Listener {
         if (fight.privateZone != null) mob.setCollidable(false);
         fight.nextAbility = System.currentTimeMillis() + 6000;
         fight.nextDash = System.currentTimeMillis() + 9000;
+        var cfg = plugin.getConfig();
+        if (mythic(def)) fight.power = Math.max(0.1, cfg.getDouble("mythic.damage-multiplier", 1.25));
+        double chance = def.evolve() >= 0 ? def.evolve() : Math.max(0, Math.min(1, cfg.getDouble("evolve.chance", 0.6)));
+        if (mythic(def) && cfg.getBoolean("mythic.always-evolve", true)) chance = 1;
+        fight.evolves = cfg.getBoolean("evolve.enabled", true) && ThreadLocalRandom.current().nextDouble() < chance;
+        fight.nextEvolve = System.currentTimeMillis() + Math.max(20, cfg.getInt("evolve.after-seconds", 150)) * 1000L;
         try { fight.aura = Particle.valueOf(plugin.getConfig().getString("bosses-aura." + def.id(), fight.theme.spark().name())); } catch (IllegalArgumentException e) { fight.aura = fight.theme.spark(); }
         if (owner != null) { Player o = Bukkit.getPlayer(owner); if (o != null) fight.names.put(owner, o.getName()); }
         fights.put(key, fight);
@@ -744,7 +773,7 @@ public final class BossService implements Listener {
             BossModel model = new BossModel(plugin, look, mob);
             try {
                 model.build(kindKey, fightKey, key);
-                model.meleeDamage = def.damage() > 0 ? def.damage() : 6;
+                model.meleeDamage = (def.damage() > 0 ? def.damage() : 6) * fight.power;
                 model.flying = def.flies();
                 fight.model = model;
                 boolean ai = mob.hasAI();
@@ -758,7 +787,7 @@ public final class BossService implements Listener {
                     if (!mob.isValid() || fight.over) return;
                     mob.setInvulnerable(false);
                     if (ai) mob.setAI(true);
-                    if (!test || tester != null) cinema.titleCard(fight);
+                    if ((!test || tester != null) && !quiet) cinema.titleCard(fight);
                 });
             } catch (RuntimeException | LinkageError e) {
                 model.remove();
@@ -775,6 +804,23 @@ public final class BossService implements Listener {
         }
         mob.getScheduler().runAtFixedRate(plugin, t -> { if (!tick(fight)) t.cancel(); }, () -> end(fight, "gone"), 2, 10);
         if (def.flies()) mob.getScheduler().runAtFixedRate(plugin, t -> { if (!fly(fight)) t.cancel(); }, null, 4, 2);
+        if (!def.partner().isEmpty() && !def.sidekick() && !quiet) {
+            BossDef pd = def(def.partner());
+            if (pd != null && !pd.id().equals(def.id())) {
+                Location side = null;
+                for (double dx : new double[]{2.4, -2.4, 0}) {
+                    Location l = at.clone().add(dx, 0, dx == 0 ? 2.4 : 0);
+                    if (!l.getBlock().isSolid() && !l.clone().add(0, 1, 0).getBlock().isSolid()) { side = l; break; }
+                }
+                Fight other = spawnFight(pd, arena, key + "+" + pd.id(), side == null ? at : side, tester, test, owner, true);
+                if (other != null) {
+                    other.partner = fight; fight.partner = other; other.payDef = def;
+                    other.privateZone = fight.privateZone;
+                    if (other.privateZone != null) other.boss.setCollidable(false);
+                }
+            }
+        }
+        if (quiet) return fight;
         if (test) {
             if (tester != null) plugin.send(tester, T.t("fight.test-boss-nothing-is-paid", "<gray>Test boss: <boss> <gray>(<id>). Nothing is paid. <yellow>/cbosses test phase</yellow> jumps to the next phase, <yellow>/cbosses test stop</yellow> ends it.", "boss", def.name(), "id", def.id()));
         } else if (owner != null) {
@@ -806,7 +852,8 @@ public final class BossService implements Listener {
         m.setHealth(Math.max(1, Math.min(1024, health)));
         if (!(m instanceof Slime)) attr(m, "scale", look == null ? def.scale() : Math.max(0.3, Math.min(14, look.blocks() * look.hitbox / baseHeight)));
         if (look != null) m.setInvisible(true);
-        if (def.damage() > 0) attr(m, "attack_damage", def.damage() * Math.max(0, plugin.getConfig().getDouble("fight.damage-multiplier", 1)));
+        if (def.damage() > 0) attr(m, "attack_damage", def.damage() * Math.max(0, plugin.getConfig().getDouble("fight.damage-multiplier", 1))
+                * (mythic(def) ? Math.max(0.1, plugin.getConfig().getDouble("mythic.damage-multiplier", 1.25)) : 1));
         if (def.speed() > 0) attr(m, "movement_speed", def.speed());
         if (def.armor() > 0) attr(m, "armor", def.armor());
         attr(m, "knockback_resistance", 0.85);
@@ -928,7 +975,8 @@ public final class BossService implements Listener {
         if (shown != f.shownHealth) {
             f.shownHealth = shown;
             if (f.introDone || f.model == null) f.bar.progress((float) Math.max(0, Math.min(1, health / Math.max(1, f.max))));
-            String phase = f.def.phases().size() > 1 ? " <dark_gray>[" + "◆".repeat(f.phase + 1) + "◇".repeat(f.def.phases().size() - f.phase) + "]" : "";
+            String phase = (f.def.phases().size() > 1 ? " <dark_gray>[" + "◆".repeat(f.phase + 1) + "◇".repeat(f.def.phases().size() - f.phase) + "]" : "")
+                    + (f.stage > 0 ? " <dark_red>" + "✦".repeat(f.stage) : "");
             f.bar.name(Text.mm(f.def.name() + " <gray>❤ <white>" + String.format(Locale.ROOT, "%,d", shown) + "<gray>/" + String.format(Locale.ROOT, "%,d", Math.round(f.max * f.ratio)) + phase));
         }
         if (!close.isEmpty()) aura(f, loc);
@@ -936,11 +984,14 @@ public final class BossService implements Listener {
         if (!inside.isEmpty()) {
             f.lastPlayer = now;
             double best = Double.MAX_VALUE;
+            // the two bodies of a pair hunt different players when there is more than one
+            Fight mate = f.partner;
+            Player avoid = mate != null && !mate.over && inside.size() > 1 && mate.boss.getTarget() instanceof Player pt ? pt : null;
             for (Player p : inside) {
-                double d = p.getLocation().distanceSquared(loc) * (f.owner != null && f.owner.equals(p.getUniqueId()) ? 0.5 : 1);
+                double d = p.getLocation().distanceSquared(loc) * (f.owner != null && f.owner.equals(p.getUniqueId()) ? 0.5 : 1) * (p.equals(avoid) ? 16 : 1);
                 if (d < best) { best = d; target = p; }
             }
-            if (!(boss.getTarget() instanceof Player current) || !inside.contains(current)) boss.setTarget(target);
+            if (!(boss.getTarget() instanceof Player current) || !inside.contains(current) || current.equals(avoid)) boss.setTarget(target);
             target = boss.getTarget() instanceof Player cur ? cur : target;
             if (f.ticks % 2 == 0) {
                 for (Mob minion : f.minions) {
@@ -963,6 +1014,8 @@ public final class BossService implements Listener {
             if (!ab.isEmpty() && !inside.isEmpty()) { String sig = ab.get(ab.size() - 1); later(f, 30, () -> abilities.run(f, sig, fighters(f))); }
             f.nextAbility = now + 4000;
         }
+        if (f.evolves && now >= f.nextEvolve && !inside.isEmpty() && (f.introDone || f.model == null)
+                && f.stage < Math.max(1, plugin.getConfig().getInt("evolve.max-stages", 3))) evolve(f, false);
         // gap closer: a walking boss far from its target dashes or leaps at it
         if (target != null && !f.def.flies() && !f.busy() && now >= f.nextDash && f.introDone && boss.hasAI()
                 && target.getLocation().distanceSquared(loc) > 12 * 12 && plugin.getConfig().getBoolean("fight.gap-closer", true)) {
@@ -987,6 +1040,36 @@ public final class BossService implements Listener {
             }
         }
         return true;
+    }
+
+    /**
+     * The boss grows stronger: it hits harder (evolve.damage-per-stage), moves faster, heals a little and
+     * everyone near is told. rage: its partner just fell, which counts as a stage whatever the timer says.
+     */
+    void evolve(Fight f, boolean rage) {
+        if (f.over || !f.boss.isValid()) return;
+        var c = plugin.getConfig();
+        long now = System.currentTimeMillis();
+        f.stage++;
+        f.nextEvolve = now + Math.max(20, c.getInt("evolve.after-seconds", 150)) * 1000L;
+        double base = mythic(f.def) ? Math.max(0.1, c.getDouble("mythic.damage-multiplier", 1.25)) : 1;
+        f.power = base * (1 + Math.max(0, c.getDouble("evolve.damage-per-stage", 0.25)) * f.stage);
+        Mob boss = f.boss;
+        if (f.def.damage() > 0) attr(boss, "attack_damage", f.def.damage() * f.power * damageMultiplier());
+        if (f.model != null) f.model.meleeDamage = (f.def.damage() > 0 ? f.def.damage() : 6) * f.power;
+        attr(boss, "movement_speed", Math.max(0.25, (f.def.speed() > 0 ? f.def.speed() : 0.25) * (1 + 0.15 * f.phase)
+                * (1 + Math.max(0, c.getDouble("evolve.speed-per-stage", 0.08)) * f.stage)));
+        double heal = Math.max(0, Math.min(1, c.getDouble("evolve.heal-percent", 0.1)));
+        if (heal > 0) boss.setHealth(Math.min(maxHealth(boss), boss.getHealth() + maxHealth(boss) * heal));
+        f.shownHealth = -1;
+        Location at = boss.getLocation().add(0, 1.5, 0);
+        Fx.particle(at.getWorld(), f.theme.spark(), at, 90, 1.2, 1.6, 1.2, 0.25, f.theme);
+        Fx.sound(at, "ENTITY_ELDER_GUARDIAN_CURSE", 1f, 0.7f);
+        if (f.model != null) try { f.model.attack("roar"); } catch (RuntimeException ignored) { }
+        String text = rage
+                ? T.t("fight.partner-rage", "<dark_red><bold>⬆</bold> <boss> <red>is enraged by the fall of its partner! <gray>It hits <percent>% harder.", "boss", f.def.name(), "percent", Math.round((f.power - 1) * 100))
+                : T.t("fight.evolved", "<dark_red><bold>⬆</bold> <boss> <red>evolved! <gray>Stage <stage>: it hits <percent>% harder.", "boss", f.def.name(), "stage", f.stage, "percent", Math.round((f.power - 1) * 100));
+        for (UUID id : f.viewers) { Player p = Bukkit.getPlayer(id); if (p != null) plugin.send(p, text); }
     }
 
     /**
@@ -1137,6 +1220,11 @@ public final class BossService implements Listener {
     void end(Fight f, String reason) {
         if (f.over) return;
         f.over = true;
+        Fight mate = f.partner;
+        if (mate != null && !mate.over && !reason.equals("defeated")) {
+            if (Bukkit.isOwnedByCurrentRegion(mate.boss)) end(mate, reason);
+            else mate.boss.getScheduler().run(plugin, t -> end(mate, reason), () -> end(mate, reason));
+        }
         // the death animation and its shards keep the circle private until they are gone
         if (f.privateZone != null) { String z = f.privateZone; Bukkit.getGlobalRegionScheduler().runDelayed(plugin, t -> Privacy.remove(z), 20L * 20); }
         f.endReason = reason;
@@ -1166,11 +1254,13 @@ public final class BossService implements Listener {
         }
         if (f.owner != null) {
             Player o = Bukkit.getPlayer(f.owner);
-            if (!reason.equals("defeated")) plugin.chapters().failed(f.owner, f.def, reason);
+            if (f.def.sidekick()) return;
+            if (!reason.equals("defeated")) plugin.chapters().failed(f.owner, f.payDef, reason);
             if (o != null && !reason.equals("defeated") && !reason.equals("shutdown"))
-                plugin.send(o, plugin.msg("chapter-boss-left", T.t("fight.left-fight-it-again-with", "<gray><boss> <gray>left. Fight it again with <yellow>/cbosses chapter retry</yellow>.")).replace("<boss>", f.def.name()));
+                plugin.send(o, plugin.msg("chapter-boss-left", T.t("fight.left-fight-it-again-with", "<gray><boss> <gray>left. Fight it again with <yellow>/cbosses chapter retry</yellow>.")).replace("<boss>", f.payDef.name()));
             return;
         }
+        if (f.def.sidekick()) return;
         switch (reason) {
             case "idle" -> broadcast(plugin.msg("boss-idle", T.t("fight.found-no-challengers-and-left", "<gray><boss> <gray>found no challengers and left.")).replace("<boss>", f.def.name()));
             case "time" -> broadcast(plugin.msg("boss-timeout", T.t("fight.was-not-beaten-in-time", "<gray><boss> <gray>was not beaten in time and vanished.")).replace("<boss>", f.def.name()));
@@ -1180,6 +1270,20 @@ public final class BossService implements Listener {
     }
 
     private void victory(Fight f) {
+        Fight mate = f.partner;
+        if (mate != null && !mate.over) {
+            // one body of a pair fell: the other carries everyone's damage, keeps the pair's rewards and gets angry
+            for (var e : f.damage.entrySet()) mate.damage.merge(e.getKey(), e.getValue(), Double::sum);
+            mate.names.putAll(f.names);
+            if (!f.def.sidekick()) mate.payDef = f.payDef;
+            Location fell = f.boss.getLocation();
+            cinema.deathStart(f, fell);
+            if (f.model != null) f.model.die(() -> cinema.deathEnd(f, fell));
+            end(f, "defeated");
+            if (f.model == null) cinema.deathEnd(f, fell);
+            mate.boss.getScheduler().run(plugin, t -> evolve(mate, true), null);
+            return;
+        }
         List<Map.Entry<UUID, Double>> ranked = new ArrayList<>(f.damage.entrySet());
         ranked.sort(Map.Entry.<UUID, Double>comparingByValue().reversed());
         Location fell = f.boss.getLocation();
@@ -1189,23 +1293,24 @@ public final class BossService implements Listener {
         if (f.model == null) cinema.deathEnd(f, fell);
         List<UUID> order = new ArrayList<>();
         for (var e : ranked) order.add(e.getKey());
-        Bukkit.getPluginManager().callEvent(new BossDefeatEvent(f.def.id(), fell, order, f.owner, f.test));
+        Bukkit.getPluginManager().callEvent(new BossDefeatEvent(f.payDef.id(), fell, order, f.owner, f.test));
         if (f.test) {
             Player tester = f.tester == null ? null : Bukkit.getPlayer(f.tester);
             if (tester != null) plugin.send(tester, T.t("fight.test-boss-beaten-top-damage", "<green>Test boss beaten. <gray>Top damage: <ranked>", "ranked", top(f, ranked)));
             return;
         }
         if (f.owner != null) {
-            plugin.chapters().won(f.owner, f.def, ranked);
+            plugin.chapters().won(f.owner, f.payDef, ranked);
             return;
         }
         double minimum = f.max * f.ratio * Math.max(0, plugin.getConfig().getDouble("rewards.min-damage-percent", 2)) / 100.0;
-        BossDef.Rewards r = f.def.rewards();
+        if (mate != null) minimum *= 2;
+        BossDef.Rewards r = f.payDef.rewards();
         int place = 0;
         for (var entry : ranked) {
             place++;
             if (entry.getValue() < minimum) continue;
-            pay(entry.getKey(), f.names.getOrDefault(entry.getKey(), "?"), place, r, f.def);
+            pay(entry.getKey(), f.names.getOrDefault(entry.getKey(), "?"), place, r, f.payDef);
         }
         broadcast(defeatMessage(f, ranked));
     }
@@ -1259,7 +1364,7 @@ public final class BossService implements Listener {
         if (ranked.isEmpty()) rows.append(T.t("fight.nobody-hurt-it", "<gray>Nobody hurt it.")).append("\n");
         String killer = f.killer == null ? "" : T.t("fight.defeat-killer", " by <white><player></white>", "player", Text.escape(f.killer));
         return T.t("fight.defeat-broadcast", "<line>\n<gold><bold>⚔ BOSS DEFEATED ⚔</bold></gold>\n<boss> <gray>was slain<killer><gray>!\n<rows><line>",
-                "line", line, "boss", f.def.name(), "killer", killer, "rows", rows.toString());
+                "line", line, "boss", f.payDef.name(), "killer", killer, "rows", rows.toString());
     }
 
     private String top(Fight f, List<Map.Entry<UUID, Double>> ranked) {
@@ -1415,6 +1520,14 @@ public final class BossService implements Listener {
     }
 
     private final Map<UUID, ModelRig.Zone> aimed = new ConcurrentHashMap<>();
+
+    /** Nothing about a player who left is kept: their aimed hit zone and their place in boss bars. */
+    @EventHandler
+    public void quit(org.bukkit.event.player.PlayerQuitEvent event) {
+        UUID id = event.getPlayer().getUniqueId();
+        aimed.remove(id);
+        for (Fight f : fights.values()) f.viewers.remove(id);
+    }
 
     /** A player struck one of the model's hit boxes: it becomes a normal attack on the boss with that part's multiplier. */
     private void hitZone(Player player, Entity box) {
