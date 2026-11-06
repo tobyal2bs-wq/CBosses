@@ -27,6 +27,8 @@ printf 'online-mode=false\nlevel-type=minecraft\\:flat\ngenerate-structures=fals
 
 BOSSES=$(python3 -c 'import yaml,sys; print(len(yaml.safe_load(open(sys.argv[1]))["bosses"]))' "$GITHUB_WORKSPACE/src/main/resources/bosses.yml" 2>/dev/null || grep -cE "^  [a-z_]+:$" "$GITHUB_WORKSPACE/src/main/resources/bosses.yml")
 ABILITIES=28
+# Partner bodies (kind: partner) fight alongside their main boss, so the self-test spawns them with it.
+TESTED=$(python3 -c 'import yaml,sys; print(sum(1 for b in yaml.safe_load(open(sys.argv[1]))["bosses"].values() if b.get("kind") != "partner"))' "$GITHUB_WORKSPACE/src/main/resources/bosses.yml")
 echo "Expecting $BOSSES bosses"
 
 touch console
@@ -66,8 +68,8 @@ grep -q "Enabling CBosses" plain.log || { echo "CBosses did not enable"; exit 1;
 grep -qE "CBosses .* enabled with $BOSSES bosses" plain.log || { echo "Not all $BOSSES bosses loaded"; exit 1; }
 grep -qE "Bosses \($BOSSES\)" plain.log || { echo "/cbosses list did not list $BOSSES bosses"; exit 1; }
 grep -q "Winterfest is now on" plain.log || { echo "/cbosses season winter on failed"; exit 1; }
-ATTACKS=$((BOSSES * ABILITIES))
-grep -qE "Boss self-test: $BOSSES/$BOSSES appeared, $ATTACKS attacks ran, $BOSSES drawn with [0-9]+ blocks and [0-9]+ hit zones, [0-9]+ animations, $BOSSES deaths played" plain.log \
+ATTACKS=$((TESTED * ABILITIES))
+grep -qE "Boss self-test: $TESTED/$TESTED appeared, $ATTACKS attacks ran, $TESTED drawn with [0-9]+ blocks and [0-9]+ hit zones, [0-9]+ animations, $TESTED deaths played" plain.log \
   && ! grep -q "Boss self-test.*Problems" plain.log || { echo "Boss self-test failed"; grep -E "self-test|CBosses" plain.log | tail -30; exit 1; }
 grep -E "Boss self-test" plain.log
 grep -qE "Reloaded: $BOSSES bosses" plain.log || { echo "/cbosses reload failed"; exit 1; }
