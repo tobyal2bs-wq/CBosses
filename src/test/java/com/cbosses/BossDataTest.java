@@ -221,4 +221,25 @@ class BossDataTest {
         assertFalse(Seasons.inWindow(MonthDay.of(12, 10), MonthDay.of(1, 5), LocalDate.of(2027, 2, 2)));
         assertTrue(Seasons.inWindow(MonthDay.of(7, 1), MonthDay.of(7, 31), LocalDate.of(2027, 7, 15)));
     }
+
+    @Test
+    void blocksShownInGameMatchTheModel() throws Exception {
+        // what the client draws (translation x rotation x scale) must be the posed cube, or the boss breaks apart
+        for (ModelRig.Model m : models().values()) {
+            for (String an : new String[]{"idle", "walk"}) {
+                var anim = m.anim(an);
+                if (anim == null) continue;
+                org.joml.Matrix4f[] cubes = ModelRig.cubes(m, ModelRig.pose(m, java.util.List.of(new ModelRig.Layer(anim, 0.5f, 1))));
+                for (org.joml.Matrix4f c : cubes) {
+                    var t = com.cbosses.model.BossModel.transformation(c);
+                    org.joml.Matrix4f shown = new org.joml.Matrix4f().translation(t.getTranslation()).rotate(t.getLeftRotation()).scale(t.getScale());
+                    for (int k = 0; k < 8; k++) {
+                        float d = c.transformPosition(k & 1, k >> 1 & 1, k >> 2 & 1, new org.joml.Vector3f())
+                                .distance(shown.transformPosition(k & 1, k >> 1 & 1, k >> 2 & 1, new org.joml.Vector3f()));
+                        assertTrue(d < 0.2f, m.id + " " + an + ": a block is drawn " + d + " blocks off");
+                    }
+                }
+            }
+        }
+    }
 }
