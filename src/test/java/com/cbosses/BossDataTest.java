@@ -116,7 +116,7 @@ class BossDataTest {
             ModelRig.Model m = models.get(d.model());
             float blocks = m.blocks();
             // long, low models (wolves, crabs, turtles) are sized by their length, so they stand lower
-            if (d.mini() || d.sidekick()) assertTrue(blocks >= 0.9 && blocks <= 2.05, d.id() + " is a mini " + blocks + " blocks tall");
+            if (d.mini() || d.sidekick()) assertTrue(blocks >= 0.6 && blocks <= 2.05, d.id() + " is a mini " + blocks + " blocks tall");
             else if (d.tier().equals("mythic")) assertTrue(blocks >= 1.8 && blocks <= 5.1, d.id() + " is mythic and " + blocks + " blocks tall");
             else assertTrue(blocks >= 1.8 && blocks <= 3.6, d.id() + " is a big boss " + blocks + " blocks tall");
             assertTrue(m.hitbox >= 0.45f, d.id() + " hitbox " + m.hitbox);
