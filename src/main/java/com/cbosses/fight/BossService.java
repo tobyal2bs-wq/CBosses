@@ -980,9 +980,8 @@ public final class BossService implements Listener {
         if (shown != f.shownHealth) {
             f.shownHealth = shown;
             if (f.introDone || f.model == null) f.bar.progress((float) Math.max(0, Math.min(1, health / Math.max(1, f.max))));
-            String phase = (f.def.phases().size() > 1 ? " <dark_gray>[" + "◆".repeat(f.phase + 1) + "◇".repeat(f.def.phases().size() - f.phase) + "]" : "")
-                    + (f.stage > 0 ? " <dark_red>" + "✦".repeat(f.stage) : "");
-            f.bar.name(Text.mm(f.def.name() + " <gray>❤ <white>" + String.format(Locale.ROOT, "%,d", shown) + "<gray>/" + String.format(Locale.ROOT, "%,d", Math.round(f.max * f.ratio)) + phase));
+            // the bar shows only the name and the health
+            f.bar.name(Text.mm(f.def.name() + " <gray>❤ <white>" + String.format(Locale.ROOT, "%,d", shown) + "<gray>/" + String.format(Locale.ROOT, "%,d", Math.round(f.max * f.ratio))));
         }
         if (!close.isEmpty()) aura(f, loc);
         Player target = null;

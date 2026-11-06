@@ -299,7 +299,7 @@ final class Abilities {
                 if (f.heals < 2 && boss.getHealth() < f.max * 0.35) {
                     f.heals++;
                     boss.setHealth(Math.min(f.max, boss.getHealth() + f.max * 0.12));
-                    Fx.particle(world, Particle.HAPPY_VILLAGER, at.clone().add(0, boss.getHeight() / 2, 0), 60, 1, 1, 1, 0.1, th);
+                    Fx.particle(world, Particle.CLOUD, at.clone().add(0, boss.getHeight() / 2, 0), 60, 1, 1, 1, 0.1, th);
                     Fx.pillar(at, Particle.HEART, th, 6, 1.2);
                     Fx.sound(at, "BLOCK_BEACON_POWER_SELECT", 1.2f, 0.8f);
                     for (Player p : targets) p.sendActionBar(Text.mm(T.t("fight.heals-itself", "<boss> <green>heals itself!", "boss", f.def.name())));

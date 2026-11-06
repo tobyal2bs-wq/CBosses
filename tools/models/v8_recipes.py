@@ -41,7 +41,6 @@ def climb_out(soil="PODZOL", sound="ENTITY_ZOMBIE_AMBIENT", pitch=0.5):
 
 
 SPAWN["rotting_giant"] = climb_out("PODZOL", "ENTITY_ZOMBIE_BREAK_WOODEN_DOOR", 0.5) + [fx(90, "SNEEZE", 60, "ENTITY_ZOMBIE_VILLAGER_CONVERTED", 0.4, y=0.9, spread=2)]
-SPAWN["grave_marshal"] = climb_out("COARSE_DIRT", "ENTITY_SKELETON_AMBIENT", 0.5)
 DEATH["rotting_giant"] = [S("flash", 0, 4, block="lime_concrete"), fx(0, sound="ENTITY_ZOMBIE_DEATH", pitch=0.4), S("anim", 0, 40, name="die_front"),
     S("drop", 22, 14, tilt=60, rand=2, only="armL"), S("drop", 26, 14, tilt=60, rand=2, only="armR"), fx(36, "BLOCK", 200, "ENTITY_GENERIC_BIG_FALL", 0.4, y=0, spread=4, block="MUD"),
     S("swap", 42, block="mud", order="up", stagger=30), S("scale", 70, 24, s=[1.3, 0.05, 1.3]), fx(74, "SNEEZE", 80, "BLOCK_MUD_BREAK", 0.5, y=0.1, spread=3), gone(94, 12)]

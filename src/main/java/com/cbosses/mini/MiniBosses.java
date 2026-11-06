@@ -254,7 +254,7 @@ public final class MiniBosses implements Listener {
                     double phase = (System.currentTimeMillis() / 500L % 12) * Math.PI / 6;
                     for (int k = 0; k < 12; k++) {
                         double a = phase + k * Math.PI / 6;
-                        p.spawnParticle(s.enabled ? Particle.HAPPY_VILLAGER : Particle.SMOKE,
+                        p.spawnParticle(s.enabled ? Particle.END_ROD : Particle.SMOKE,
                                 l.getX() + Math.cos(a) * s.radius, l.getY(), l.getZ() + Math.sin(a) * s.radius, 1, 0, 0, 0, 0);
                     }
                 }

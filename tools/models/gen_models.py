@@ -1,3 +1,4 @@
+import os
 """Builds models.json from the boss modules: the 25 general bosses, the seasonal ones, the chapter bosses and
 the legends. Every model gets its elbows and hit zones, its small pieces are tagged so low detail can drop
 them, and its own opening and death from v2_recipes. Checks that every step points at real blocks and
@@ -143,6 +144,33 @@ def check(m, j, steps, what):
 out = {"version": 2, "rigs": anims.RIGS, "models": {}}
 used, problems = set(), []
 SPAWN, DEATH = roster.recipes()
+
+# ---- one clean entrance for every boss: the whole model grows in at once (no blocks flying in one by one,
+# no rising out of the ground), with a burst in its theme's colours and its own roar. Only the zombie climbs out.
+CLIMBERS = {"rotting_giant"}
+try:
+    import yaml as _yaml
+    _THEMES = {k: v.get("theme", "earth") for k, v in _yaml.safe_load(open(os.path.join(os.path.dirname(__file__), "..", "..", "src", "main", "resources", "bosses.yml")))["bosses"].items()}
+except Exception:
+    _THEMES = {}
+_BURST = {"fire": "FLAME", "frost": "SNOWFLAKE", "soul": "SOUL_FIRE_FLAME", "nature": "CHERRY_LEAVES", "water": "SPLASH", "storm": "ELECTRIC_SPARK",
+          "gold": "WAX_ON", "toxic": "ITEM_SLIME", "blood": "CRIMSON_SPORE", "void": "PORTAL", "witch": "WITCH", "sculk": "SCULK_SOUL",
+          "wither": "SMOKE", "candy": "CHERRY_LEAVES", "holiday": "SNOWFLAKE", "pumpkin": "FLAME", "feather": "CLOUD", "wind": "CLOUD",
+          "earth": "CLOUD", "iron": "CLOUD", "bone": "CLOUD", "sand": "CLOUD"}
+
+
+def entrance(id, old):
+    sound = next((st["sound"] for st in old if st.get("op") == "fx" and st.get("sound")), "ENTITY_EVOKER_PREPARE_SUMMON")
+    pitch = next((st.get("pitch", 1.0) for st in old if st.get("op") == "fx" and st.get("sound")), 1.0)
+    roar = next((st["name"] for st in old if st.get("op") == "anim" and st.get("name") not in ("walk",)), None)
+    p = _BURST.get(_THEMES.get(id, "earth"), "CLOUD")
+    return [{"op": "shrink", "at": 0, "s": 0},
+            {"op": "fx", "at": 0, "y": 0.5, "spread": 1.2, "particle": p, "count": 40, "sound": sound, "pitch": pitch, "ring": 2},
+            {"op": "pose", "at": 2, "dur": 12},
+            {"op": "fx", "at": 10, "y": 0.8, "spread": 1.0, "particle": p, "count": 30}] + \
+           ([{"op": "anim", "at": 16, "dur": 24, "name": roar}] if roar else [])
+
+
 for id, fn in roster.builders().items():
     m = fn()
     if m.rig in ("biped", "float") and not getattr(m, "no_elbows", False):
@@ -158,6 +186,7 @@ for id, fn in roster.builders().items():
         continue
     fixo = lambda s: dict(s, **{f: (s[f][0] + powder(s[f][1:]) if s[f].startswith("!") else powder(s[f])) for f in ("only",) if isinstance(s.get(f), str) and s[f] and not getattr(m, "flat", False) and powder(s[f].lstrip("!")) in {base(c["k"]) for c in m.cubes}})
     spawn = [fixo(s) for s in SPAWN[m.id]]
+    if m.id not in CLIMBERS and not m.id.startswith("decor_"): spawn = entrance(m.id, spawn)
     end = max(st["at"] + st.get("dur", 0) for st in spawn)
     spawn.append({"op": "pose", "at": end + 2, "dur": 4})   # whatever the opening did, it ends in the model's own shape
     j["spawn"], j["death"] = spawn, [fixo(s) for s in DEATH[m.id]]
