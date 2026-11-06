@@ -168,12 +168,14 @@ public final class BossService implements Listener {
             case "medium" -> 1;
             default -> 2;
         };
+        Map<String, ModelRig.Model> loaded = new java.util.HashMap<>();
         try (var in = plugin.getResource("models.json")) {
-            models = in == null ? Map.of() : ModelRig.load(new InputStreamReader(in, StandardCharsets.UTF_8));
+            if (in != null) loaded.putAll(ModelRig.load(new InputStreamReader(in, StandardCharsets.UTF_8)));
         } catch (IOException | RuntimeException e) {
-            models = Map.of();
             plugin.getLogger().warning("Could not read the boss models, bosses use plain mobs: " + e);
         }
+        loadModelFolder(loaded);
+        models = loaded;
         YamlConfiguration yaml = YamlConfiguration.loadConfiguration(arenasFile);
         arenas.clear();
         var section = yaml.getConfigurationSection("arenas");
@@ -230,6 +232,37 @@ public final class BossService implements Listener {
     public BossDef def(String id) { return id == null ? null : defs.get(id.toLowerCase(Locale.ROOT)); }
     double damageMultiplier() { return Math.max(0, plugin.getConfig().getDouble("fight.damage-multiplier", 1)); }
     boolean introDarkness() { return plugin.getConfig().getBoolean("effects.intro-darkness", true); }
+
+    /**
+     * Models in plugins/CBosses/models/*.json (same format as the jar's models.json) replace or add to the
+     * built-in ones by id. The folder is never touched by an update, so edited models survive a new jar,
+     * and player progress lives in its own files (chapters.yml, minis.yml), so nothing is lost either way.
+     */
+    private void loadModelFolder(Map<String, ModelRig.Model> models) {
+        File dir = new File(plugin.getDataFolder(), "models");
+        if (!dir.isDirectory() && dir.mkdirs()) {
+            try {
+                java.nio.file.Files.writeString(new File(dir, "README.txt").toPath(), String.join("\n",
+                        "Put model files here to change boss models without touching the jar.",
+                        "Each .json file uses the same format as models.json inside the jar (copy it out of the jar to start).",
+                        "A model here replaces the built-in model with the same id; new ids add new models.",
+                        "Updating the plugin never changes this folder, and no player progress is stored in it.",
+                        "Run /cbosses reload after changing a file.", ""));
+            } catch (IOException ignored) { }
+        }
+        File[] files = dir.listFiles((d, n) -> n.toLowerCase(Locale.ROOT).endsWith(".json"));
+        if (files == null) return;
+        java.util.Arrays.sort(files);
+        for (File f : files) {
+            try (var r = java.nio.file.Files.newBufferedReader(f.toPath(), StandardCharsets.UTF_8)) {
+                var extra = ModelRig.load(r);
+                models.putAll(extra);
+                plugin.getLogger().info("Loaded " + extra.size() + " boss model(s) from models/" + f.getName());
+            } catch (IOException | RuntimeException e) {
+                plugin.getLogger().warning("Could not read models/" + f.getName() + ": " + e.getMessage());
+            }
+        }
+    }
 
     /** A model from models.json by id, or null. */
     public ModelRig.Model model(String id) { return id == null ? null : models.get(id.toLowerCase(Locale.ROOT)); }

@@ -70,7 +70,8 @@ class BossDataTest {
             int n = fm.cubes.size();
             // only one face is shown at a time, so the spare faces don't count
             if (fm.faceOf != null) for (String f : fm.faceOf) if (f != null && !f.equals("idle")) n--;
-            if (d.mini()) assertTrue(n >= 25 && n <= 200, d.id() + " is a mini boss with " + n + " blocks");
+            if (d.mini()) assertTrue(n >= 25 && n <= 300, d.id() + " is a mini boss with " + n + " blocks");
+            else if (d.chapterBoss() && d.chapter() >= 4) assertTrue(n >= 150 && n <= 300, d.id() + " is a rebuilt chapter boss with " + n + " blocks");
             else if (d.chapterBoss()) assertTrue(n >= 70 && n <= 150, d.id() + " is a chapter boss with " + n + " blocks");
             else if (d.seasonal()) assertTrue(n >= 60 && n <= 300, d.id() + " is a painted seasonal boss with " + n + " blocks");
             else if (!d.id().equals("grand_augur")) assertTrue(n >= 150, d.id() + " has only " + n + " blocks");
@@ -104,6 +105,21 @@ class BossDataTest {
             else if (!d.chapterBoss()) assertEquals(5000, d.health(), 0.01, d.id());
         }
         for (String id : new String[]{"the_unmaker", "withered_tyrant", "ender_wyrm", "gale_sovereign", "the_listener"}) assertEquals("mythic", defs.get(id).tier(), id);
+    }
+
+    @Test
+    void rebuiltBossesAreTexturedAndAlive() throws Exception {
+        var models = models();
+        for (String id : new String[]{"gnome_brothers", "moss_spirit", "cyclops_ogre", "grubnose", "orc_bruiser", "mudclub", "ugor",
+                "snapjaw", "boo_twins", "mossling", "cluck_rider", "angry_goose"}) {
+            ModelRig.Model m = models.get(id);
+            assertNotNull(m, id);
+            int n = m.cubes.size();
+            assertTrue(n >= 150 && n <= 300, id + " has " + n + " blocks");
+            long kinds = m.cubes.stream().map(ModelRig.Cube::base).distinct().count();
+            assertTrue(kinds >= 6, id + " uses only " + kinds + " kinds of block");
+            assertNotNull(m.anim("idle"), id + " idle");
+        }
     }
 
     @Test

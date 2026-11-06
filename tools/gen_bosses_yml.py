@@ -15,6 +15,7 @@ import roster
 for mod in roster.MODULES:
     importlib.import_module(mod)
 import v9_minis
+import v11_new
 DOCS = {f.__name__: " ".join((f.__doc__ or "").split()) for f in _m.MODELS}
 MODELS = json.load(open(os.path.join(ROOT, "src/main/resources/models.json")))["models"]
 YML = os.path.join(ROOT, "src/main/resources/bosses.yml")
@@ -137,8 +138,14 @@ NEW.update({
 })
 for _id, _i in v9_minis.INFO.items():
     NEW[_id] = dict(name=_i["name"], title=_i["title"], entity=_i["entity"], health=3000, damage=8, armor=4, bar=_i["bar"], theme=_i["theme"],
+                    movement=_i.get("movement", "walk"),
                     minion=_i["minion"], minions=2 if _i["minion"] else 0, ability_seconds=6, phases=[0.5], hpp=0.15,
                     money=15000, top_money=45000, items=["DIAMOND 1", "GOLD_INGOT 8", "EXPERIENCE_BOTTLE 8"], top_items=["GOLDEN_APPLE 2"])
+    EXTRA[_id] = _i["extra"]
+
+for _id, _i in v11_new.CHAPTER_INFO.items():
+    NEW[_id] = dict(name=_i["name"], title=_i["title"], entity=_i["entity"], health=1000, damage=9, armor=8, bar=_i["bar"], theme=_i["theme"],
+                    minion=_i["minion"], minions=2 if _i["minion"] else 0, money=_i["money"], top_money=0, items=_i["items"], top_items=[])
     EXTRA[_id] = _i["extra"]
 
 

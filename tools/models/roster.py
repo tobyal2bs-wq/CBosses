@@ -4,7 +4,7 @@ import importlib
 import models
 
 MODULES = ["v2_general", "v2_seasonal", "v2_chapters", "v2_legends", "v3_general", "v3_mythic", "v3_seasonal",
-           "v4_normal", "v4_chapters", "v4_seasonal", "v5_normal", "v5_mythic", "v6_originals", "v7_bigs", "v8_pumpkins", "v9_minis", "v10_fixes"]
+           "v4_normal", "v4_chapters", "v4_seasonal", "v5_normal", "v5_mythic", "v6_originals", "v7_bigs", "v8_pumpkins", "v9_minis", "v10_fixes", "v11_new"]
 
 # the weekly rotation: the first 25 bosses, then the new ones drawn from the user's pictures
 GENERAL = ["slagheart", "warlord_gruk", "grand_augur", "crimson_ronin", "thunderback", "gorehorn", "abyssal_eye", "overgrowth",
@@ -15,7 +15,7 @@ GENERAL = ["slagheart", "warlord_gruk", "grand_augur", "crimson_ronin", "thunder
 MYTHIC = ["the_listener", "withered_tyrant", "ender_wyrm", "gale_sovereign", "the_unmaker"]
 SEASONAL = {"winter": ["killer_claus", "frostbottom", "old_man_winter"], "summer": ["sunscorch", "admiral_pinchworth", "brain_freeze"],
             "spring": ["clucksworth", "killer_bunny", "cocoa_colossus"], "halloween": ["gourd_king", "headless_horseman", "hexmother"]}
-CHAPTERS = ["brakka", "gate_shade", "oakheart", "vault_mimic", "crypt_knight", "iron_tusk", "reef_hulk", "ember_knight", "choirmaster", "sculk_herald"]
+CHAPTERS = ["brakka", "gate_shade", "oakheart", "gnome_brothers", "moss_spirit", "cyclops_ogre", "grubnose", "orc_bruiser", "mudclub", "ugor"]
 DECOR = ["decor_pumpkin_tall", "decor_pumpkin_flat", "decor_pumpkin_cube"]
 
 
@@ -42,9 +42,9 @@ def builders():
 
 
 def recipes():
-    import v2_recipes, v4_recipes, v8_recipes, v9_minis
+    import v2_recipes, v4_recipes, v8_recipes, v9_minis, v11_new
     spawn, death = dict(v2_recipes.SPAWN), dict(v2_recipes.DEATH)
-    for r in (v4_recipes, v8_recipes, v9_minis):
+    for r in (v4_recipes, v8_recipes, v9_minis, v11_new):
         spawn.update(r.SPAWN)
         death.update(r.DEATH)
     return spawn, death

@@ -140,3 +140,17 @@ P.update({
  "cherry_planks": ("planks", "#e2b2ac", "#cf9b95"), "stripped_birch_log": ("log", "#c4b07b", "#b29f6b"), "stripped_jungle_wood": ("log", "#ab8448", "#97723c"),
  "black_concrete_powder": ("noise", "#191a1f", "#25262b"), "white_stained_glass": ("glass", "#ffffff", "#e8e8e8"),
 })
+
+# concrete powder: the speckled twin of every concrete, used for skin and cloth so faces show pixel texture in game
+P.update({c + "_concrete_powder": ("noise", a, b) for c, a, b in (
+    ("white", "#e2e4e4", "#f2f4f4"), ("orange", "#e3831f", "#d0741a"), ("magenta", "#c053b9", "#ad47a6"), ("light_blue", "#4ab4d5", "#3ea2c2"),
+    ("yellow", "#e8c736", "#d6b52c"), ("lime", "#7dbd29", "#6eab22"), ("pink", "#e59ab5", "#d88aa6"), ("gray", "#4c5154", "#41464a"),
+    ("light_gray", "#9a9a94", "#8b8b85"), ("cyan", "#24939d", "#1e838c"), ("purple", "#8337b1", "#752fa0"), ("blue", "#4649a6", "#3c3f95"),
+    ("brown", "#7d5435", "#6e492e"), ("green", "#61772c", "#556a26"), ("red", "#a83632", "#962d2a"), ("black", "#191a1f", "#25262b"))})
+P.update({
+ "mud": ("noise", "#3c3a3d", "#333134"), "coarse_dirt": ("noise", "#77553b", "#5f4330"), "rooted_dirt": ("noise", "#90674c", "#7a5640"),
+ "diorite": ("noise", "#bcbcbc", "#d4d4d4"), "mud_bricks": ("bricks", "#89684f", "#7a5c45"), "andesite": ("noise", "#888888", "#7a7a7a"),
+ "granite": ("noise", "#956755", "#a87a68"), "dripstone_block": ("noise", "#866b5c", "#77604f"), "smooth_stone": ("flat", "#9e9e9e", "#8e8e8e"),
+ "stripped_oak_log": ("log", "#b1904f", "#9c7e44"), "stripped_spruce_log": ("log", "#73593a", "#664e33"), "bone_block": ("noise", "#e1ddc9", "#d0cbb4"),
+ "pale_moss_block": ("noise", "#6b7365", "#5e665a"), "azalea_leaves": ("noise", "#5a7a2a", "#7a9a3a"), "nether_wart_block": ("noise", "#7b0000", "#6a0000"),
+})

@@ -84,13 +84,31 @@ public final class BossCommand implements CommandExecutor, TabCompleter {
                 else s().info(sender);
             }
             case "chapter" -> {
+                String act = args.length > 1 ? args[1].toLowerCase(Locale.ROOT) : "";
+                if (act.equals("bosses") || act.equals("list")) { plugin.chapters().list(sender); return true; }
+                if (act.equals("set") && args.length >= 4) {
+                    try {
+                        int n = Integer.parseInt(args[2]);
+                        if (plugin.chapters().set(n, args[3])) { plugin.send(sender, T.t("command.chapter-set", "<green>Chapter <n> boss set. Player progress is kept.", "n", n)); plugin.chapters().list(sender); }
+                        else plugin.send(sender, T.t("command.no-boss", "<red>No boss <input>", "input", Text.escape(args[3])));
+                    } catch (NumberFormatException e) { plugin.send(sender, T.t("command.chapter-must-be-a-number", "<red>Chapter must be a number.")); }
+                    return true;
+                }
+                if (act.equals("swap") && args.length >= 4) {
+                    try {
+                        int a = Integer.parseInt(args[2]), b = Integer.parseInt(args[3]);
+                        if (plugin.chapters().swap(a, b)) { plugin.send(sender, T.t("command.chapter-swapped", "<green>Swapped the bosses of chapters <a> and <b>. Player progress is kept.", "a", a, "b", b)); plugin.chapters().list(sender); }
+                        else plugin.send(sender, T.t("command.chapter-swap-missing", "<red>Both chapters need a boss."));
+                    } catch (NumberFormatException e) { plugin.send(sender, T.t("command.chapter-must-be-a-number", "<red>Chapter must be a number.")); }
+                    return true;
+                }
                 if (args.length >= 3 && args[1].equalsIgnoreCase("reset")) {
                     var target = Bukkit.getOfflinePlayer(args[2]);
                     plugin.chapters().reset(target.getUniqueId());
                     plugin.send(sender, T.t("command.chapter-bosses-reset-for", "<gray>Chapter bosses reset for <input2>.", "input2", Text.escape(args[2])));
                     return true;
                 }
-                if (args.length < 3) { plugin.send(sender, T.t("command.chapter-reset-retry", "<yellow>/<label> chapter <player> <chapter> <gray>| reset <player> | retry", "label", label)); return true; }
+                if (args.length < 3) { plugin.send(sender, T.t("command.chapter-reset-retry", "<yellow>/<label> chapter <player> <chapter> <gray>| bosses | set <chapter> <boss|default> | swap <a> <b> | reset <player> | retry", "label", label)); return true; }
                 Player target = Bukkit.getPlayerExact(args[1]);
                 int n;
                 try { n = Integer.parseInt(args[2]); } catch (NumberFormatException e) { plugin.send(sender, T.t("command.chapter-must-be-a-number", "<red>Chapter must be a number.")); return true; }
@@ -217,7 +235,7 @@ public final class BossCommand implements CommandExecutor, TabCompleter {
             case "minis", "mini" -> filter(List.of("menu", "info", "add", "remove", "show", "mode", "every", "next", "now", "on", "off"), args[1]);
             case "settings", "config" -> filter(List.of("effects", "schedule", "fight", "chapters", "seasons", "set"), args[1]);
             case "season", "seasons" -> filter(plugin.seasons().ids(), args[1]);
-            case "chapter" -> { List<String> out = new ArrayList<>(List.of("reset", "retry")); for (Player p : Bukkit.getOnlinePlayers()) out.add(p.getName()); yield filter(out, args[1]); }
+            case "chapter" -> { List<String> out = new ArrayList<>(List.of("reset", "retry", "bosses", "set", "swap")); for (Player p : Bukkit.getOnlinePlayers()) out.add(p.getName()); yield filter(out, args[1]); }
             default -> List.of();
         };
         if (args.length == 3 && (sub.equals("settings") || sub.equals("config")) && args[1].equalsIgnoreCase("set")) {

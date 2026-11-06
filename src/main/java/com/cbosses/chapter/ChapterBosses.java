@@ -147,7 +147,9 @@ public final class ChapterBosses implements Listener {
     }
 
     public void won(UUID player, BossDef def, List<Map.Entry<UUID, Double>> ranked) {
-        beaten.computeIfAbsent(player, k -> ConcurrentHashMap.newKeySet()).add(def.chapter());
+        // progress is kept by chapter number, so swapping which boss guards a chapter never loses it
+        int chapter = pending.getOrDefault(player, def.chapter());
+        beaten.computeIfAbsent(player, k -> ConcurrentHashMap.newKeySet()).add(chapter);
         pending.remove(player);
         save();
         Player p = Bukkit.getPlayer(player);
@@ -168,7 +170,7 @@ public final class ChapterBosses implements Listener {
     }
 
     public void failed(UUID player, BossDef def, String reason) {
-        if (!reason.equals("shutdown") && !reason.equals("stopped")) { pending.put(player, def.chapter()); save(); }
+        if (!reason.equals("shutdown") && !reason.equals("stopped") && !pending.containsKey(player) && def.chapter() > 0) { pending.put(player, def.chapter()); save(); }
     }
 
     public boolean retry(Player player) {
@@ -178,4 +180,37 @@ public final class ChapterBosses implements Listener {
     }
 
     public void reset(UUID player) { beaten.remove(player); pending.remove(player); save(); }
+
+    /** Which boss guards each chapter (1 to 10 and any chapter set in the config). */
+    public void list(org.bukkit.command.CommandSender to) {
+        java.util.TreeSet<Integer> chapters = new java.util.TreeSet<>();
+        for (BossDef d : plugin.service().defs().values()) if (d.chapterBoss()) chapters.add(d.chapter());
+        var sec = plugin.getConfig().getConfigurationSection("chapter-bosses.bosses");
+        if (sec != null) for (String k : sec.getKeys(false)) try { chapters.add(Integer.parseInt(k)); } catch (NumberFormatException ignored) { }
+        plugin.send(to, T.t("chapter.list-head", "<gold>Chapter bosses <gray>(swap with /cbosses chapter swap <a> <b>):"));
+        for (int c : chapters) {
+            BossDef d = bossFor(c);
+            String set = plugin.getConfig().getString("chapter-bosses.bosses." + c, "");
+            plugin.send(to, T.t("chapter.list-line", "<gray>  <white><n></white>: <boss> <dark_gray><how>", "n", c,
+                    "boss", d == null ? "<red>none" : d.name() + " <dark_gray>(" + d.id() + ")", "how", set == null || set.isBlank() ? "" : "set in config"));
+        }
+    }
+
+    /** Puts a boss on a chapter ("default" goes back to bosses.yml). Player progress is by chapter, so nothing is lost. */
+    public boolean set(int chapter, String boss) {
+        if (!boss.equalsIgnoreCase("default") && !boss.equalsIgnoreCase("none") && plugin.service().def(boss) == null) return false;
+        plugin.getConfig().set("chapter-bosses.bosses." + chapter, boss.equalsIgnoreCase("default") ? null : boss);
+        plugin.saveConfig();
+        return true;
+    }
+
+    /** Swaps the bosses of two chapters. */
+    public boolean swap(int a, int b) {
+        BossDef da = bossFor(a), db = bossFor(b);
+        if (da == null || db == null) return false;
+        plugin.getConfig().set("chapter-bosses.bosses." + a, db.id());
+        plugin.getConfig().set("chapter-bosses.bosses." + b, da.id());
+        plugin.saveConfig();
+        return true;
+    }
 }

@@ -27,6 +27,8 @@ text:
     in: "<boss> <gray>in <white><left>"
     is-coming-for-you-in: "<gold>⚔ <boss> <gray>is coming for you in <white><seconds></white> seconds. Get ready!"
     is-still-waiting-for-you: "<gold><boss> <gray>is still waiting for you. <yellow>/cbosses chapter retry</yellow> when you are ready."
+    list-head: "<gold>Chapter bosses <gray>(swap with /cbosses chapter swap <a> <b>):"
+    list-line: "<gray>  <white><n></white>: <boss> <dark_gray><how>"
     the-chapter-boss-could-not: "<gray>The chapter boss could not appear here. <yellow>/cbosses chapter retry</yellow> somewhere open."
   # commands
   command:
@@ -35,7 +37,10 @@ text:
     chapter-boss-coming: "<green>Chapter <n> boss is coming for <player>."
     chapter-bosses-reset-for: "<gray>Chapter bosses reset for <input2>."
     chapter-must-be-a-number: "<red>Chapter must be a number."
-    chapter-reset-retry: "<yellow>/<label> chapter <player> <chapter> <gray>| reset <player> | retry"
+    chapter-reset-retry: "<yellow>/<label> chapter <player> <chapter> <gray>| bosses | set <chapter> <boss|default> | swap <a> <b> | reset <player> | retry"
+    chapter-set: "<green>Chapter <n> boss set. Player progress is kept."
+    chapter-swap-missing: "<red>Both chapters need a boss."
+    chapter-swapped: "<green>Swapped the bosses of chapters <a> and <b>. Player progress is kept."
     every-boss-was-sent-away: "<gray>Every boss was sent away."
     finale-already: "<gray>The finale is already on its way, or its boss is missing."
     finale-reset: "<gray>Finale progress reset: every legend must be beaten again."

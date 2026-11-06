@@ -64,6 +64,23 @@ def fight_attacks(m):
     return out
 
 
+KEEP_FLAT = {"black_concrete"}
+
+
+def powder(k):
+    """Flat concrete becomes its speckled powder twin, so every face shows pixel texture in game."""
+    b = base(k)
+    if b.endswith("_concrete") and b not in KEEP_FLAT:
+        return b + "_powder" + k[len(b):]
+    return k
+
+
+def texturize(m):
+    if getattr(m, "flat", False): return
+    for c in m.cubes:
+        if not c.get("l"): c["k"] = powder(c["k"])
+
+
 def base(k):
     return k.split("[")[0]
 
@@ -93,15 +110,17 @@ for id, fn in roster.builders().items():
     if m.rig in ("biped", "quad"): m.knees()
     m.zones()
     tag(m)
+    texturize(m)
     m.attacks = fight_attacks(m)
     j = m.json()
     if m.id not in SPAWN or m.id not in DEATH:
         problems.append(f"{m.id}: no opening or death written")
         continue
-    spawn = list(SPAWN[m.id])
+    fixo = lambda s: dict(s, **{f: (s[f][0] + powder(s[f][1:]) if s[f].startswith("!") else powder(s[f])) for f in ("only",) if isinstance(s.get(f), str) and s[f] and not getattr(m, "flat", False) and powder(s[f].lstrip("!")) in {base(c["k"]) for c in m.cubes}})
+    spawn = [fixo(s) for s in SPAWN[m.id]]
     end = max(st["at"] + st.get("dur", 0) for st in spawn)
     spawn.append({"op": "pose", "at": end + 2, "dur": 4})   # whatever the opening did, it ends in the model's own shape
-    j["spawn"], j["death"] = spawn, DEATH[m.id]
+    j["spawn"], j["death"] = spawn, [fixo(s) for s in DEATH[m.id]]
     problems += [f"{m.id}: {p}" for p in check(m, j, j["spawn"], "spawn") + check(m, j, j["death"], "death")]
     if not any(s["op"] == "flash" for s in j["death"]):
         problems.append(f"{m.id}: death has no flash")
