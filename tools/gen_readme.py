@@ -48,7 +48,7 @@ md = f"""# CBosses
 
 **CBosses** adds {len(b)} animated block-model bosses to Paper and Folia servers. Every boss is built from {counts[0]} to
 {counts[-1]} display blocks, has its own entrance, its own attacks and its own death, and runs on a schedule, on a
-season, right after a player finishes a CQuests chapter, or as the finale once the four legends have fallen. It
+season, right after a player finishes a CQuests chapter, or as the finale once both legends have fallen. It
 works on its own and alongside **CQuests**, and it has full **WorldGuard** support.
 
 ### [Open the 3D boss viewer]({VIEWER})
@@ -67,7 +67,7 @@ also in this repo at [`docs/viewer.html`](docs/viewer.html) (download and open i
   chest until it stands up, and Clucksworth hatches out of a painted Easter egg.
 - **A different death for every boss.** Each death has a flash and its own story: the Horseman's pumpkin is thrown, the
   Pharaoh pours away as sand, Fenrir freezes and shatters, the Void Walker is sucked into a point and bursts.
-- **The finale.** Beat the Withered Tyrant, the Ender Wyrm, the Gale Sovereign and The Listener Below and **The Unmaker**
+- **The finale.** Beat the Withered Tyrant and The Listener Below and **The Unmaker**
   wakes: a ten block tall, four-armed titan with a void heart, one great eye and a crown of orbiting shards.
 - **Private chapter bosses.** A chapter boss appears where the player finished their quest and only exists for them:
   nobody else sees it, hears it, bumps into it or gets attacked. No boss ever breaks or places blocks.
@@ -75,9 +75,9 @@ also in this repo at [`docs/viewer.html`](docs/viewer.html) (download and open i
   boss names, titles and descriptions are in `bosses.yml`.
 - **Attacks you can read.** Every ability has its own wind-up pose, effects and impact: slams, charges, dives, beams, meteors,
   spikes, sonic booms, minion waves and more. Flying bosses swoop and dive instead of jumping.
-- **Chapter bosses.** A small, simple boss after every CQuests chapter (1 to 10), each built for its chapter's story.
-- **Legend bosses.** The Listener Below (the Warden), the Withered Tyrant (the Wither), the Ender Wyrm (a flying Ender
-  Dragon) and the Gale Sovereign (the Breeze) are the biggest fights in the plugin.
+- **Chapter bosses.** A small, simple boss after most CQuests chapters (ops can put any boss on any chapter), each built for its chapter's story.
+- **Legend bosses.** The Listener Below (the Warden) and the Withered Tyrant (the Wither) are the biggest
+  fights in the plugin.
 - **Seasonal bosses.** Three each for Halloween, Winter, Easter and Summer, including Killer Claus, Brain Freeze,
   Clucksworth and the Headless Horseman.
 - **25 world bosses.** From the Grand Augur and the Crimson Oni to King Gloop, the slime king.
@@ -98,7 +98,7 @@ and its minions only go after that player. If they lose or leave, it waits for `
 
 ## The finale
 
-When the Withered Tyrant, the Ender Wyrm, the Gale Sovereign and The Listener Below have all been beaten (in any order, by anyone),
+When the Withered Tyrant and The Listener Below have all been beaten (in any order, by anyone),
 the whole server is warned and The Unmaker wakes at the main arena a minute later. `/cbosses finale` shows how far
 the server is, `/cbosses finale wake` starts it now and `/cbosses finale reset` starts over. Change the bosses, the
 delay and the arena under `finale:` in `config.yml`.

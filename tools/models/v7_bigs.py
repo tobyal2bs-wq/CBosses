@@ -486,12 +486,11 @@ def rotting_giant():
             s.draw(sl, f, 0, 0, ["lllllll", ".......", "..g....", ".......", ".....g.", "CCCCCCC", "C.CC.CC"], K)
         s.draw(sl, "top", 0, 0, ["lllllll"] * 7, K)
         pb(m, s, arm, sl, (x - 3.5, 29, -3.5))
-        ar = s.box(6, 22, 6, SK)
+        # long arms that hang almost to the ground, ending in plain fists (no fingers)
+        ar = s.box(6, 28, 6, SK)
         for f in ("front", "back", "left", "right"):
-            s.rect(ar, f, 1, 3, 1, 4, SG); s.rect(ar, f, 4, 9, 1, 5, SG); s.rect(ar, f, 0, 19, 6, 3, SD)
-        pb(m, s, arm, ar, (x - 3, 8, -3))
-        for t in (-1.8, 0, 1.8):
-            m.c(arm, SD, (x + t, 7.2, 2), (1.2, 2.4, 1.4))
+            s.rect(ar, f, 1, 3, 1, 4, SG); s.rect(ar, f, 4, 11, 1, 5, SG); s.rect(ar, f, 0, 24, 6, 4, SD)
+        pb(m, s, arm, ar, (x - 3, 2, -3))
 
     # a dark rot drip down the chest and a few flies (lit specks of black)
     for i, (x, y, z) in enumerate(((-7, 49, 4), (6, 52, -3), (0, 54, 5), (-3, 47, -6), (8, 46, 2))):

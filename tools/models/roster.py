@@ -11,11 +11,11 @@ GENERAL = ["slagheart", "warlord_gruk", "grand_augur", "crimson_ronin", "thunder
            "prism_sentinel", "tiki_warden", "broodmother", "ironhide_behemoth", "fenrir", "tide_tyrant", "void_walker",
            "storm_herald", "pharaoh", "executioner", "ember_queen", "gravelord", "captain_brine", "keywarden", "bloodtusk", "king_gloop",
            "clockwork_colossus", "mossback", "old_wizard", "hollow_mage", "horned_brute", "rotting_giant", "dusk_scorpion",
-           "grave_marshal", "mayor_grumble", "shulker_matriarch", "old_ironroot", "frost_yeti", "cinder_imp", "bog_orc"]
+           "grave_marshal", "mayor_grumble", "old_ironroot", "frost_yeti", "bog_orc"]
 MYTHIC = ["the_listener", "withered_tyrant", "the_unmaker"]
 SEASONAL = {"winter": ["killer_claus", "frostbottom", "old_man_winter"], "summer": ["sunscorch", "admiral_pinchworth", "brain_freeze"],
             "spring": ["clucksworth", "killer_bunny", "cocoa_colossus"], "halloween": ["gourd_king", "headless_horseman", "hexmother"]}
-CHAPTERS = ["brakka", "gate_shade", "oakheart", "gnome_brothers", "moss_spirit", "cyclops_ogre", "grubnose", "orc_bruiser", "mudclub", "ugor"]
+CHAPTERS = ["brakka", "gate_shade", "oakheart", "gnome_brothers", "moss_spirit", "grubnose", "mudclub", "ugor"]
 DECOR = ["decor_pumpkin_tall", "decor_pumpkin_flat", "decor_pumpkin_cube"]
 
 

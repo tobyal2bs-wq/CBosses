@@ -646,7 +646,10 @@ def gate_shade():
 
 # ---------------------------------------------------------------------------- minis grown into big bosses
 drop("frost_yeti"); drop("cinder_imp"); drop("bog_orc"); drop("cluck_rider")
-REMOVED = ["cluck_rider", "hollow_king", "ender_wyrm", "gale_sovereign"]
+REMOVED = ["cluck_rider", "hollow_king", "ender_wyrm", "gale_sovereign", "ghost_jelly", "orc_bruiser", "cyclops_ogre", "cinder_imp",
+           "boo_twins", "shulker_matriarch", "pink_burrower"]
+for _r in ("ghost_jelly", "pink_burrower", "boo_twins"): drop(_r)
+BIG_INFO.pop("cinder_imp", None)
 BIG_INFO.pop("hollow_king", None)
 
 
@@ -775,10 +778,16 @@ def bog_orc():
 def remake(id, recipe=None, **change):
     """A new model for an existing mini; its name, attacks and opening stay unless changed here."""
     def deco(fn):
-        # 1.3.1: the old minis came back (the redraws were too busy); the revision brings back their old names
         REVISED.add(id)
-        return fn
+        # 1.3.3: only the minis the user named get the clean redraw; the rest keep their older look
+        if id not in FIX: return fn
+        if recipe: v9_minis.SPAWN[id], v9_minis.DEATH[id] = recipe
+        if change: v9_minis.INFO[id].update(change)
+        return model(fn)
     return deco
+
+
+FIX = {"hay_golem", "moss_imp", "gilded_mimic", "mossling", "garden_gnome", "snapjaw", "stumpy"}
 
 
 def fk(skin, eye="black_concrete", brow=None, mouth="black_concrete", tooth="white_concrete", nose=None, cheek="pink_concrete", glow="yellow_concrete"):

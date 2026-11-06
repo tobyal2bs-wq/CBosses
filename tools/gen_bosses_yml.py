@@ -210,7 +210,7 @@ def entry(id, kind, season=None, chapter=None):
     if id == "gale_sovereign":
         d["theme"] = "wind"
     if id == "the_unmaker":
-        d["description"] = describe(id).replace("THE UNMAKER, the finale.", "The finale. Wakes once the Withered Tyrant, the Ender Wyrm, the Gale Sovereign and The Listener Below have all been beaten.")
+        d["description"] = describe(id).replace("THE UNMAKER, the finale.", "The finale. Wakes once the Withered Tyrant and The Listener Below have all been beaten.")
     else:
         d["description"] = describe(id)
     if id in MINION and not d.get("minion"):

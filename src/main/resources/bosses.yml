@@ -880,32 +880,6 @@ bosses:
       commands: []
       top-commands: []
     description: "The village mayor, now a person: the big villager head with the unibrow, green eyes and the long nose, a green coat with gold buttons and a red sash, a gold chain of office with a big emerald, a black top hat with a red band, a gavel in his hand, grey trousers and polished shoes planted flat."
-  shulker_matriarch:
-    name: "<gradient:#6a1b9a:#f3e5f5><bold>The Shulker Matriarch</bold></gradient>"
-    title: "Mother of the End City"
-    tier: big
-    entity: BLAZE
-    health: 5000
-    damage: 12
-    armor: 8
-    bar: PURPLE
-    theme: void
-    movement: hover
-    fly-height: 2
-    phases: [0.5]
-    minion: ENDERMITE
-    minions: 3
-    ability-seconds: 7
-    abilities: [orbs, levitate, shockwave, dive]
-    health-per-player: 0.25
-    rewards:
-      money: 60000
-      top-money: 180000
-      items: ["SHULKER_SHELL 4", "ENDER_PEARL 16", "DIAMOND 3"]
-      top-items: ["ELYTRA 1"]
-      commands: []
-      top-commands: []
-    description: "The mother of the shulkers, painted properly: a purpur shell with raised plates and dark seams, the lid lifted on her pale yellow head with black eyes, a crown of end rods along the lid, glowing purple runes along the seam, and four small shulkers with their own faces orbiting her."
   old_ironroot:
     revision: 3
     name: "<gradient:#5d4037:#c5e1a5><bold>The Stump Warden</bold></gradient>"
@@ -958,32 +932,6 @@ bosses:
       commands: []
       top-commands: []
     description: "A huge shaggy white yeti hunched forward on long arms, thick fur in white and pale grey, a blue-grey face with a heavy brow, a wide mouth with two fangs, short curled horns, icicles hanging off its shoulders and a fist frozen into a block of ice."
-  cinder_imp:
-    revision: 3
-    name: "<gradient:#8b0000:#ffab40><bold>The Cinder Devil</bold></gradient>"
-    title: "Horned Trouble From Below"
-    tier: big
-    entity: PIGLIN_BRUTE
-    health: 5000
-    damage: 12
-    armor: 8
-    bar: RED
-    theme: fire
-    movement: walk
-    phases: [0.5]
-    minion: BLAZE
-    minions: 3
-    ability-seconds: 6
-    abilities: [fire_ring, leap, meteor, breath]
-    health-per-player: 0.15
-    rewards:
-      money: 60000
-      top-money: 180000
-      items: ["BLAZE_ROD 12", "MAGMA_CREAM 16", "DIAMOND 3"]
-      top-items: ["NETHERITE_SCRAP 1"]
-      commands: []
-      top-commands: []
-    description: "A big red devil with black curling horns, glowing yellow eyes under an angry brow, a toothy grin and a pointed beard, bat wings that flex behind it, goat legs ending in black hooves, a whipping tail with an arrow tip and a black pitchfork with glowing prongs."
   bog_orc:
     revision: 3
     name: "<gradient:#2e7d32:#e0e0e0><bold>Horngut</bold></gradient>"
@@ -1085,7 +1033,7 @@ bosses:
       top-items: ["NETHER_STAR 1"]
       commands: []
       top-commands: []
-    description: "The finale. Wakes once the Withered Tyrant, the Ender Wyrm, the Gale Sovereign and The Listener Below have all been beaten. A floating titan of obsidian armoured in end-stone plates trimmed in gold. One great eye with a purple iris; a crown of eight shards turning over its head; a void heart in a diamond-shaped opening in its chest; four arms: two huge gauntleted fists above, a void blade and an end-crystal orb below; two blade fins on its back; no legs, its body ends in a trailing tail of stone plates over a rune circle on the ground."
+    description: "The finale. Wakes once the Withered Tyrant and The Listener Below have all been beaten. A floating titan of obsidian armoured in end-stone plates trimmed in gold. One great eye with a purple iris; a crown of eight shards turning over its head; a void heart in a diamond-shaped opening in its chest; four arms: two huge gauntleted fists above, a void blade and an end-crystal orb below; two blade fins on its back; no legs, its body ends in a trailing tail of stone plates over a rune circle on the ground."
   # ------------------------------------------------------------ winter
   killer_claus:
     name: "<gradient:#b30000:#ffffff><bold>Killer Claus</bold></gradient>"
@@ -1549,35 +1497,12 @@ bosses:
       commands: []
       top-commands: []
     description: "Picture 2: a squat stone spirit with two faces, glowing blue eyes on its head and a second pair on its chest, moss and grass growing over its shoulders with a white flower, and a gnarled wooden staff wound with moss, set with a red crystal."
-  cyclops_ogre:
-    name: "<gradient:#33691e:#ccff90><bold>Gulp the Cyclops</bold></gradient>"
-    title: "One Eye, Two Fists"
-    chapter: 6
-    entity: ZOMBIE
-    health: 1600
-    damage: 9
-    armor: 8
-    bar: GREEN
-    theme: nature
-    movement: walk
-    phases: [0.5]
-    ability-seconds: 7
-    abilities: [slam, shockwave, charge, roar]
-    health-per-player: 0.25
-    rewards:
-      money: 30000
-      top-money: 0
-      items: ["SLIME_BALL 16", "BONE 16", "DIAMOND 2"]
-      top-items: []
-      commands: []
-      top-commands: []
-    description: "Picture 3: a big green cyclops ogre with one yellow eye, a gaping mouth full of teeth, a horn on its head, green and lime stripes over its body and arms, and a wooden barrel strapped to its fists with bone spikes through it."
   grubnose:
     name: "<gradient:#827717:#ffcc80><bold>Grubnose the Troll</bold></gradient>"
     title: "Under the Old Bridge"
-    chapter: 7
+    chapter: 6
     entity: ZOMBIE
-    health: 1800
+    health: 1600
     damage: 9
     armor: 8
     bar: YELLOW
@@ -1595,37 +1520,12 @@ bosses:
       commands: []
       top-commands: []
     description: "Picture 4: a huge olive-yellow troll, all shoulders and long arms, a bulbous orange nose, a heavy brow over little eyes, a leather loincloth hung with bones, and lumpy mottled skin."
-  orc_bruiser:
-    name: "<gradient:#558b2f:#f5f5f5><bold>Borka the Bruiser</bold></gradient>"
-    title: "Shirt Torn, Tusks Out"
-    chapter: 8
-    entity: VINDICATOR
-    health: 2000
-    damage: 9
-    armor: 8
-    bar: GREEN
-    theme: earth
-    movement: walk
-    phases: [0.5]
-    minion: ZOMBIE
-    minions: 2
-    ability-seconds: 7
-    abilities: [minions, charge, slam, shockwave]
-    health-per-player: 0.25
-    rewards:
-      money: 38000
-      top-money: 0
-      items: ["IRON_INGOT 16", "LEATHER 12", "DIAMOND 2"]
-      top-items: []
-      commands: []
-      top-commands: []
-    description: "Picture 5: a green orc with a heavy square head, mottled moss-green skin, ivory tusks poking up from the jaw, a torn white shirt under a brown leather vest with a rope belt, and brown trousers."
   mudclub:
     name: "<gradient:#3e2723:#9ccc65><bold>Mudclub</bold></gradient>"
     title: "Troll of the Dry Riverbed"
-    chapter: 9
+    chapter: 7
     entity: ZOMBIE
-    health: 2200
+    health: 1800
     damage: 9
     armor: 8
     bar: GREEN
@@ -1646,9 +1546,9 @@ bosses:
   ugor:
     name: "<gradient:#4e342e:#f8bbd0><bold>Ugor</bold></gradient>"
     title: "The Brute of the Last Chapter"
-    chapter: 10
+    chapter: 8
     entity: RAVAGER
-    health: 2500
+    health: 2000
     damage: 9
     armor: 8
     bar: RED
@@ -1797,7 +1697,7 @@ bosses:
       top-items: ["GOLDEN_APPLE 2"]
       commands: []
       top-commands: []
-    description: "A golden treasure chest on stubby legs: a crown of gold studs on the lid, purple gems, a grin full of white teeth inside, and a long red tongue lolling out."
+    description: "A treasure chest that bites: dark wood planks banded with gold, a gold lock plate with a red jewel, a lid that lifts to show rows of white teeth, a long red tongue lolling out and little gold coins spilling round its feet."
   mossling:
     revision: 3
     name: "<gradient:#33691e:#ffcc80><bold>Mossling</bold></gradient>"
@@ -1813,7 +1713,7 @@ bosses:
     movement: walk
     phases: [0.5]
     ability-seconds: 6
-    abilities: [leap, shockwave, slam]
+    abilities: [leap, shockwave]
     health-per-player: 0.15
     rewards:
       money: 15000
@@ -1822,7 +1722,7 @@ bosses:
       top-items: ["GOLDEN_APPLE 2"]
       commands: []
       top-commands: []
-    description: "Picture 11: a round green bird made of moss: a big mottled body that is mostly head, one beady black eye on each side, a brown band and a pale buckle across its belly, stubby wings, and long peach legs ending in wide flat duck feet."
+    description: "A round moss bush that hatched legs: a fat leafy ball with two big shiny black eyes, a little open mouth, a pink flower and a white flower on top, stubby brown legs and leafy arms that wave."
   apple_crab:
     revision: 3
     name: "<gradient:#c62828:#aed581><bold>Applecrab</bold></gradient>"
@@ -1848,33 +1748,6 @@ bosses:
       commands: []
       top-commands: []
     description: "A crab whose shell is a shiny red apple with a stalk and a green leaf, pale pink claws and legs, and two black stalk eyes peeking over the rim."
-  pink_burrower:
-    revision: 3
-    name: "<gradient:#f48fb1:#fce4ec><bold>The Pink Burrower</bold></gradient>"
-    title: "It Came Up Through the Lawn"
-    kind: mini
-    tier: mini
-    entity: SILVERFISH
-    health: 3000
-    damage: 8
-    armor: 4
-    bar: PINK
-    theme: earth
-    movement: walk
-    phases: [0.5]
-    minion: SILVERFISH
-    minions: 2
-    ability-seconds: 6
-    abilities: [minions, quake, charge]
-    health-per-player: 0.15
-    rewards:
-      money: 15000
-      top-money: 45000
-      items: ["DIAMOND 1", "GOLD_INGOT 8", "EXPERIENCE_BOTTLE 8"]
-      top-items: ["GOLDEN_APPLE 2"]
-      commands: []
-      top-commands: []
-    description: "A long pink grub-worm with a blunt face, tiny black eyes, a little smile, soft ridges down its back and four stubby feet; it rears its head up when angry."
   moss_imp:
     revision: 3
     name: "<gradient:#558b2f:#d7ccc8><bold>Moss Imp</bold></gradient>"
@@ -1899,7 +1772,7 @@ bosses:
       top-items: ["GOLDEN_APPLE 2"]
       commands: []
       top-commands: []
-    description: "A tiny wrinkled green creature with enormous pointed ears, big dark eyes with a shine, a few white wisps of hair and a baggy tan robe with a rope belt. It lifts you with its mind."
+    description: "A little old imp grown over with moss: a round green body, leaf ears that flick, two twig horns, a red cap mushroom sprouting from its head, big glowing amber eyes over a toothy grin and a bark loincloth."
   garden_gnome:
     revision: 3
     name: "<gradient:#c62828:#69f0ae><bold>Mister Pebbles</bold></gradient>"
@@ -1915,7 +1788,7 @@ bosses:
     movement: walk
     phases: [0.5]
     ability-seconds: 6
-    abilities: [leap, volley, slam]
+    abilities: [spikes, heal, leap, volley]
     health-per-player: 0.15
     rewards:
       money: 15000
@@ -1924,7 +1797,7 @@ bosses:
       top-items: ["GOLDEN_APPLE 2"]
       commands: []
       top-commands: []
-    description: "Picture 13: a villager gnome with a lumpy red hat, a long nose, bright green eyes, a white beard, a teal shirt and a glowing emerald buckle on his belt."
+    description: "Mister Pebbles, a garden gnome come to life: a tall red pointed hat that flops as he walks, a big white beard, a round pink nose and rosy cheeks, a blue coat with a black belt, brown boots and a tiny shovel."
   angry_goose:
     name: "<gradient:#eceff1:#ff9800><bold>Honkus</bold></gradient>"
     title: "The Goose Who Owns This Bench"
@@ -2024,7 +1897,7 @@ bosses:
       top-items: ["GOLDEN_APPLE 2"]
       commands: []
       top-commands: []
-    description: "Picture 9: a man-eating plant: a green stalk with spiky leaves, a purple flower head that opens on a red mouth full of white teeth, and it sways and snaps without ever moving its roots."
+    description: "A hungry flower rooted in a mossy clump: a thick bending stem in three parts, wide leaves that flap, and a purple-spotted head that splits into a jaw full of white teeth and snaps at anything near."
   cap_brothers:
     revision: 3
     name: "<gradient:#b71c1c:#ffccbc><bold>Toadstool</bold></gradient>"
@@ -2155,31 +2028,6 @@ bosses:
       commands: []
       top-commands: []
     description: "Picture 14: a tall frog standing upright, mottled green all over, bulging eyes on top of a wide head, a pale wide mouth line, a pale belly, and long arms with webbed fingers."
-  ghost_jelly:
-    revision: 3
-    name: "<gradient:#7e57c2:#e1f5fe><bold>Jellyboo</bold></gradient>"
-    title: "The Floating Fright"
-    kind: mini
-    tier: mini
-    entity: VEX
-    health: 3000
-    damage: 8
-    armor: 4
-    bar: PURPLE
-    theme: void
-    movement: walk
-    phases: [0.5]
-    ability-seconds: 6
-    abilities: [darkness, blink]
-    health-per-player: 0.15
-    rewards:
-      money: 15000
-      top-money: 45000
-      items: ["DIAMOND 1", "GOLD_INGOT 8", "EXPERIENCE_BOTTLE 8"]
-      top-items: ["GOLDEN_APPLE 2"]
-      commands: []
-      top-commands: []
-    description: "A floating jelly ghost: a soft lilac-to-white dome with two big round eyes and a little open mouth, long wavy ribbon tentacles trailing under it, glowing faintly."
   hay_golem:
     revision: 3
     name: "<gradient:#f9a825:#8d6e63><bold>Hay Golem</bold></gradient>"
@@ -2195,7 +2043,7 @@ bosses:
     movement: walk
     phases: [0.5]
     ability-seconds: 6
-    abilities: [slam, fire_ring]
+    abilities: [fire_ring, slam]
     health-per-player: 0.15
     rewards:
       money: 15000
@@ -2204,7 +2052,7 @@ bosses:
       top-items: ["GOLDEN_APPLE 2"]
       commands: []
       top-commands: []
-    description: "A golem of bound hay bales: a straw head with a stitched burlap face and button eyes, red twine bands round the chest and limbs, straw poking out everywhere and a crown of wheat."
+    description: "A scarecrow golem of tied hay bales with straw sticking out at the joints, a burlap sack head with stitched button eyes and a sewn grin, a crooked straw hat, a rope belt and a pitchfork."
   baby_minotaur:
     revision: 3
     name: "<gradient:#4e342e:#ffccbc><bold>Little Moo</bold></gradient>"
@@ -2230,31 +2078,6 @@ bosses:
       commands: []
       top-commands: []
     description: "A chubby little minotaur: a big brown bull head with white curved horns, a pink muzzle with a gold nose ring, a shaggy fringe, and a tiny body in a leather kilt; small but it charges hard."
-  boo_twins:
-    revision: 3
-    name: "<gradient:#bdbdbd:#ffffff><bold>The Boo Twins</bold></gradient>"
-    title: "Nobody Home"
-    kind: mini
-    tier: mini
-    entity: VEX
-    health: 3000
-    damage: 8
-    armor: 4
-    bar: WHITE
-    theme: soul
-    movement: walk
-    phases: [0.5]
-    ability-seconds: 6
-    abilities: [darkness, blink, dive]
-    health-per-player: 0.15
-    rewards:
-      money: 15000
-      top-money: 45000
-      items: ["DIAMOND 1", "GOLD_INGOT 8", "EXPERIENCE_BOTTLE 8"]
-      top-items: ["GOLDEN_APPLE 2"]
-      commands: []
-      top-commands: []
-    description: "Picture 10: two pale ghost kids with wide flat heads, hollow black eyes and a dark mouth, ragged grey bodies and dangling legs. They bob up and down out of step and lean toward each other."
   mandrake:
     revision: 3
     name: "<gradient:#a1887f:#c5e1a5><bold>Mandrake</bold></gradient>"
@@ -2329,7 +2152,7 @@ bosses:
       top-items: ["GOLDEN_APPLE 2"]
       commands: []
       top-commands: []
-    description: "A walking tree stump: rough bark with deep grooves, two big white eyes with dark pupils carved into the trunk, a sapling growing out of its flat top, stubby root feet and twiggy arms."
+    description: "Stumpy, what is left of the old oak: a short cut stump with tree rings on top, a cross face carved in the bark with glowing green eyes, a shelf mushroom on its side, little root feet and twig arms."
   boo_twin_b:
     revision: 3
     name: "<gradient:#e0e0e0:#b3e5fc><bold>Hoo</bold></gradient>"
@@ -2408,4 +2231,4 @@ bosses:
   # ------------------------------------------------------------ second bodies of two-body bosses (they appear beside their partner, never alone)
 
 # bosses taken out of the plugin; a server that still has them drops them on start
-removed: ["cluck_rider", "hollow_king", "ender_wyrm", "gale_sovereign"]
+removed: ["cluck_rider", "hollow_king", "ender_wyrm", "gale_sovereign", "ghost_jelly", "orc_bruiser", "cyclops_ogre", "cinder_imp", "boo_twins", "shulker_matriarch", "pink_burrower"]

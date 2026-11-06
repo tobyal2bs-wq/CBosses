@@ -29,9 +29,19 @@ DEATH["horned_brute"] = [S("flash", 0, 4), fx(0, sound="ENTITY_RAVAGER_DEATH", p
     S("fling", 14, power=3, up=4, tilt=300, only="spear"), S("fling", 26, power=2, up=4, tilt=220, only="horns"),
     fx(30, "BLOCK", 140, "ENTITY_GENERIC_BIG_FALL", 0.6, y=0, spread=3, block="COARSE_DIRT"), S("swap", 44, block="coarse_dirt", order="down", stagger=24), gone(74, 14)]
 
-SPAWN["rotting_giant"] = [S("move", 0, vh=[0, -1.05, 0]), fx(0, "BLOCK", 160, "ENTITY_ZOMBIE_BREAK_WOODEN_DOOR", 0.5, y=0, spread=3, block="PODZOL", ring=4),
-    S("move", 6, 70, vh=[0, 1.05, 0]), fx(30, "ITEM_SLIME", 60, "ENTITY_ZOMBIE_AMBIENT", 0.4, y=0.6, spread=2),
-    S("anim", 80, 30, name="roar"), fx(86, "SNEEZE", 60, "ENTITY_ZOMBIE_VILLAGER_CONVERTED", 0.4, y=0.9, spread=2)]
+def climb_out(soil="PODZOL", sound="ENTITY_ZOMBIE_AMBIENT", pitch=0.5):
+    """Climbs out of the ground: buried, he hauls
+    himself up in three heaves, with dirt bursting up at every heave."""
+    return [S("move", 0, vh=[0, -1.0, 0]), fx(0, "BLOCK", 120, "BLOCK_ROOTED_DIRT_BREAK", 0.5, y=0, spread=2.5, block=soil, ring=3),
+            fx(8, "BLOCK", 80, "BLOCK_GRAVEL_BREAK", 0.6, y=0.2, spread=1.5, block=soil),
+            S("move", 14, 18, vh=[0, 0.35, 0]), fx(16, "BLOCK", 90, "BLOCK_ROOTED_DIRT_BREAK", 0.6, y=0.2, spread=2, block=soil),
+            S("move", 36, 18, vh=[0, 0.35, 0]), fx(38, "BLOCK", 90, "BLOCK_ROOTED_DIRT_BREAK", 0.6, y=0.2, spread=2, block=soil),
+            S("move", 58, 18, vh=[0, 0.3, 0]), fx(60, "BLOCK", 140, sound, pitch, y=0.1, spread=3, block=soil, ring=4),
+            S("pose", 76, 6), S("anim", 82, 30, name="roar")]
+
+
+SPAWN["rotting_giant"] = climb_out("PODZOL", "ENTITY_ZOMBIE_BREAK_WOODEN_DOOR", 0.5) + [fx(90, "SNEEZE", 60, "ENTITY_ZOMBIE_VILLAGER_CONVERTED", 0.4, y=0.9, spread=2)]
+SPAWN["grave_marshal"] = climb_out("COARSE_DIRT", "ENTITY_SKELETON_AMBIENT", 0.5)
 DEATH["rotting_giant"] = [S("flash", 0, 4, block="lime_concrete"), fx(0, sound="ENTITY_ZOMBIE_DEATH", pitch=0.4), S("anim", 0, 40, name="die_front"),
     S("drop", 22, 14, tilt=60, rand=2, only="armL"), S("drop", 26, 14, tilt=60, rand=2, only="armR"), fx(36, "BLOCK", 200, "ENTITY_GENERIC_BIG_FALL", 0.4, y=0, spread=4, block="MUD"),
     S("swap", 42, block="mud", order="up", stagger=30), S("scale", 70, 24, s=[1.3, 0.05, 1.3]), fx(74, "SNEEZE", 80, "BLOCK_MUD_BREAK", 0.5, y=0.1, spread=3), gone(94, 12)]
