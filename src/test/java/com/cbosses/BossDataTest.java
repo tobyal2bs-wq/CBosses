@@ -45,7 +45,7 @@ class BossDataTest {
     void everyBossHasAModelWithAnEntranceAndADeath() throws Exception {
         var models = models();
         var defs = bosses();
-        assertEquals(92, defs.size(), "39 weekly, 5 mythic, 12 seasonal, 10 chapter and 26 mini bosses");
+        assertEquals(92, defs.size(), "38 weekly, 3 mythic, 12 seasonal, 10 chapter and 29 mini bosses");
         for (BossDef d : defs.values()) {
             ModelRig.Model m = models.get(d.model());
             assertNotNull(m, d.id() + " has no model");
@@ -93,19 +93,19 @@ class BossDataTest {
         var defs = bosses();
         for (String season : new String[]{"winter", "summer", "spring", "halloween"})
             assertEquals(3, defs.values().stream().filter(d -> d.seasonal() && season.equals(d.season())).count(), season);
-        assertEquals(44, defs.values().stream().filter(d -> !d.seasonal() && !d.chapterBoss() && !d.mini() && !d.sidekick()).count(), "39 weekly bosses and 5 mythic");
+        assertEquals(41, defs.values().stream().filter(d -> !d.seasonal() && !d.chapterBoss() && !d.mini() && !d.sidekick()).count(), "38 weekly bosses and 3 mythic");
     }
 
     @Test
     void healthTiersAndMiniBosses() throws Exception {
         var defs = bosses();
-        assertEquals(26, defs.values().stream().filter(BossDef::mini).count(), "26 mini bosses");
+        assertEquals(29, defs.values().stream().filter(BossDef::mini).count(), "29 mini bosses");
         for (BossDef d : defs.values()) {
             if (d.mini()) assertEquals(3000, d.health(), 0.01, d.id());
             else if (d.tier().equals("mythic")) assertEquals(8000, d.health(), 0.01, d.id());
             else if (!d.chapterBoss() && !d.sidekick()) assertEquals(5000, d.health(), 0.01, d.id());
         }
-        for (String id : new String[]{"the_unmaker", "withered_tyrant", "ender_wyrm", "gale_sovereign", "the_listener"}) assertEquals("mythic", defs.get(id).tier(), id);
+        for (String id : new String[]{"the_unmaker", "withered_tyrant", "the_listener"}) assertEquals("mythic", defs.get(id).tier(), id);
     }
 
     @Test
@@ -126,7 +126,7 @@ class BossDataTest {
     @Test
     void retiredBossesAreGoneAndTwinsAreOneModelAgain() throws Exception {
         var defs = bosses();
-        assertNull(defs.get("cluck_rider"));
+        for (String id : new String[]{"cluck_rider", "hollow_king", "ender_wyrm", "gale_sovereign"}) assertNull(defs.get(id), id);
         assertEquals(0, defs.values().stream().filter(BossDef::sidekick).count());
         var yaml = org.bukkit.configuration.file.YamlConfiguration.loadConfiguration(new java.io.File("src/main/resources/bosses.yml"));
         assertTrue(yaml.getStringList("removed").contains("cluck_rider"));
@@ -135,7 +135,7 @@ class BossDataTest {
     @Test
     void newBigBossesAreCleanAndAlive() throws Exception {
         var models = models();
-        for (String id : new String[]{"abyssal_eye", "hollow_king", "fenrir", "tide_tyrant", "storm_herald", "ember_queen", "gravelord", "bloodtusk",
+        for (String id : new String[]{"abyssal_eye", "fenrir", "tide_tyrant", "storm_herald", "ember_queen", "gravelord", "bloodtusk",
                 "old_ironroot", "gate_shade", "frost_yeti", "cinder_imp", "bog_orc"}) {
             ModelRig.Model m = models.get(id);
             assertNotNull(m, id);
@@ -182,7 +182,7 @@ class BossDataTest {
     void theFinaleBossExistsAndIsKeptOutOfTheWeeklyRotation() throws Exception {
         var defs = bosses();
         assertNotNull(defs.get("the_unmaker"), "the finale boss");
-        for (String legend : new String[]{"withered_tyrant", "ender_wyrm", "gale_sovereign", "the_listener"}) assertNotNull(defs.get(legend), legend);
+        for (String legend : new String[]{"withered_tyrant", "the_listener"}) assertNotNull(defs.get(legend), legend);
         ModelRig.Model m = models().get("the_unmaker");
         assertTrue(m.cubes.size() >= 200, "the finale is the most detailed boss");
         assertTrue(m.death.stream().anyMatch(s -> s.op().equals("shatter")), "the finale shatters");

@@ -146,8 +146,9 @@ def mini(id, name, title, entity="ZOMBIE", theme="nature", bar="GREEN", extra=()
 def partner(main, id, name, title, entity="ZOMBIE", theme="nature", bar="GREEN", extra=(), recipe=None, movement=None, speed=None, tier="mini"):
     """The second body of a two-body boss: its own model, its own health bar and its own target."""
     def deco(fn):
+        # 1.3.2: the little ones are their own mini bosses now, not second bodies
         REVISED.add(main)
-        return fn
+        return mini(id, name, title, entity, theme, bar, extra, None, recipe, movement)(fn)
         PARTNERS[main] = id
         PARTNER_INFO[id] = dict(name=name, title=title, entity=entity, theme=theme, bar=bar, extra=list(extra), tier=tier,
                                 **({"movement": movement} if movement else {}), **({"speed": speed} if speed else {}))
@@ -645,7 +646,8 @@ def gate_shade():
 
 # ---------------------------------------------------------------------------- minis grown into big bosses
 drop("frost_yeti"); drop("cinder_imp"); drop("bog_orc"); drop("cluck_rider")
-REMOVED = ["cluck_rider"]
+REMOVED = ["cluck_rider", "hollow_king", "ender_wyrm", "gale_sovereign"]
+BIG_INFO.pop("hollow_king", None)
 
 
 @big("frost_yeti", "<gradient:#90caf9:#ffffff><bold>The Frost Yeti</bold></gradient>", "Keeper of the Ice Cave", "IRON_GOLEM", "frost", "WHITE",

@@ -41,8 +41,10 @@ public final class Finale implements Listener {
     private boolean on() { return plugin.getConfig().getBoolean("finale.enabled", true); }
     public String boss() { return plugin.getConfig().getString("finale.boss", "the_unmaker"); }
     public List<String> after() {
-        List<String> l = plugin.getConfig().getStringList("finale.after");
-        return l.isEmpty() ? List.of("withered_tyrant", "ender_wyrm", "gale_sovereign", "the_listener") : l;
+        List<String> l = new ArrayList<>(plugin.getConfig().getStringList("finale.after"));
+        // bosses retired in 1.3.2 no longer stand in the way on servers with an older config
+        l.removeAll(List.of("ender_wyrm", "gale_sovereign", "hollow_king"));
+        return l.isEmpty() ? List.of("withered_tyrant", "the_listener") : l;
     }
 
     /** The legends still standing between the server and the finale. */

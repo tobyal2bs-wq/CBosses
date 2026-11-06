@@ -27,7 +27,7 @@ def table(items):
     return "<table>\n" + "\n".join(rows) + "\n</table>\n"
 
 chapter = sorted([(i, v) for i, v in b.items() if v.get("chapter")], key=lambda x: x[1]["chapter"])
-LEG = ("the_listener", "withered_tyrant", "ender_wyrm", "gale_sovereign")
+LEG = ("the_listener", "withered_tyrant")
 legends = [(i, b[i]) for i in LEG if i in b]
 finale = [(i, b[i]) for i in ("the_unmaker",) if i in b]
 season = [(i, v) for i, v in b.items() if v.get("season")]

@@ -282,32 +282,6 @@ bosses:
       commands: []
       top-commands: []
     description: "A volcanic tiki idol come to life: a huge carved mask for a head with a lit mouth, orange stone body cut with glyph bands, a feathered headdress and a jagged obsidian-edged war blade."
-  hollow_king:
-    revision: 3
-    name: "<gradient:#1b1b1b:#9ccc65><bold>The Antler King</bold></gradient>"
-    title: "He Wears the Forest"
-    tier: big
-    entity: WITHER_SKELETON
-    health: 5000
-    damage: 12
-    armor: 8
-    bar: GREEN
-    theme: nature
-    movement: walk
-    phases: [0.7, 0.4, 0.15]
-    minion: SKELETON
-    minions: 3
-    ability-seconds: 6
-    abilities: [darkness, spikes, minions]
-    health-per-player: 0.25
-    rewards:
-      money: 60000
-      top-money: 180000
-      items: ["BONE_BLOCK 16", "MOSS_BLOCK 16", "DIAMOND 3"]
-      top-items: ["TOTEM_OF_UNDYING 1"]
-      commands: []
-      top-commands: []
-    description: "A tall gaunt king in a ragged black robe with a pale bone mask for a face, green fire in its eye slits, enormous branching antlers with moss hanging from them, long clawed arms and a lantern of green fire swinging from one hand."
   broodmother:
     name: "<gradient:#33691e:#aed581><bold>The Broodmother</bold></gradient>"
     title: "Queen of the Deep Webs"
@@ -1086,58 +1060,6 @@ bosses:
       commands: []
       top-commands: []
     description: "The Wither grown into a tyrant: three skulls on a bar of blackstone set with bone spikes, the middle one crowned in netherite and soul gems, a ribcage of dark bone with soul fire burning inside, a long spine that curls into a tail of flame, tattered black banners hanging from the bar and wither skulls circling it like moons."
-  ender_wyrm:
-    name: "<gradient:#1a0033:#d14bff><bold>Vorthax the Ender Wyrm</bold></gradient>"
-    title: "Dragon of the Outer Dark"
-    tier: mythic
-    entity: PHANTOM
-    health: 8000
-    damage: 13
-    armor: 8
-    bar: PINK
-    theme: dragon
-    movement: fly
-    fly-height: 9
-    phases: [0.7, 0.4, 0.15]
-    minion: ENDERMITE
-    minions: 4
-    ability-seconds: 6
-    abilities: [breath, charge, minions, slam, dive, orbs, meteor, levitate]
-    health-per-player: 0.25
-    rewards:
-      money: 90000
-      top-money: 300000
-      items: ["DRAGON_BREATH 4", "ENDER_PEARL 8", "SHULKER_SHELL 2"]
-      top-items: ["ELYTRA 1"]
-      commands: []
-      top-commands: []
-    description: "A dragon of the End: a black body armoured in dark grey scales, a ridge of plates from its horns to the spade of its tail, purple eyes that glow, a long jaw lined with teeth, great membrane wings on finger bones that beat as it moves, and end crystals set into its chest like a heart."
-  gale_sovereign:
-    name: "<gradient:#5fb3a8:#e0f7fa><bold>The Gale Sovereign</bold></gradient>"
-    title: "Lord of the Trial Winds"
-    tier: mythic
-    entity: BREEZE
-    health: 8000
-    damage: 13
-    armor: 10
-    bar: WHITE
-    theme: wind
-    movement: hover
-    fly-height: 3
-    phases: [0.7, 0.4, 0.15]
-    minion: BREEZE
-    minions: 2
-    ability-seconds: 5
-    abilities: [pull, shockwave, orbs, charge, levitate, volley, dive]
-    health-per-player: 0.25
-    rewards:
-      money: 85000
-      top-money: 280000
-      items: ["BREEZE_ROD 8", "WIND_CHARGE 32", "DIAMOND 4"]
-      top-items: ["HEAVY_CORE 1"]
-      commands: []
-      top-commands: []
-    description: "A breeze that grew up in a trial chamber and took its armour: a pale head in an oxidized copper helm with a visor slit that glows, a heavy iron core where its heart should be, a body that is nothing but a spinning column of wind in three bands, breeze rods circling its head and two copper gauntlets that float where its hands would be."
   the_unmaker:
     name: "<gradient:#2a0845:#ff4fd8:#2a0845><bold>THE UNMAKER</bold></gradient>"
     title: "Heart of the Void"
@@ -2408,7 +2330,82 @@ bosses:
       commands: []
       top-commands: []
     description: "A walking tree stump: rough bark with deep grooves, two big white eyes with dark pupils carved into the trunk, a sapling growing out of its flat top, stubby root feet and twiggy arms."
+  boo_twin_b:
+    revision: 3
+    name: "<gradient:#e0e0e0:#b3e5fc><bold>Hoo</bold></gradient>"
+    title: "The Younger Twin"
+    kind: mini
+    tier: mini
+    entity: VEX
+    health: 3000
+    damage: 8
+    armor: 4
+    bar: WHITE
+    theme: soul
+    movement: hover
+    phases: [0.5]
+    ability-seconds: 6
+    abilities: [darkness, blink, dive]
+    health-per-player: 0.15
+    rewards:
+      money: 15000
+      top-money: 45000
+      items: ["DIAMOND 1", "GOLD_INGOT 8", "EXPERIENCE_BOTTLE 8"]
+      top-items: ["GOLDEN_APPLE 2"]
+      commands: []
+      top-commands: []
+    description: "Hoo, the younger Boo Twin: smaller and whiter, with tall oval eyes and a wobbly open mouth, arms raised to scare. Quicker than Boo, it darts around and goes after a different player."
+  cap_little:
+    revision: 3
+    name: "<gradient:#6d4c41:#ffe0b2><bold>Puffball</bold></gradient>"
+    title: "The Little Mushroom"
+    kind: mini
+    tier: mini
+    entity: ZOMBIE
+    health: 3000
+    damage: 8
+    armor: 4
+    bar: YELLOW
+    theme: toxic
+    movement: walk
+    phases: [0.5]
+    ability-seconds: 6
+    abilities: [poison, leap]
+    health-per-player: 0.15
+    rewards:
+      money: 15000
+      top-money: 45000
+      items: ["DIAMOND 1", "GOLD_INGOT 8", "EXPERIENCE_BOTTLE 8"]
+      top-items: ["GOLDEN_APPLE 2"]
+      commands: []
+      top-commands: []
+    description: "Puffball, the little brother: a short mushroom with a round brown cap, a happy face and quick feet. He hops around and chases a different player from his brother."
+  gnome_little:
+    revision: 3
+    name: "<gradient:#c62828:#ffcdd2><bold>Thimble</bold></gradient>"
+    title: "The Little Brother"
+    kind: mini
+    tier: mini
+    entity: ZOMBIE
+    health: 3000
+    damage: 8
+    armor: 4
+    bar: GREEN
+    theme: nature
+    movement: walk
+    phases: [0.5]
+    ability-seconds: 6
+    abilities: [leap, volley]
+    health-per-player: 0.15
+    rewards:
+      money: 15000
+      top-money: 45000
+      items: ["DIAMOND 1", "GOLD_INGOT 8", "EXPERIENCE_BOTTLE 8"]
+      top-items: ["GOLDEN_APPLE 2"]
+      commands: []
+      top-commands: []
+    description: "Thimble, the little Gnome Brother: a tall red hat that flops, a checked white beard, a green coat and a peach face with a round nose. He darts about on his own while Bramble fights."
   # ------------------------------------------------------------ second bodies of two-body bosses (they appear beside their partner, never alone)
 
 # bosses taken out of the plugin; a server that still has them drops them on start
-removed: ["cluck_rider"]
+removed: ["cluck_rider", "hollow_king", "ender_wyrm", "gale_sovereign"]
