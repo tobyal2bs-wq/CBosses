@@ -369,6 +369,8 @@ public final class BossModel {
         if (b == null) return false;
         // Plain arithmetic: the JOML bundled with each server version differs, so avoid newer helpers.
         Vector3f ta = a.getTranslation(), tb = b.getTranslation(), sa = a.getScale(), sb = b.getScale();
+        Quaternionf ra = a.getRightRotation(), rb = b.getRightRotation();
+        if (Math.abs(ra.x * rb.x + ra.y * rb.y + ra.z * rb.z + ra.w * rb.w) < 0.99999f) return false;
         Quaternionf qa = a.getLeftRotation(), qb = b.getLeftRotation();
         float dt = sq(ta.x - tb.x) + sq(ta.y - tb.y) + sq(ta.z - tb.z);
         float ds = sq(sa.x - sb.x) + sq(sa.y - sb.y) + sq(sa.z - sb.z);

@@ -232,11 +232,11 @@ class BossDataTest {
                 org.joml.Matrix4f[] cubes = ModelRig.cubes(m, ModelRig.pose(m, java.util.List.of(new ModelRig.Layer(anim, 0.5f, 1))));
                 for (org.joml.Matrix4f c : cubes) {
                     var t = com.cbosses.model.Displays.transformation(c);
-                    org.joml.Matrix4f shown = new org.joml.Matrix4f().translation(t.getTranslation()).rotate(t.getLeftRotation()).scale(t.getScale());
+                    org.joml.Matrix4f shown = new org.joml.Matrix4f().translation(t.getTranslation()).rotate(t.getLeftRotation()).scale(t.getScale()).rotate(t.getRightRotation());
                     for (int k = 0; k < 8; k++) {
                         float d = c.transformPosition(k & 1, k >> 1 & 1, k >> 2 & 1, new org.joml.Vector3f())
                                 .distance(shown.transformPosition(k & 1, k >> 1 & 1, k >> 2 & 1, new org.joml.Vector3f()));
-                        assertTrue(d < 0.2f, m.id + " " + an + ": a block is drawn " + d + " blocks off");
+                        assertTrue(d < 0.01f, m.id + " " + an + ": a block is drawn " + d + " blocks off");
                     }
                 }
             }
