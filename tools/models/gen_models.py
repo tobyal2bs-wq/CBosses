@@ -186,7 +186,8 @@ for id, fn in roster.builders().items():
         continue
     fixo = lambda s: dict(s, **{f: (s[f][0] + powder(s[f][1:]) if s[f].startswith("!") else powder(s[f])) for f in ("only",) if isinstance(s.get(f), str) and s[f] and not getattr(m, "flat", False) and powder(s[f].lstrip("!")) in {base(c["k"]) for c in m.cubes}})
     spawn = [fixo(s) for s in SPAWN[m.id]]
-    if m.id not in CLIMBERS and not m.id.startswith("decor_"): spawn = entrance(m.id, spawn)
+    # a model with parts that only show during its entrance (the egg Clucksworth hatches from) keeps its own
+    if m.id not in CLIMBERS and not m.id.startswith("decor_") and not any("shell" in str(st.get("only", "")) or st.get("op") in ("hide", "reveal") for st in spawn): spawn = entrance(m.id, spawn)
     end = max(st["at"] + st.get("dur", 0) for st in spawn)
     spawn.append({"op": "pose", "at": end + 2, "dur": 4})   # whatever the opening did, it ends in the model's own shape
     j["spawn"], j["death"] = spawn, [fixo(s) for s in DEATH[m.id]]
