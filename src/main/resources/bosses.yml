@@ -964,7 +964,7 @@ bosses:
     title: "It Hears Your Heartbeat"
     tier: mythic
     entity: IRON_GOLEM
-    health: 8000
+    health: 5000
     damage: 15
     armor: 14
     bar: BLUE
@@ -987,7 +987,7 @@ bosses:
     title: "Three Skulls, One Hunger"
     tier: mythic
     entity: WITHER_SKELETON
-    health: 8000
+    health: 5000
     damage: 14
     armor: 12
     bar: PURPLE
@@ -1013,7 +1013,7 @@ bosses:
     title: "Heart of the Void"
     tier: mythic
     entity: IRON_GOLEM
-    health: 8000
+    health: 5000
     damage: 17
     armor: 16
     bar: PINK
@@ -1376,7 +1376,7 @@ bosses:
     title: "Burner of the Wanderers' Camp"
     chapter: 1
     entity: VINDICATOR
-    health: 500
+    health: 5000
     damage: 7
     armor: 4
     bar: YELLOW
@@ -1402,7 +1402,7 @@ bosses:
     title: "Nothing Passes Without the Key"
     chapter: 2
     entity: VEX
-    health: 700
+    health: 5000
     damage: 12
     armor: 8
     bar: WHITE
@@ -1428,7 +1428,7 @@ bosses:
     title: "The Elder's Champion"
     chapter: 3
     entity: ZOMBIE
-    health: 900
+    health: 5000
     damage: 8
     armor: 8
     bar: GREEN
@@ -1454,7 +1454,7 @@ bosses:
     title: "Bramble and Thimble"
     chapter: 4
     entity: ZOMBIE
-    health: 1200
+    health: 5000
     damage: 9
     armor: 8
     bar: GREEN
@@ -1479,7 +1479,7 @@ bosses:
     title: "Two Faces in the Stone"
     chapter: 5
     entity: IRON_GOLEM
-    health: 1400
+    health: 5000
     damage: 9
     armor: 8
     bar: GREEN
@@ -1502,7 +1502,7 @@ bosses:
     title: "Under the Old Bridge"
     chapter: 7
     entity: ZOMBIE
-    health: 1800
+    health: 5000
     damage: 9
     armor: 8
     bar: YELLOW
@@ -1525,7 +1525,7 @@ bosses:
     title: "Troll of the Dry Riverbed"
     chapter: 9
     entity: ZOMBIE
-    health: 2200
+    health: 5000
     damage: 9
     armor: 8
     bar: GREEN
@@ -1548,7 +1548,7 @@ bosses:
     title: "The Brute of the Last Chapter"
     chapter: 10
     entity: RAVAGER
-    health: 2500
+    health: 5000
     damage: 9
     armor: 8
     bar: RED
@@ -1576,7 +1576,7 @@ bosses:
     kind: mini
     tier: mini
     entity: ZOMBIE
-    health: 3000
+    health: 2000
     damage: 8
     armor: 4
     bar: YELLOW
@@ -1601,7 +1601,7 @@ bosses:
     kind: mini
     tier: mini
     entity: ZOMBIE
-    health: 3000
+    health: 2000
     damage: 8
     armor: 4
     bar: WHITE
@@ -1626,7 +1626,7 @@ bosses:
     kind: mini
     tier: mini
     entity: VINDICATOR
-    health: 3000
+    health: 2000
     damage: 8
     armor: 4
     bar: RED
@@ -1653,7 +1653,7 @@ bosses:
     kind: mini
     tier: mini
     entity: VINDICATOR
-    health: 3000
+    health: 2000
     damage: 8
     armor: 4
     bar: YELLOW
@@ -1680,7 +1680,7 @@ bosses:
     kind: mini
     tier: mini
     entity: SLIME
-    health: 3000
+    health: 2000
     damage: 8
     armor: 4
     bar: YELLOW
@@ -1705,7 +1705,7 @@ bosses:
     kind: mini
     tier: mini
     entity: ZOMBIE
-    health: 3000
+    health: 2000
     damage: 8
     armor: 4
     bar: GREEN
@@ -1730,7 +1730,7 @@ bosses:
     kind: mini
     tier: mini
     entity: SPIDER
-    health: 3000
+    health: 2000
     damage: 8
     armor: 4
     bar: RED
@@ -1755,7 +1755,7 @@ bosses:
     kind: mini
     tier: mini
     entity: ZOMBIE
-    health: 3000
+    health: 2000
     damage: 8
     armor: 4
     bar: GREEN
@@ -1780,7 +1780,7 @@ bosses:
     kind: mini
     tier: mini
     entity: ZOMBIE
-    health: 3000
+    health: 2000
     damage: 8
     armor: 4
     bar: RED
@@ -1804,7 +1804,7 @@ bosses:
     kind: mini
     tier: mini
     entity: ZOMBIE
-    health: 3000
+    health: 2000
     damage: 8
     armor: 4
     bar: WHITE
@@ -1829,7 +1829,7 @@ bosses:
     kind: mini
     tier: mini
     entity: ZOMBIE
-    health: 3000
+    health: 2000
     damage: 8
     armor: 4
     bar: GREEN
@@ -1853,7 +1853,7 @@ bosses:
     kind: mini
     tier: mini
     entity: ZOMBIE
-    health: 3000
+    health: 2000
     damage: 8
     armor: 4
     bar: YELLOW
@@ -1880,7 +1880,7 @@ bosses:
     kind: mini
     tier: mini
     entity: ZOMBIE
-    health: 3000
+    health: 2000
     damage: 8
     armor: 4
     bar: PURPLE
@@ -1905,7 +1905,7 @@ bosses:
     kind: mini
     tier: mini
     entity: ZOMBIE
-    health: 3000
+    health: 2000
     damage: 8
     armor: 4
     bar: RED
@@ -1932,7 +1932,7 @@ bosses:
     kind: mini
     tier: mini
     entity: ZOMBIE
-    health: 3000
+    health: 2000
     damage: 8
     armor: 4
     bar: WHITE
@@ -1957,7 +1957,7 @@ bosses:
     kind: mini
     tier: mini
     entity: ZOMBIE
-    health: 3000
+    health: 2000
     damage: 8
     armor: 4
     bar: GREEN
@@ -1984,7 +1984,7 @@ bosses:
     kind: mini
     tier: mini
     entity: ZOMBIE
-    health: 3000
+    health: 2000
     damage: 8
     armor: 4
     bar: PINK
@@ -2010,7 +2010,7 @@ bosses:
     kind: mini
     tier: mini
     entity: ZOMBIE
-    health: 3000
+    health: 2000
     damage: 8
     armor: 4
     bar: GREEN
@@ -2035,7 +2035,7 @@ bosses:
     kind: mini
     tier: mini
     entity: IRON_GOLEM
-    health: 3000
+    health: 2000
     damage: 8
     armor: 4
     bar: YELLOW
@@ -2060,7 +2060,7 @@ bosses:
     kind: mini
     tier: mini
     entity: ZOMBIE
-    health: 3000
+    health: 2000
     damage: 8
     armor: 4
     bar: RED
@@ -2085,7 +2085,7 @@ bosses:
     kind: mini
     tier: mini
     entity: ZOMBIE
-    health: 3000
+    health: 2000
     damage: 8
     armor: 4
     bar: GREEN
@@ -2110,7 +2110,7 @@ bosses:
     kind: mini
     tier: mini
     entity: ZOMBIE
-    health: 3000
+    health: 2000
     damage: 8
     armor: 4
     bar: GREEN
@@ -2135,7 +2135,7 @@ bosses:
     kind: mini
     tier: mini
     entity: ZOMBIE
-    health: 3000
+    health: 2000
     damage: 8
     armor: 4
     bar: GREEN
@@ -2160,7 +2160,7 @@ bosses:
     kind: mini
     tier: mini
     entity: VEX
-    health: 3000
+    health: 2000
     damage: 8
     armor: 4
     bar: WHITE
@@ -2185,7 +2185,7 @@ bosses:
     kind: mini
     tier: mini
     entity: ZOMBIE
-    health: 3000
+    health: 2000
     damage: 8
     armor: 4
     bar: YELLOW
@@ -2210,7 +2210,7 @@ bosses:
     kind: mini
     tier: mini
     entity: ZOMBIE
-    health: 3000
+    health: 2000
     damage: 8
     armor: 4
     bar: GREEN

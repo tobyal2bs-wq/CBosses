@@ -1,5 +1,7 @@
 # CBosses
 
+**Boss polish update 1.3.7:** connected joints, stable faces/turning, individual entrances, no aura rings, and 2,000/5,000 HP. [Friendly Mossback commands and update notes](RELEASE-1.3.7.md).
+
 <p align="center"><img src="docs/images/hero.jpg" alt="CBosses bosses" width="100%"></p>
 
 **CBosses** adds 85 animated block-model bosses to Paper and Folia servers. Every boss is built from 50 to

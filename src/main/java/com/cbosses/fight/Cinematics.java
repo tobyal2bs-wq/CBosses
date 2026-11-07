@@ -53,50 +53,19 @@ final class Cinematics {
         Bukkit.getRegionScheduler().runAtFixedRate(plugin, at, t -> {
             int i = step[0]++;
             int tick = i * 2;
-            if (tick >= OMEN) { t.cancel(); arrival(at, th, ground); then.run(); return; }
+            if (tick >= OMEN) { t.cancel(); arrival(at, def, th); then.run(); return; }
             double p = (double) tick / OMEN;
             double r = 7.5 - p * 4.5;
-            // two rings turning opposite ways and a five pointed star between them
-            sigil(at, r, th, tick * 0.06);
-            if (tick % 4 == 0) Fx.particle(world, th.spark(), at.clone().add(0, 0.2 + p * 3, 0), 6 + (int) (p * 10), r / 3, 0.3 + p, r / 3, 0.02, th);
-            if (tick % 6 == 0) Fx.particle(world, th.mist(), at.clone().add(0, 0.3, 0), 10, r / 2, 0.1, r / 2, 0.01, th);
-            if (tick % 10 == 0) {
-                // the ground cracks: chunks of the floor lift around the circle
-                double a = tick * 0.7;
-                for (int k = 0; k < 3; k++) {
-                    double aa = a + k * Math.PI * 2 / 3;
-                    Location crack = at.clone().add(Math.cos(aa) * r, 0, Math.sin(aa) * r);
-                    Fx.debris(crack, ground, 2, 0.8, 0.6 + p, 0.4f);
-                    Fx.blockDust(crack.clone().add(0, 0.3, 0), ground, 8, 0.4);
-                }
-                Fx.sound(at, "BLOCK_DEEPSLATE_BREAK", 1.6f, 0.5f + (float) p * 0.3f);
-            }
+            // A character's own motif, without a shared rune ring or dirt eruption.
+            int variant = Math.floorMod(def.id().hashCode(), 7);
+            double spread = 0.6 + variant * 0.16;
+            double height = def.flies() ? 1.5 + p * 2 : 0.3 + p * (1 + variant * 0.13);
+            if (tick % 4 == 0) Fx.particle(world, th.spark(), at.clone().add(0, height, 0),
+                    3 + variant, spread * (1-p), 0.12, spread * (1-p), 0.015, th);
             themed(at, th, tick, p);
             if (tick == 30) Fx.sound(at, "ENTITY_EVOKER_PREPARE_SUMMON", 2f, 0.6f);
-            if (tick == 40) Fx.sound(at, "ENTITY_WITHER_SPAWN", 0.8f, 1.4f);
-        }, 1, 2);
-    }
 
-    private static void sigil(Location at, double r, Theme th, double turn) {
-        World w = at.getWorld();
-        Particle.DustOptions main = new Particle.DustOptions(th.main(), 1.4f), accent = new Particle.DustOptions(th.accent(), 1.1f);
-        int n = Math.max(16, (int) (r * 6 * Math.max(0.4, Fx.particles)));
-        for (int i = 0; i < n; i++) {
-            double a = Math.PI * 2 * i / n + turn;
-            Privacy.particle(w, Particle.DUST, at.getX() + Math.cos(a) * r, at.getY() + 0.12, at.getZ() + Math.sin(a) * r, 1, 0, 0, 0, 0, main);
-            double b = Math.PI * 2 * i / n - turn * 1.6;
-            Privacy.particle(w, Particle.DUST, at.getX() + Math.cos(b) * r * 0.62, at.getY() + 0.12, at.getZ() + Math.sin(b) * r * 0.62, 1, 0, 0, 0, 0, accent);
-        }
-        // the star: five points on the inner ring, every second one joined
-        for (int k = 0; k < 5; k++) {
-            double a1 = turn * 0.5 + Math.PI * 2 * k / 5, a2 = turn * 0.5 + Math.PI * 2 * (k + 2) / 5;
-            double x1 = Math.cos(a1) * r * 0.95, z1 = Math.sin(a1) * r * 0.95, x2 = Math.cos(a2) * r * 0.95, z2 = Math.sin(a2) * r * 0.95;
-            int steps = Math.max(4, (int) (r * 2 * Math.max(0.4, Fx.particles)));
-            for (int s = 0; s <= steps; s++) {
-                double t = (double) s / steps;
-                Privacy.particle(w, Particle.DUST, at.getX() + x1 + (x2 - x1) * t, at.getY() + 0.12, at.getZ() + z1 + (z2 - z1) * t, 1, 0, 0, 0, 0, accent);
-            }
-        }
+        }, 1, 2);
     }
 
     /** Each theme's own build-up during the omen. */
@@ -107,7 +76,7 @@ final class Cinematics {
             case "frost" -> Fx.particle(w, Particle.SNOWFLAKE, at.clone().add(0, 6, 0), 20, 7, 3, 7, 0.02, th);
             case "fire", "pumpkin" -> { if (tick % 8 == 0) for (int k = 0; k < 4; k++) Fx.pillar(at.clone().add(Math.cos(k * 1.57 + p) * 5, 0, Math.sin(k * 1.57 + p) * 5), Particle.FLAME, th, 3 + p * 3, 0.3); }
             case "sculk" -> {
-                if (tick % 10 == 0) { Fx.sound(at, "ENTITY_WARDEN_HEARTBEAT", 2f, 1f); Fx.ring(at, 1 + p * 8, th.accent(), 1.8f, 50); }
+                if (tick % 10 == 0) { Fx.sound(at, "ENTITY_WARDEN_HEARTBEAT", 2f, 1f); }
                 Fx.particle(w, Particle.SCULK_SOUL, at.clone().add(0, 0.4, 0), 3, 4, 0.2, 4, 0.03, th);
                 if (tick == 36) Fx.sound(at, "BLOCK_SCULK_SHRIEKER_SHRIEK", 2.5f, 0.8f);
             }
@@ -127,14 +96,11 @@ final class Cinematics {
         }
     }
 
-    private void arrival(Location at, Theme th, Material ground) {
+    private void arrival(Location at, BossDef def, Theme th) {
         World w = at.getWorld();
-        Fx.particle(w, Particle.FLASH, at.clone().add(0, 1.5, 0), 1, 0, 0, 0, 0, th);
-        Fx.particle(w, Particle.EXPLOSION_EMITTER, at.clone().add(0, 0.5, 0), 1, 0, 0, 0, 0, th);
-        Fx.eruption(at, 7, ground, th, 4);
-        Fx.debris(at, ground, 14, 4, 2.6, 0.5f);
-        Fx.sound(at, "ENTITY_GENERIC_EXPLODE", 1.6f, 0.6f);
-        Fx.sound(at, th.impact(), 2f, 0.7f);
+        int variant = Math.floorMod(def.id().hashCode(), 7);
+        Fx.particle(w, th.spark(), at.clone().add(0, .8, 0), 14 + variant * 2, .5 + variant * .1, .7, .5 + variant * .1, .025, th);
+        Fx.sound(at, th.impact(), 1.2f, .8f + variant * .06f);
     }
 
     /** After the model's entrance: the title card for everyone near and the boss bar filling up. */
@@ -154,8 +120,7 @@ final class Cinematics {
             service.later(f, i * 2L, () -> f.bar.progress(Math.min(prog, (float) Math.max(0, Math.min(1, f.boss.getHealth() / Math.max(1, f.max))))));
         }
         service.later(f, 22, () -> f.introDone = true);
-        Fx.ring(at, 3, f.theme.main(), 2f, 40);
-        Fx.ring(at, 6, f.theme.accent(), 1.6f, 60);
+
     }
 
     /** A phase change: the boss roars, the ground erupts around it and every player near is pushed back. */

@@ -270,7 +270,9 @@ public final class BossModel {
 
     public void hurt() { if (hurtT > 0.25f) hurtT = 0; }
 
-    private static final org.bukkit.attribute.Attribute MAX_HEALTH = maxHealth();
+    private static final class HealthAttribute {
+        static final org.bukkit.attribute.Attribute MAX_HEALTH = maxHealth();
+    }
     private static org.bukkit.attribute.Attribute maxHealth() {
         var a = org.bukkit.Registry.ATTRIBUTE.get(org.bukkit.NamespacedKey.minecraft("max_health"));
         return a != null ? a : org.bukkit.Registry.ATTRIBUTE.get(org.bukkit.NamespacedKey.minecraft("generic.max_health"));
@@ -280,7 +282,7 @@ public final class BossModel {
     private String face() {
         if (hurtT < 0.5f) return "hurt";
         if (attack != null) return "angry";
-        var max = MAX_HEALTH == null ? null : mob.getAttribute(MAX_HEALTH);
+        var max = HealthAttribute.MAX_HEALTH == null ? null : mob.getAttribute(HealthAttribute.MAX_HEALTH);
         if (max != null && mob.getHealth() < max.getValue() * 0.5) return "rage";
         return "idle";
     }
@@ -315,8 +317,12 @@ public final class BossModel {
                 if (d > 1.8 * 1.8 && d < reach * reach && Bukkit.isOwnedByCurrentRegion(target2)) target2.damage(meleeDamage, mob);
             }, null, Math.max(1, Math.round(swing.hit() * 20)));
         }
-        float turn = now.getYaw() - yaw;
-        yaw = now.getYaw();
+        // Follow the shortest arc through +/-180 rather than spinning a whole turn.
+        float heading = !flying && speed > 0.025
+                ? (float) Math.toDegrees(Math.atan2(-dx, dz)) : now.getYaw();
+        float turn = (float) Math.IEEEremainder(heading - yaw, 360);
+        turn = Math.max(-45, Math.min(45, turn));
+        yaw += turn;
         if (++viewerCheck % 7 == 1) {
             double near = Double.MAX_VALUE;
             for (var p : now.getNearbyPlayers(Math.max(32, viewDistance))) near = Math.min(near, p.getLocation().distanceSquared(now));
@@ -355,11 +361,21 @@ public final class BossModel {
         BlockDisplay d = parts.get(i);
         if (!d.isValid()) return;
         Transformation t = transformation(new Matrix4f(w).mul(op[i]).mul(pose[i]));
+        // The carrier may update passenger yaw even when the pose did not change.
+        if (d.getYaw() != 0 || d.getPitch() != 0) d.setRotation(0, 0);
         if (same(t, sent[i])) return;
         sent[i] = t;
         d.setInterpolationDelay(0);
-        d.setInterpolationDuration(duration);
+        boolean visibilityCut = sentVisibilityChanged(t, d.getTransformation());
+        d.setInterpolationDuration(visibilityCut ? 0 : duration);
+        // Some carriers rotate their passengers. All yaw belongs to world(), exactly once.
         d.setTransformation(t);
+    }
+
+    private static boolean sentVisibilityChanged(Transformation a, Transformation b) {
+        boolean hiddenA = a.getScale().lengthSquared() < 1e-10f;
+        boolean hiddenB = b.getScale().lengthSquared() < 1e-10f;
+        return hiddenA != hiddenB;
     }
 
     /** translation x rotation x scale, without the shear a general matrix could have. */

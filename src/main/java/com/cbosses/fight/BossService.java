@@ -177,10 +177,28 @@ public final class BossService implements Listener {
         }
     }
 
+    /** Apply the requested health tiers once; retain every reward and other custom field. */
+    private void migratePolishHealth(java.io.File file, YamlConfiguration yaml) {
+        if (yaml.getInt("polish-health-version", 0) >= 1) return;
+        try (var in = plugin.getResource("bosses.yml")) {
+            if (in == null) return;
+            var bundled = YamlConfiguration.loadConfiguration(new java.io.InputStreamReader(in, java.nio.charset.StandardCharsets.UTF_8));
+            var bosses = bundled.getConfigurationSection("bosses");
+            if (bosses == null) return;
+            for (String id : bosses.getKeys(false)) {
+                String path = "bosses." + id + ".health";
+                if (yaml.contains("bosses." + id)) yaml.set(path, bundled.getDouble(path));
+            }
+            yaml.set("polish-health-version", 1);
+            com.cbosses.util.SafeFiles.write(file, yaml.saveToString());
+        } catch (Exception e) { plugin.getLogger().warning("Could not migrate boss health: " + e.getMessage()); }
+    }
+
     public void reload() {
         File bossFile = new File(plugin.getDataFolder(), "bosses.yml");
         YamlConfiguration bossYaml = YamlConfiguration.loadConfiguration(bossFile);
         addNewBosses(bossFile, bossYaml);
+        migratePolishHealth(bossFile, bossYaml);
         defs = BossDef.load(bossYaml, plugin.getLogger());
         ModelRig.detail = switch (plugin.getConfig().getString("effects.model-detail", "high").toLowerCase(Locale.ROOT)) {
             case "low" -> 0;
@@ -1160,17 +1178,7 @@ public final class BossService implements Listener {
         double w = Math.max(0.6, (f.model != null ? h * 0.35 : f.boss.getWidth() / 1.5));
         Location at = feet.clone().add(0, h / 2, 0);
         Fx.particle(at.getWorld(), f.aura, at, 6, w, h / 2.5, w, 0.02, f.theme);
-        if (f.ticks % 4 == 0) {
-            Location base = feet.clone().add(0, f.def.flies() ? -f.def.flyHeight() + 0.15 : 0.15, 0);
-            if (f.def.flies()) base.setY(feet.getWorld().getHighestBlockYAt(feet) + 1.15);
-            double r = Math.max(1.8, w * 2.2);
-            Particle.DustOptions ring = new Particle.DustOptions(f.theme.main(), 1.3f);
-            int n = Math.max(10, (int) (24 * Math.max(0.4, Fx.particles)));
-            for (int i = 0; i < n; i++) {
-                double a = Math.PI * 2 * i / n + f.ticks * 0.1;
-                Privacy.particle(base.getWorld(), Particle.DUST, base.getX() + Math.cos(a) * r, base.getY(), base.getZ() + Math.sin(a) * r, 1, 0, 0, 0, 0, ring);
-            }
-        }
+
     }
 
     void summonMinions(Fight f, int count) { summonMinionsAt(f, f.boss.getLocation(), count); }

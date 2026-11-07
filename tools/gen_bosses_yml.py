@@ -27,8 +27,8 @@ LEGENDS = roster.MYTHIC
 SEASONAL = roster.SEASONAL
 CHAPTERS = roster.CHAPTERS
 MINIS = roster.minis()
-# health tiers asked for: big bosses 5000, mythic 8000, minis 3000 (chapter bosses are one-on-one and keep their own curve)
-TIER_HEALTH = {"big": 5000, "mythic": 8000, "mini": 3000}
+# health tiers asked for: big bosses 5000, mythic 5000, minis 2000, chapter bosses 5000
+TIER_HEALTH = {"big": 5000, "mythic": 5000, "mini": 2000}
 
 # extra abilities on top of the model's own attack moves (these use its melee swing)
 EXTRA = {
@@ -193,7 +193,7 @@ def entry(id, kind, season=None, chapter=None):
     d.update(NEW.get(id, {}) if o else {})
     d["season"], d["chapter"] = season, chapter
     if chapter:
-        d["health"] = CHAPTER_HEALTH[chapter - 1]
+        d["health"] = 5000
         d["top_money"] = 0
     else:
         d["tier"] = "mythic" if id in LEGENDS else "mini" if id in MINIS else "big"
@@ -305,7 +305,7 @@ def emit(id, d):
 
 w("  # ------------------------------------------------------------ the weekly bosses (5000 health)")
 for id in GENERAL: emit(id, entry(id, "world"))
-w("  # ------------------------------------------------------------ mythic: Warden, Wither, Ender Dragon, Breeze and the finale (8000 health)")
+w("  # ------------------------------------------------------------ mythic: Warden, Wither, Ender Dragon, Breeze and the finale (5000 health)")
 for id in LEGENDS: emit(id, entry(id, "world"))
 for season, ids in SEASONAL.items():
     w(f"  # ------------------------------------------------------------ {season}")
@@ -315,7 +315,7 @@ w("  # ------------------------------------------------------------ chapter boss
 CHAPTER_NO = {id: n for n, id in enumerate(["brakka", "gate_shade", "oakheart", "gnome_brothers", "moss_spirit", "cyclops_ogre", "grubnose",
                                             "orc_bruiser", "mudclub", "ugor"], 1)}
 for id in CHAPTERS: emit(id, entry(id, "chapter", chapter=CHAPTER_NO[id]))
-w("  # ------------------------------------------------------------ mini bosses: wake on the mini timer (/cbosses minis), 3000 health")
+w("  # ------------------------------------------------------------ mini bosses: wake on the mini timer (/cbosses minis), 2000 health")
 for id in MINIS: emit(id, entry(id, "mini"))
 w("  # ------------------------------------------------------------ second bodies of two-body bosses (they appear beside their partner, never alone)")
 for id in v12_final.PARTNER_INFO: emit(id, entry(id, "partner"))

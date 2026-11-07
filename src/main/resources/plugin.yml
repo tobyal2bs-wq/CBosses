@@ -7,6 +7,10 @@ author: clarx
 description: Animated block-model bosses with weekly, seasonal and chapter fights, WorldGuard support and a CQuests hook.
 softdepend: [WorldGuard, PlaceholderAPI, CQuests]
 commands:
+  mossback:
+    description: Spawn peaceful rideable Mossbacks
+    usage: /mossback spawn [x y z [world]] | remove | list
+    permission: bosses.use
   cbosses:
     description: CBosses commands
     aliases: [cb, bosses]

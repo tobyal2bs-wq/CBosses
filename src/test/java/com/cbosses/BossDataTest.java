@@ -101,8 +101,8 @@ class BossDataTest {
         var defs = bosses();
         assertEquals(26, defs.values().stream().filter(BossDef::mini).count(), "26 mini bosses");
         for (BossDef d : defs.values()) {
-            if (d.mini()) assertEquals(3000, d.health(), 0.01, d.id());
-            else if (d.tier().equals("mythic")) assertEquals(8000, d.health(), 0.01, d.id());
+            if (d.mini()) assertEquals(2000, d.health(), 0.01, d.id());
+            else if (d.tier().equals("mythic")) assertEquals(5000, d.health(), 0.01, d.id());
             else if (!d.chapterBoss() && !d.sidekick()) assertEquals(5000, d.health(), 0.01, d.id());
         }
         for (String id : new String[]{"the_unmaker", "withered_tyrant", "the_listener"}) assertEquals("mythic", defs.get(id).tier(), id);

@@ -206,6 +206,8 @@ if missing: print("no preview colour for", missing)
 if problems:
     print("\n".join(problems))
     sys.exit(1)
+import polish
+for model_id, data in out["models"].items(): polish.apply(model_id, data, out["rigs"])
 dest = sys.argv[1] if len(sys.argv) > 1 else os.path.join(os.path.dirname(__file__), "../../src/main/resources/models.json")
 json.dump(out, open(dest, "w"), separators=(",", ":"))
 for id, m in out["models"].items():

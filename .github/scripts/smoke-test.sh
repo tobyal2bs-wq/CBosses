@@ -49,7 +49,7 @@ wait_for() {
 wait_for "Done (" 300
 wait_for "CBosses .* enabled with" 30
 for cmd in "cbosses list" "cbosses arena radius main 30" "cbosses arena list" "cbosses schedule" "cbosses season" "cbosses season winter on" "cbosses season winter auto" "cbosses finale" \
-           "cbosses selftest" "cbosses reload" "cbosses list"; do
+           "cbosses selftest" "cbosses reload" "cbosses list" "mossback spawn 0 80 0 world" "mossback list"; do
   echo "$cmd" >> console
   sleep 3
   # The self-test plays every omen, entrance, attack and death at once; it reports by itself after 75 seconds at the latest.
@@ -73,6 +73,7 @@ grep -qE "Boss self-test: $TESTED/$TESTED appeared, $ATTACKS attacks ran, $TESTE
   && ! grep -q "Boss self-test.*Problems" plain.log || { echo "Boss self-test failed"; grep -E "self-test|CBosses" plain.log | tail -30; exit 1; }
 grep -E "Boss self-test" plain.log
 grep -qE "Reloaded: $BOSSES bosses" plain.log || { echo "/cbosses reload failed"; exit 1; }
+grep -q "Friendly Mossbacks: 1" plain.log || { echo "Friendly Mossback spawn failed"; exit 1; }
 if grep -E "at com\.cbosses|Error occurred while enabling CBosses|\[CBosses\].*(ERROR|SEVERE)|Exception.*cbosses" plain.log; then
   echo "CBosses logged an error"
   exit 1

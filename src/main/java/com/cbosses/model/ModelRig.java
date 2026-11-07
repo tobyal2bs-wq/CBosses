@@ -383,26 +383,51 @@ public final class ModelRig {
             if (F.y < floor - 0.01f) {
                 Vector3f H = out[legI].transformPosition(new Vector3f(leg.pivot()));
                 Vector3f Kn = out[shinI].transformPosition(new Vector3f(shin.pivot()));
-                float L1 = shin.pivot().distance(leg.pivot()), L2 = foot.pivot().distance(shin.pivot());
+                float L1 = H.distance(Kn), L2 = Kn.distance(F);
+                if (L1 < 1e-4f || L2 < 1e-4f) continue;
                 Vector3f T = new Vector3f(F.x, floor, F.z);
                 float D = T.distance(H);
                 D = Math.max(Math.abs(L1 - L2) + 0.01f, Math.min(L1 + L2 - 0.01f, D));
-                Vector3f u = new Vector3f(T).sub(H).normalize();
+                Vector3f u = new Vector3f(T).sub(H);
+                if (u.lengthSquared() < 1e-8f) u.set(0, -1, 0);
+                u.normalize();
+                T.set(H).add(new Vector3f(u).mul(D));
                 Vector3f kh = new Vector3f(Kn).sub(H);
                 Vector3f n = new Vector3f(kh).sub(new Vector3f(u).mul(kh.dot(u)));
-                if (n.lengthSquared() < 1e-4f) n = rr.transformDirection(new Vector3f(0, 0, 1));
+                if (n.lengthSquared() < 1e-4f) {
+                    n = rr.transformDirection(new Vector3f(0, 0, 1));
+                    n.sub(new Vector3f(u).mul(n.dot(u)));
+                    if (n.lengthSquared() < 1e-4f) {
+                        n.set(1, 0, 0);
+                        n.sub(new Vector3f(u).mul(n.dot(u)));
+                    }
+                }
                 n.normalize();
                 float a = (L1 * L1 - L2 * L2 + D * D) / (2 * D), h = (float) Math.sqrt(Math.max(0, L1 * L1 - a * a));
                 Vector3f K2 = new Vector3f(H).add(new Vector3f(u).mul(a)).add(n.mul(h));
                 Matrix4f d1 = turn(new Vector3f(Kn).sub(H), new Vector3f(K2).sub(H), H);
-                out[legI] = new Matrix4f(d1).mul(out[legI]);
+                // Apply each correction to the entire subtree (armour, toes, and
+                // attachments included), otherwise the rig separates at the knee.
+                transformBranch(model, out, legI, d1);
                 Vector3f F1 = d1.transformPosition(new Vector3f(F));
                 Matrix4f d2 = turn(F1.sub(K2), new Vector3f(T).sub(K2), K2);
-                out[shinI] = d2.mul(d1).mul(out[shinI]);
-                F = T;
+                transformBranch(model, out, shinI, d2);
+                // The target may be outside the chain's reach. Keep the foot on
+                // the actual ankle, not the unreachable target.
+                F = out[shinI].transformPosition(new Vector3f(foot.pivot()));
             }
             Vector3f p = foot.pivot();
-            out[f] = new Matrix4f().translation(F).mul(rr).translate(-p.x, -p.y, -p.z);
+            Matrix4f level = new Matrix4f().translation(F).mul(rr).translate(-p.x, -p.y, -p.z);
+            Matrix4f correction = new Matrix4f(level).mul(new Matrix4f(out[f]).invert());
+            transformBranch(model, out, f, correction);
+        }
+    }
+
+    private static void transformBranch(Model model, Matrix4f[] pose, int root, Matrix4f correction) {
+        for (int i = root; i < pose.length; i++) {
+            int ancestor = i;
+            while (ancestor >= 0 && ancestor != root) ancestor = model.bones.get(ancestor).parent();
+            if (ancestor == root) pose[i] = new Matrix4f(correction).mul(pose[i]);
         }
     }
 

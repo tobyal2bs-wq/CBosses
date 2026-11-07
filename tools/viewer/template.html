@@ -98,7 +98,14 @@ function plantFeet(model, out, ground) {
   for (const b of model.bones) by[b.name] = b;
   const root = out.root || new M(), rr = new M().extractRotation(root);
   const at = (name, p) => new V(p[0], p[1], p[2]).applyMatrix4(out[name]);
-  const level = (name, w) => { const p = by[name].pivot; out[name] = new M().makeTranslation(w.x, w.y, w.z).multiply(rr).multiply(new M().makeTranslation(-p[0], -p[1], -p[2])); };
+  const branch = (name, correction) => { for (const b of model.bones) {
+    let ancestor = b.name;
+    while (ancestor && ancestor !== name) ancestor = by[ancestor].parent;
+    if (ancestor === name) out[b.name] = correction.clone().multiply(out[b.name]);
+  }};
+  const level = (name, w) => { const p = by[name].pivot;
+    const target = new M().makeTranslation(w.x, w.y, w.z).multiply(rr).multiply(new M().makeTranslation(-p[0], -p[1], -p[2]));
+    branch(name, target.multiply(out[name].clone().invert())); };
   const turn = (from, to, c) => { const q = new THREE.Quaternion().setFromUnitVectors(from.clone().normalize(), to.clone().normalize());
     return new M().makeTranslation(c.x, c.y, c.z).multiply(new M().makeRotationFromQuaternion(q)).multiply(new M().makeTranslation(-c.x, -c.y, -c.z)); };
   for (const b of model.bones) {
@@ -109,21 +116,25 @@ function plantFeet(model, out, ground) {
       const floor = b.pivot[1] + (ground ? ground(b.name) : 0) + root.elements[13];
       if (F.y < floor - 0.01) {
         const H = at(leg.name, leg.pivot), Kn = at(shin.name, shin.pivot);
-        const L1 = new V().fromArray(shin.pivot).distanceTo(new V().fromArray(leg.pivot));
-        const L2 = new V().fromArray(b.pivot).distanceTo(new V().fromArray(shin.pivot));
+        const L1 = H.distanceTo(Kn);
+        const L2 = Kn.distanceTo(F);
+        if (L1 < 0.0001 || L2 < 0.0001) continue;
         const T = F.clone(); T.y = floor;
         let D = T.distanceTo(H); D = Math.max(Math.abs(L1 - L2) + 0.01, Math.min(L1 + L2 - 0.01, D));
-        const u = T.clone().sub(H).normalize();
+        const u = T.clone().sub(H); if (u.lengthSq() < 1e-8) u.set(0,-1,0); u.normalize(); T.copy(H).add(u.clone().multiplyScalar(D));
         const kh = Kn.clone().sub(H); let n = kh.clone().sub(u.clone().multiplyScalar(kh.dot(u)));
-        if (n.lengthSq() < 1e-4) n = new V(0, 0, 1).applyMatrix4(rr); n.normalize();
+        if (n.lengthSq() < 1e-4) {
+          n = new V(0,0,1).transformDirection(rr); n.sub(u.clone().multiplyScalar(n.dot(u)));
+          if (n.lengthSq()<1e-4) { n.set(1,0,0); n.sub(u.clone().multiplyScalar(n.dot(u))); }
+        } n.normalize();
         const a = (L1 * L1 - L2 * L2 + D * D) / (2 * D), h = Math.sqrt(Math.max(0, L1 * L1 - a * a));
         const K2 = H.clone().add(u.clone().multiplyScalar(a)).add(n.multiplyScalar(h));
         const d1 = turn(Kn.clone().sub(H), K2.clone().sub(H), H);
-        out[leg.name] = d1.clone().multiply(out[leg.name]);
+        branch(leg.name,d1);
         const F1 = F.clone().applyMatrix4(d1);
         const d2 = turn(F1.clone().sub(K2), T.clone().sub(K2), K2);
-        out[shin.name] = d2.multiply(d1).multiply(out[shin.name]);
-        F = T;
+        branch(shin.name,d2);
+        F = at(shin.name,b.pivot);
       }
     }
     level(b.name, F);

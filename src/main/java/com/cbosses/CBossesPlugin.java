@@ -28,6 +28,7 @@ public final class CBossesPlugin extends JavaPlugin {
     private com.cbosses.finale.Finale finale;
     private com.cbosses.mini.MiniBosses minis;
     private com.cbosses.decor.Decor decor;
+    private com.cbosses.friendly.FriendlyMossbacks friendlyMossbacks;
     private YamlConfiguration messages = new YamlConfiguration();
 
     public static CBossesPlugin instance() { return instance; }
@@ -60,6 +61,13 @@ public final class CBossesPlugin extends JavaPlugin {
         getServer().getPluginManager().registerEvents(finale, this);
         minis = new com.cbosses.mini.MiniBosses(this);
         decor = new com.cbosses.decor.Decor(this);
+        friendlyMossbacks = new com.cbosses.friendly.FriendlyMossbacks(this);
+        getServer().getPluginManager().registerEvents(friendlyMossbacks, this);
+        var mossbackCommand = getCommand("mossback");
+        if (mossbackCommand != null) {
+            mossbackCommand.setExecutor(friendlyMossbacks);
+            mossbackCommand.setTabCompleter(friendlyMossbacks);
+        }
         getServer().getPluginManager().registerEvents(minis, this);
         var miniMenu = new com.cbosses.mini.MiniMenu(this, minis);
         getServer().getPluginManager().registerEvents(miniMenu, this);
@@ -73,6 +81,7 @@ public final class CBossesPlugin extends JavaPlugin {
         service.start();
         minis.start();
         decor.start();
+        friendlyMossbacks.start();
         if (getServer().getPluginManager().getPlugin("PlaceholderAPI") != null) {
             try { new com.cbosses.hook.Placeholders(this).register(); getLogger().info("PlaceholderAPI placeholders registered (%cbosses_...%)."); }
             catch (Throwable e) { getLogger().warning("Could not register placeholders: " + e); }
@@ -84,6 +93,7 @@ public final class CBossesPlugin extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        if (friendlyMossbacks != null) friendlyMossbacks.stop();
         if (minis != null) minis.stop();
         if (decor != null) decor.stop();
         if (service != null) service.shutdown();
