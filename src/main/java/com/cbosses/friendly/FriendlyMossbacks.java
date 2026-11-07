@@ -189,7 +189,14 @@ public final class FriendlyMossbacks implements Listener, CommandExecutor, TabCo
             else entity.getScheduler().run(plugin,t->entity.remove(),null);
         }
     }
-    public void stop(){stopping=true;if(wakeLoop!=null)wakeLoop.cancel();save();for(Pet pet:List.copyOf(pets.values()))despawn(pet);}
+    public void stop(){
+        stopping=true;if(wakeLoop!=null)wakeLoop.cancel();save();
+        // Folia halts region tick contexts before disabling plugins. Removing
+        // entities then can dereference missing region data on 26.2. These
+        // entities are nonpersistent; the server discards them during unload.
+        if(Bukkit.isStopping()){pets.clear();return;}
+        for(Pet pet:List.copyOf(pets.values()))despawn(pet);
+    }
     @Override public List<String> onTabComplete(CommandSender s,Command c,String a,String[] args){
         return args.length==1?List.of("spawn","remove","list").stream().filter(x->x.startsWith(args[0].toLowerCase(Locale.ROOT))).toList():List.of();
     }
