@@ -141,7 +141,7 @@ function plantFeet(model, out, ground) {
   }
 }
 // layers: [{anim, t, w}] later layers override earlier ones bone by bone
-function pose(model, layers) {
+function rawPose(model, layers) {
   const M = THREE.Matrix4, out = {};
   const tmp = new M(), r = new M();
   for (const b of model.bones) {
@@ -167,6 +167,17 @@ function pose(model, layers) {
   plantFeet(model, out, model.ground || null);
   return out;
 }
+function pose(model,layers){
+ if(model._groundLift===undefined){
+  model._groundLift=0;const r=Object.assign({},DATA.rigs[model.rig],model.anims||{}),rest=rawPose(model,[{anim:r.idle,t:0,w:1}]);let low=Infinity;
+  const parent=Object.fromEntries(model.bones.map(b=>[b.name,b.parent]));
+  for(const c of model.cubes){let bone=c.b,shell=false;while(bone){if(bone.startsWith('shell'))shell=true;bone=parent[bone];}if(shell||c.g&&c.g.startsWith('face:')&&c.g!=='face:idle')continue;
+   const matrix=rest[c.b].clone().multiply(cubeLocal(c));for(let k=0;k<8;k++){const v=new THREE.Vector3(k&1,k>>1&1,k>>2&1).applyMatrix4(matrix);low=Math.min(low,v.y);}}
+  model._groundLift=Number.isFinite(low)?-low:0;
+ }
+ const out=rawPose(model,layers);if(Math.abs(model._groundLift)>1e-5){const lift=new THREE.Matrix4().makeTranslation(0,model._groundLift,0);for(const key of Object.keys(out))out[key].premultiply(lift);}return out;
+}
+
 function cubeLocal(c) {
   const M = THREE.Matrix4, m = new M(), r = new M();
   if (c.r) {

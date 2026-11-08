@@ -1,5 +1,7 @@
 # CBosses
 
+**Visual refinement 1.3.8:** grounded rest poses, visible joint sockets, two-eye birds, individual reactions and deaths, and three retired designs. [Update notes](RELEASE-1.3.8.md).
+
 **Boss polish update 1.3.7:** connected joints, stable faces/turning, individual entrances, no aura rings, and 2,000/5,000 HP. [Friendly Mossback commands and update notes](RELEASE-1.3.7.md).
 
 <p align="center"><img src="docs/images/hero.jpg" alt="CBosses bosses" width="100%"></p>

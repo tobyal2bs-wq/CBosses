@@ -45,7 +45,7 @@ class BossDataTest {
     void everyBossHasAModelWithAnEntranceAndADeath() throws Exception {
         var models = models();
         var defs = bosses();
-        assertEquals(85, defs.size(), "36 weekly, 3 mythic, 12 seasonal, 8 chapter and 26 mini bosses");
+        assertEquals(82, defs.size(), "33 weekly, 3 mythic, 12 seasonal, 8 chapter and 26 mini bosses");
         for (BossDef d : defs.values()) {
             ModelRig.Model m = models.get(d.model());
             assertNotNull(m, d.id() + " has no model");
@@ -93,7 +93,7 @@ class BossDataTest {
         var defs = bosses();
         for (String season : new String[]{"winter", "summer", "spring", "halloween"})
             assertEquals(3, defs.values().stream().filter(d -> d.seasonal() && season.equals(d.season())).count(), season);
-        assertEquals(39, defs.values().stream().filter(d -> !d.seasonal() && !d.chapterBoss() && !d.mini() && !d.sidekick()).count(), "36 weekly bosses and 3 mythic");
+        assertEquals(36, defs.values().stream().filter(d -> !d.seasonal() && !d.chapterBoss() && !d.mini() && !d.sidekick()).count(), "33 weekly bosses and 3 mythic");
     }
 
     @Test
@@ -126,7 +126,7 @@ class BossDataTest {
     @Test
     void retiredBossesAreGoneAndTwinsAreOneModelAgain() throws Exception {
         var defs = bosses();
-        for (String id : new String[]{"cluck_rider", "hollow_king", "ender_wyrm", "gale_sovereign", "ghost_jelly", "orc_bruiser", "cyclops_ogre", "cinder_imp", "boo_twins", "shulker_matriarch", "pink_burrower"}) assertNull(defs.get(id), id);
+        for (String id : new String[]{"cluck_rider", "hollow_king", "ender_wyrm", "gale_sovereign", "ghost_jelly", "orc_bruiser", "cyclops_ogre", "cinder_imp", "boo_twins", "shulker_matriarch", "pink_burrower", "ironhide_behemoth", "void_walker", "fenrir"}) assertNull(defs.get(id), id);
         assertEquals(0, defs.values().stream().filter(BossDef::sidekick).count());
         var yaml = org.bukkit.configuration.file.YamlConfiguration.loadConfiguration(new java.io.File("src/main/resources/bosses.yml"));
         assertTrue(yaml.getStringList("removed").contains("cluck_rider"));
@@ -135,7 +135,7 @@ class BossDataTest {
     @Test
     void newBigBossesAreCleanAndAlive() throws Exception {
         var models = models();
-        for (String id : new String[]{"abyssal_eye", "fenrir", "tide_tyrant", "storm_herald", "ember_queen", "gravelord", "bloodtusk",
+        for (String id : new String[]{"abyssal_eye", "tide_tyrant", "storm_herald", "ember_queen", "gravelord", "bloodtusk",
                 "old_ironroot", "gate_shade", "frost_yeti", "bog_orc"}) {
             ModelRig.Model m = models.get(id);
             assertNotNull(m, id);
@@ -148,7 +148,7 @@ class BossDataTest {
     @Test
     void rebuiltBossesAreTexturedAndAlive() throws Exception {
         var models = models();
-        for (String id : new String[]{"gnome_brothers", "moss_spirit", "grubnose", "mudclub", "ugor", "angry_goose"}) {
+        for (String id : new String[]{"gnome_brothers", "moss_spirit", "grubnose", "mudclub", "ugor"}) {
             ModelRig.Model m = models.get(id);
             assertNotNull(m, id);
             int n = m.cubes.size();

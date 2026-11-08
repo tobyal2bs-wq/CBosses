@@ -8,7 +8,7 @@ MODULES = ["v2_general", "v2_seasonal", "v2_chapters", "v2_legends", "v3_general
 
 # the weekly rotation: the first 25 bosses, then the new ones drawn from the user's pictures
 GENERAL = ["slagheart", "warlord_gruk", "grand_augur", "crimson_ronin", "thunderback", "gorehorn", "abyssal_eye", "overgrowth",
-           "prism_sentinel", "tiki_warden", "broodmother", "ironhide_behemoth", "fenrir", "tide_tyrant", "void_walker",
+           "prism_sentinel", "tiki_warden", "broodmother", "tide_tyrant",
            "storm_herald", "pharaoh", "executioner", "ember_queen", "gravelord", "captain_brine", "keywarden", "bloodtusk", "king_gloop",
            "clockwork_colossus", "mossback", "old_wizard", "hollow_mage", "horned_brute", "rotting_giant", "dusk_scorpion",
            "grave_marshal", "mayor_grumble", "old_ironroot", "frost_yeti", "bog_orc"]

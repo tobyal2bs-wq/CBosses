@@ -646,7 +646,7 @@ def gate_shade():
 
 # ---------------------------------------------------------------------------- minis grown into big bosses
 drop("frost_yeti"); drop("cinder_imp"); drop("bog_orc"); drop("cluck_rider")
-REMOVED = ["cluck_rider", "hollow_king", "ender_wyrm", "gale_sovereign", "ghost_jelly", "orc_bruiser", "cyclops_ogre", "cinder_imp",
+REMOVED = ['fenrir', 'ironhide_behemoth', 'void_walker', "cluck_rider", "hollow_king", "ender_wyrm", "gale_sovereign", "ghost_jelly", "orc_bruiser", "cyclops_ogre", "cinder_imp",
            "boo_twins", "shulker_matriarch", "pink_burrower"]
 for _r in ("ghost_jelly", "pink_burrower", "boo_twins"): drop(_r)
 BIG_INFO.pop("cinder_imp", None)

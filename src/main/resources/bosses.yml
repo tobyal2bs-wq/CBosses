@@ -309,58 +309,6 @@ bosses:
       commands: []
       top-commands: []
     description: "The spider queen: a black, hairy body banded in venom green, a swollen abdomen marked with a red hourglass, eight glowing eyes in two rows, long jointed legs and dripping fangs."
-  ironhide_behemoth:
-    name: "<gradient:#5d4037:#bcaaa4><bold>The Ironhide Behemoth</bold></gradient>"
-    title: "War Beast of the Raid"
-    tier: big
-    entity: RAVAGER
-    health: 5000
-    scale: 1.7
-    damage: 15
-    armor: 12
-    bar: RED
-    theme: iron
-    movement: walk
-    phases: [0.66, 0.33]
-    ability-seconds: 8
-    abilities: [charge, quake, roar, slam, shockwave, leap]
-    health-per-player: 0.25
-    rewards:
-      money: 50000
-      top-money: 150000
-      items: ["EMERALD 24", "GOLDEN_APPLE 3"]
-      top-items: ["EMERALD_BLOCK 6"]
-      commands: []
-      top-commands: []
-    description: "A war rhino in riveted iron barding: a great nose horn and a second smaller one, plated neck, overlapping back plates, chain fringe, a war banner on its back and glowing furnace eyes."
-  fenrir:
-    revision: 3
-    name: "<gradient:#263238:#80d8ff><bold>Grimfang</bold></gradient>"
-    title: "The Wolf the Chains Could Not Hold"
-    tier: big
-    entity: WOLF
-    health: 5000
-    scale: 3.0
-    damage: 12
-    speed: 0.32
-    armor: 8
-    bar: BLUE
-    theme: frost
-    movement: walk
-    phases: [0.66, 0.33]
-    minion: WOLF
-    minions: 3
-    ability-seconds: 8
-    abilities: [roar, leap, frost]
-    health-per-player: 0.25
-    rewards:
-      money: 60000
-      top-money: 180000
-      items: ["BONE 32", "CHAIN 16", "DIAMOND 3"]
-      top-items: ["NETHERITE_SCRAP 1"]
-      commands: []
-      top-commands: []
-    description: "A huge shaggy dire wolf in charcoal and grey fur with a pale belly and muzzle, a thick mane, ice blue glowing eyes, white fangs, and a broken iron collar with chain ends swinging under its neck."
   tide_tyrant:
     revision: 3
     name: "<gradient:#bf360c:#ff8a65><bold>King Shellback</bold></gradient>"
@@ -391,30 +339,6 @@ bosses:
       commands: []
       top-commands: []
     description: "A giant red crab king: a wide speckled shell crusted with barnacles and a crown of pink and yellow coral, eyes on stalks that twitch, one huge crusher claw and one quick little claw, and six pointed legs that tap while it waits."
-  void_walker:
-    name: "<gradient:#311b92:#b388ff><bold>The Void Walker</bold></gradient>"
-    title: "It Was Never Really Here"
-    tier: big
-    entity: ENDERMAN
-    health: 5000
-    scale: 1.6
-    damage: 13
-    armor: 6
-    bar: PURPLE
-    theme: void
-    movement: walk
-    phases: [0.66, 0.33]
-    ability-seconds: 6
-    abilities: [blink, orbs, darkness, pull, sonic_boom, levitate]
-    health-per-player: 0.25
-    rewards:
-      money: 50000
-      top-money: 150000
-      items: ["ENDER_PEARL 16", "GOLDEN_APPLE 3"]
-      top-items: ["SHULKER_SHELL 4"]
-      commands: []
-      top-commands: []
-    description: "A towering ender lord: thin black limbs, a plated obsidian torso cracked with purple light, a flowing tattered cowl, purple eyes and a halo of floating end-stone shards."
   storm_herald:
     revision: 3
     name: "<gradient:#37474f:#ffee58><bold>The Thunder Ram</bold></gradient>"
@@ -2231,4 +2155,4 @@ bosses:
   # ------------------------------------------------------------ second bodies of two-body bosses (they appear beside their partner, never alone)
 
 # bosses taken out of the plugin; a server that still has them drops them on start
-removed: ["cluck_rider", "hollow_king", "ender_wyrm", "gale_sovereign", "ghost_jelly", "orc_bruiser", "cyclops_ogre", "cinder_imp", "boo_twins", "shulker_matriarch", "pink_burrower"]
+removed: [fenrir, ironhide_behemoth, void_walker, "cluck_rider", "hollow_king", "ender_wyrm", "gale_sovereign", "ghost_jelly", "orc_bruiser", "cyclops_ogre", "cinder_imp", "boo_twins", "shulker_matriarch", "pink_burrower"]
