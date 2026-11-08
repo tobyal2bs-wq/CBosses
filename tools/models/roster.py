@@ -11,7 +11,7 @@ GENERAL = ["slagheart", "warlord_gruk", "grand_augur", "crimson_ronin", "thunder
            "prism_sentinel", "tiki_warden", "broodmother", "tide_tyrant",
            "storm_herald", "pharaoh", "executioner", "ember_queen", "gravelord", "captain_brine", "keywarden", "bloodtusk", "king_gloop",
            "clockwork_colossus", "mossback", "old_wizard", "hollow_mage", "horned_brute", "rotting_giant", "dusk_scorpion",
-           "grave_marshal", "mayor_grumble", "old_ironroot", "frost_yeti", "bog_orc", "millstone_monk"]
+           "grave_marshal", "mayor_grumble", "old_ironroot", "frost_yeti", "bog_orc", "millstone_monk", "moonwake_manta", "thorncoil_basilisk"]
 MYTHIC = ["the_listener", "withered_tyrant", "the_unmaker"]
 SEASONAL = {"winter": ["killer_claus", "frostbottom", "old_man_winter"], "summer": ["sunscorch", "admiral_pinchworth", "brain_freeze"],
             "spring": ["clucksworth", "killer_bunny", "cocoa_colossus"], "halloween": ["gourd_king", "headless_horseman", "hexmother"]}

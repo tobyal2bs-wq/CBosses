@@ -212,11 +212,12 @@ if problems:
     print("\n".join(problems))
     sys.exit(1)
 import polish
+import v13_approved
 for model_id, data in out["models"].items():
-    if model_id != "millstone_monk": polish.apply(model_id, data, out["rigs"])
+    if model_id not in v13_approved.APPROVED: polish.apply(model_id, data, out["rigs"])
 import refine
 for model_id, data in out["models"].items():
-    if model_id != "millstone_monk": refine.apply(model_id, data, out["rigs"])
+    if model_id not in v13_approved.APPROVED: refine.apply(model_id, data, out["rigs"])
 dest = sys.argv[1] if len(sys.argv) > 1 else os.path.join(os.path.dirname(__file__), "../../src/main/resources/models.json")
 json.dump(out, open(dest, "w"), separators=(",", ":"))
 for id, m in out["models"].items():

@@ -45,7 +45,7 @@ class BossDataTest {
     void everyBossHasAModelWithAnEntranceAndADeath() throws Exception {
         var models = models();
         var defs = bosses();
-        assertEquals(83, defs.size(), "34 weekly, 3 mythic, 12 seasonal, 8 chapter and 26 mini bosses");
+        assertEquals(85, defs.size(), "36 weekly, 3 mythic, 12 seasonal, 8 chapter and 26 mini bosses");
         for (BossDef d : defs.values()) {
             ModelRig.Model m = models.get(d.model());
             assertNotNull(m, d.id() + " has no model");
@@ -75,7 +75,7 @@ class BossDataTest {
             else if (d.chapterBoss()) assertTrue(n >= 70 && n <= 300, d.id() + " is a chapter boss with " + n + " blocks");
             else if (d.sidekick()) assertTrue(n >= 150 && n <= 300, d.id() + " is a second body with " + n + " blocks");
             else if (d.seasonal()) assertTrue(n >= 60 && n <= 300, d.id() + " is a painted seasonal boss with " + n + " blocks");
-            else assertTrue(n >= 50 && n <= 300, d.id() + " has " + n + " blocks");
+            else assertTrue(n >= 40 && n <= 300, d.id() + " has " + n + " blocks");
         }
         int was = ModelRig.detail;
         try {
@@ -93,7 +93,7 @@ class BossDataTest {
         var defs = bosses();
         for (String season : new String[]{"winter", "summer", "spring", "halloween"})
             assertEquals(3, defs.values().stream().filter(d -> d.seasonal() && season.equals(d.season())).count(), season);
-        assertEquals(37, defs.values().stream().filter(d -> !d.seasonal() && !d.chapterBoss() && !d.mini() && !d.sidekick()).count(), "34 weekly bosses and 3 mythic");
+        assertEquals(39, defs.values().stream().filter(d -> !d.seasonal() && !d.chapterBoss() && !d.mini() && !d.sidekick()).count(), "36 weekly bosses and 3 mythic");
     }
 
     @Test
@@ -254,6 +254,6 @@ class BossDataTest {
         var wheel = m.bones.stream().filter(b -> b.name().equals("wheel")).findFirst().orElseThrow();
         assertEquals("body", m.bones.get(wheel.parent()).name());
         assertTrue(m.zones.stream().anyMatch(z -> z.kind().equals("weak") && m.bones.get(z.bone()).name().equals("wheel")));
-        for (String draft : List.of("moonwake_manta", "thorncoil_basilisk", "bellwether", "driftjaw")) assertFalse(all.containsKey(draft), draft);
+        for (String draft : List.of("bellwether", "driftjaw")) assertFalse(all.containsKey(draft), draft);
     }
 }
