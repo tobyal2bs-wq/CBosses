@@ -4,14 +4,14 @@ import importlib
 import models
 
 MODULES = ["v2_general", "v2_seasonal", "v2_chapters", "v2_legends", "v3_general", "v3_mythic", "v3_seasonal",
-           "v4_normal", "v4_chapters", "v4_seasonal", "v5_normal", "v5_mythic", "v6_originals", "v7_bigs", "v8_pumpkins", "v9_minis", "v10_fixes", "v11_new", "v12_final"]
+           "v4_normal", "v4_chapters", "v4_seasonal", "v5_normal", "v5_mythic", "v6_originals", "v7_bigs", "v8_pumpkins", "v9_minis", "v10_fixes", "v11_new", "v12_final", "v13_approved"]
 
 # the weekly rotation: the first 25 bosses, then the new ones drawn from the user's pictures
 GENERAL = ["slagheart", "warlord_gruk", "grand_augur", "crimson_ronin", "thunderback", "gorehorn", "abyssal_eye", "overgrowth",
            "prism_sentinel", "tiki_warden", "broodmother", "tide_tyrant",
            "storm_herald", "pharaoh", "executioner", "ember_queen", "gravelord", "captain_brine", "keywarden", "bloodtusk", "king_gloop",
            "clockwork_colossus", "mossback", "old_wizard", "hollow_mage", "horned_brute", "rotting_giant", "dusk_scorpion",
-           "grave_marshal", "mayor_grumble", "old_ironroot", "frost_yeti", "bog_orc"]
+           "grave_marshal", "mayor_grumble", "old_ironroot", "frost_yeti", "bog_orc", "millstone_monk"]
 MYTHIC = ["the_listener", "withered_tyrant", "the_unmaker"]
 SEASONAL = {"winter": ["killer_claus", "frostbottom", "old_man_winter"], "summer": ["sunscorch", "admiral_pinchworth", "brain_freeze"],
             "spring": ["clucksworth", "killer_bunny", "cocoa_colossus"], "halloween": ["gourd_king", "headless_horseman", "hexmother"]}

@@ -173,6 +173,11 @@ def entrance(id, old):
 
 for id, fn in roster.builders().items():
     m = fn()
+    if hasattr(m, "approved"):
+        out["models"][m.id] = m.approved
+        out["rigs"].setdefault(m.approved["rig"], {})
+        used |= {base(c["k"]) for c in m.approved["cubes"]}
+        continue
     if m.rig in ("biped", "float") and not getattr(m, "no_elbows", False):
         m.elbows(bend=getattr(m, "bend", -38), weapons=getattr(m, "hold", None))
     if m.rig in ("biped", "quad"): m.knees()
@@ -207,16 +212,18 @@ if problems:
     print("\n".join(problems))
     sys.exit(1)
 import polish
-for model_id, data in out["models"].items(): polish.apply(model_id, data, out["rigs"])
+for model_id, data in out["models"].items():
+    if model_id != "millstone_monk": polish.apply(model_id, data, out["rigs"])
 import refine
-for model_id, data in out["models"].items(): refine.apply(model_id, data, out["rigs"])
+for model_id, data in out["models"].items():
+    if model_id != "millstone_monk": refine.apply(model_id, data, out["rigs"])
 dest = sys.argv[1] if len(sys.argv) > 1 else os.path.join(os.path.dirname(__file__), "../../src/main/resources/models.json")
 json.dump(out, open(dest, "w"), separators=(",", ":"))
 for id, m in out["models"].items():
     tags = sum(1 for c in m["cubes"] if c.get("g"))
     print(f"{id:20s} {len(m['cubes']):3d} cubes ({tags} small)  {m['height'] * m['scale'] / 16:.1f} blocks tall  {m['rig']}")
 print(len(out["models"]), "models")
-pv = {"rigs": anims.RIGS, "models": out["models"], "palette": {k: list(v) for k, v in palette.P.items()}}
+pv = {"rigs": out["rigs"], "models": out["models"], "palette": {k: list(v) for k, v in palette.P.items()}}
 pd = os.environ.get("PREVIEW_DATA", os.path.join(os.path.dirname(__file__), "../../build/preview-data.js"))
 os.makedirs(os.path.dirname(pd), exist_ok=True)
 open(pd, "w").write("const DATA=" + json.dumps(pv, separators=(",", ":")) + ";")

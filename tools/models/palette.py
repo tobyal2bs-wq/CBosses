@@ -154,3 +154,6 @@ P.update({
  "stripped_oak_log": ("log", "#b1904f", "#9c7e44"), "stripped_spruce_log": ("log", "#73593a", "#664e33"), "bone_block": ("noise", "#e1ddc9", "#d0cbb4"),
  "pale_moss_block": ("noise", "#6b7365", "#5e665a"), "azalea_leaves": ("noise", "#5a7a2a", "#7a9a3a"), "nether_wart_block": ("noise", "#7b0000", "#6a0000"),
 })
+
+# Approved millkeeper accents (native textures in game).
+P.setdefault("weathered_cut_copper", ("metal", "#719982", "#4d6d5d"))

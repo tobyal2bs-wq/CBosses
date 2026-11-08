@@ -17,6 +17,7 @@ for mod in roster.MODULES:
 import v9_minis
 import v11_new
 import v12_final
+import v13_approved
 DOCS = {f.__name__: " ".join((f.__doc__ or "").split()) for f in _m.MODELS}
 MODELS = json.load(open(os.path.join(ROOT, "src/main/resources/models.json")))["models"]
 YML = os.path.join(ROOT, "src/main/resources/bosses.yml")
@@ -149,6 +150,10 @@ for _id, _i in v11_new.CHAPTER_INFO.items():
                     minion=_i["minion"], minions=2 if _i["minion"] else 0, money=_i["money"], top_money=0, items=_i["items"], top_items=[])
     EXTRA[_id] = _i["extra"]
 
+
+for _id, _i in v13_approved.INFO.items():
+    NEW[_id] = dict(_i, health=5000)
+    EXTRA[_id] = _i["extra"]
 
 for _id, _i in v12_final.BIG_INFO.items():
     NEW[_id] = dict(_i, health=5000)
